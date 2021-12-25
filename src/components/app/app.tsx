@@ -1,6 +1,6 @@
-import {BrowserRouter, Route, Switch} from "react-router-dom";
-import Main from "../main/main";
-import {AppRoute} from "../../const";
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Main from '../main/main';
+import {AppRoute} from '../../const';
 
 function App(): JSX.Element {
   return (
