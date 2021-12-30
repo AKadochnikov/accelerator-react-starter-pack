@@ -2,9 +2,22 @@ import Icons from '../icons/icons';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import CatalogCards from '../catalog-cards/catalog-cards';
+import {getGuitars} from '../../store/data/selectors';
+import {State} from '../../types/state';
+import {ConnectedProps, connect} from 'react-redux';
 
+const mapStateToProps = (state: State) => ({
+  guitars: getGuitars(state),
+});
 
-function Main (): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
+
+function Main (props: ConnectedComponentProps): JSX.Element {
+  const {guitars} = props;
+
   return (
     <>
       <Icons/>
@@ -84,7 +97,7 @@ function Main (): JSX.Element {
                   <button className="catalog-sort__order-button catalog-sort__order-button--down" aria-label="По убыванию"/>
                 </div>
               </div>
-              <CatalogCards/>
+              <CatalogCards guitars={guitars}/>
               <div className="pagination page-content__pagination">
                 <ul className="pagination__list">
                   <li className="pagination__page pagination__page--active">
@@ -108,4 +121,4 @@ function Main (): JSX.Element {
   );
 }
 
-export default Main;
+export default connector(Main);
