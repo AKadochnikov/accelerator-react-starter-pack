@@ -1,6 +1,7 @@
 import {useEffect, useReducer, useRef} from 'react';
 import {api} from '../services/api';
 import {APIRoute} from '../const';
+import {debounce} from 'ts-debounce';
 
 interface State<T> {
   data?: T
@@ -35,8 +36,9 @@ export const useSearch = <T = unknown>(search: string): State<T> => {
       },
     })
       .then((response) => dispatch({type: 'fetched', payload: response.data}));
+    const debouncedFetch = debounce(fetchData, 1000);
 
-    void fetchData();
+    void debouncedFetch();
 
     return () => {
       cancelRequest.current = true;
