@@ -1,4 +1,10 @@
+import {useFetch} from '../../hooks/useSearch';
+import {Guitar} from '../../types/types';
+
 function Header ():JSX.Element {
+  const { data } = useFetch<Guitar[]>('Чес');
+  // eslint-disable-next-line no-console
+  console.log(data?.length);
   return (
     <header className="header" id="header">
       <div className="container header__wrapper">
@@ -26,7 +32,7 @@ function Header ():JSX.Element {
             <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?"/>
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
-          <ul className="form-search__select-list hidden">
+          <ul style={{zIndex: 1}} className="form-search__select-list">
             <li className="form-search__select-item" tabIndex={0}>Четстер Plus</li>
             <li className="form-search__select-item" tabIndex={0}>Четстер UX</li>
             <li className="form-search__select-item" tabIndex={0}>Четстер UX2</li>
