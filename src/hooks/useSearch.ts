@@ -9,7 +9,7 @@ interface State<T> {
 type Action<T> =
   | { type: 'fetched'; payload: T }
 
-export const useFetch = <T = unknown>(search: string): State<T> => {
+export const useSearch = <T = unknown>(search: string): State<T> => {
   const cancelRequest = useRef<boolean>(false);
 
   const initialState: State<T> = {

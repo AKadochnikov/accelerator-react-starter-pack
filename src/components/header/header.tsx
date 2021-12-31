@@ -1,8 +1,8 @@
-import {useFetch} from '../../hooks/useSearch';
+import {useSearch} from '../../hooks/useSearch';
 import {Guitar} from '../../types/types';
 
 function Header ():JSX.Element {
-  const { data } = useFetch<Guitar[]>('Чес');
+  const { data } = useSearch<Guitar[]>('Чес');
   // eslint-disable-next-line no-console
   console.log(data?.length);
   return (
