@@ -1,4 +1,4 @@
-import {useEffect, useReducer, useRef} from 'react';
+import {useEffect, useReducer} from 'react';
 import {api} from '../services/api';
 import {APIRoute} from '../const';
 import {debounce} from 'ts-debounce';
@@ -8,10 +8,9 @@ interface State<T> {
 }
 
 type Action<T> =
-  | { type: 'fetched'; payload: T }
+  | { type: 'fetched'; payload: T | undefined }
 
 export const useSearch = <T = unknown>(search: string): State<T> => {
-  const cancelRequest = useRef<boolean>(false);
 
   const initialState: State<T> = {
     data: undefined,
@@ -28,21 +27,17 @@ export const useSearch = <T = unknown>(search: string): State<T> => {
 
   const [state, dispatch] = useReducer(fetchReducer, initialState);
 
-  useEffect(() => {
+  const fetchData = async () => api.get(APIRoute.Guitars, {params: {'name_like': search}})
+    .then((response) => dispatch({type: 'fetched', payload: response.data}));
 
-    const fetchData =  () => api.get(APIRoute.Guitars, {
-      params: {
-        'name_like': search,
-      },
-    })
-      .then((response) => dispatch({type: 'fetched', payload: response.data}));
-    const debouncedFetch = debounce(fetchData, 1000);
+  const debouncedFetch = debounce(fetchData, 2000);
+
+  useEffect(() => {
+    if (search === '') {
+      dispatch({type: 'fetched', payload: undefined});
+    }
 
     void debouncedFetch();
-
-    return () => {
-      cancelRequest.current = true;
-    };
 
   }, [search]);
 

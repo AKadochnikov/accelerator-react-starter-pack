@@ -1,10 +1,26 @@
 import {useSearch} from '../../hooks/useSearch';
 import {Guitar} from '../../types/types';
+import {FormEvent, useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 function Header ():JSX.Element {
-  const { data } = useSearch<Guitar[]>('Чес');
+  const [search, setSearch] = useState<string>('');
+  const history = useHistory();
+
+  const { data } = useSearch<Guitar[]>(search);
   // eslint-disable-next-line no-console
   console.log(data?.length);
+
+  const handleInput = (evt: FormEvent<HTMLInputElement>) => {
+    // eslint-disable-next-line no-console
+    console.log('yoy');
+    setSearch(evt.currentTarget.value);
+  };
+
+  // eslint-disable-next-line no-console
+  console.log(search);
+
   return (
     <header className="header" id="header">
       <div className="container header__wrapper">
@@ -29,16 +45,11 @@ function Header ():JSX.Element {
               </svg>
               <span className="visually-hidden">Начать поиск</span>
             </button>
-            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?"/>
+            <input onInput={(evt) => handleInput(evt)} className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?"/>
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
-          <ul style={{zIndex: 1}} className="form-search__select-list">
-            <li className="form-search__select-item" tabIndex={0}>Четстер Plus</li>
-            <li className="form-search__select-item" tabIndex={0}>Четстер UX</li>
-            <li className="form-search__select-item" tabIndex={0}>Четстер UX2</li>
-            <li className="form-search__select-item" tabIndex={0}>Четстер UX3</li>
-            <li className="form-search__select-item" tabIndex={0}>Четстер UX4</li>
-            <li className="form-search__select-item" tabIndex={0}>Четстер UX5</li>
+          <ul style={{zIndex: 1}} className="form-search__select-list" hidden={data === undefined}>
+            {data?.map((item) => (<li key={item.id} className="form-search__select-item" tabIndex={0} onClick={() => history.push(AppRoute.Main)}>{item.name}</li>))}
           </ul>
         </div>
         <a className="header__cart-link" href="#" aria-label="Корзина">
