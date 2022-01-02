@@ -9,7 +9,7 @@ function Header ():JSX.Element {
   const history = useHistory();
 
   const handleInput = (evt: FormEvent<HTMLInputElement>) => {
-    debouncedFetchSought(evt.currentTarget.value, setData);
+    void debouncedFetchSought(evt.currentTarget.value, setData);
   };
 
   return (
