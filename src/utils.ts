@@ -11,7 +11,11 @@ export const adaptImgPath = (imgPath: string):string => {
 };
 
 const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undefined>>) => {
+  if(value.length === 0) {
+    cb(undefined);
+    return;
+  }
   api.get(APIRoute.Guitars, {params: {'name_like': value}}).then((response) => cb(response.data));
 };
 
-export const debouncedFetchSought = debounce(fetchSought, 1500);
+export const debouncedFetchSought = debounce(fetchSought, 1000);
