@@ -1,25 +1,16 @@
-import {useSearch} from '../../hooks/useSearch';
 import {Guitar} from '../../types/types';
 import {FormEvent, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {debouncedFetchSought} from '../../utils';
 
 function Header ():JSX.Element {
-  const [search, setSearch] = useState<string>('');
+  const [data, setData] = useState<Guitar[] | undefined>(undefined);
   const history = useHistory();
 
-  const { data } = useSearch<Guitar[]>(search);
-  // eslint-disable-next-line no-console
-  console.log(data?.length);
-
   const handleInput = (evt: FormEvent<HTMLInputElement>) => {
-    // eslint-disable-next-line no-console
-    console.log('yoy');
-    setSearch(evt.currentTarget.value);
+    debouncedFetchSought(evt.currentTarget.value, setData);
   };
-
-  // eslint-disable-next-line no-console
-  console.log(search);
 
   return (
     <header className="header" id="header">
