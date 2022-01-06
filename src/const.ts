@@ -12,6 +12,7 @@ export enum AppRoute {
 
 export enum NameSpace {
   data = 'DATA',
+  user = 'USER',
 }
 
 export enum Params {

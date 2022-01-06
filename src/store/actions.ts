@@ -6,4 +6,18 @@ export const loadGuitars = (guitars: Guitar[]) => ({
   payload: {
     guitars,
   },
-});
+} as const);
+
+export const changeSortingType = (sortingType: string) => ({
+  type: ActionType.ChangeSortingType,
+  payload: {
+    sortingType,
+  },
+} as const);
+
+export const changeSortingValue = (sortingValue: string) => ({
+  type: ActionType.ChangeSortingValue,
+  payload: {
+    sortingValue,
+  },
+} as const);

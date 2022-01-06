@@ -6,4 +6,9 @@ export type Data = {
   isDataLoaded: boolean,
 };
 
+export type User = {
+  sortingType: string | undefined,
+  sortingValue: string | undefined,
+}
+
 export type State = RootState;
