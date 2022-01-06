@@ -1,4 +1,4 @@
-import {loadGuitars, changeSortingType, changeSortingValue} from '../store/actions';
+import {loadGuitars, changeSortingType, changeSortingOrder} from '../store/actions';
 import {ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {State} from './state';
@@ -12,7 +12,7 @@ export enum ActionType {
 export type Actions =
   ReturnType<typeof loadGuitars>
   | ReturnType<typeof changeSortingType>
-  | ReturnType<typeof changeSortingValue>;
+  | ReturnType<typeof changeSortingOrder>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

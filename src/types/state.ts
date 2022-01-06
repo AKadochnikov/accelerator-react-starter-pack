@@ -7,8 +7,8 @@ export type Data = {
 };
 
 export type User = {
-  sortingType: string | undefined,
-  sortingValue: string | undefined,
+  sortingType: string,
+  sortingOrder: string,
 }
 
 export type State = RootState;

@@ -3,21 +3,35 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import CatalogCards from '../catalog-cards/catalog-cards';
 import {getGuitars} from '../../store/data/selectors';
+import {getSortingType, getSortingOrder} from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {ConnectedProps, connect} from 'react-redux';
 import CatalogSort from '../catalog-sort/catalog-sort';
+import {ThunkAppDispatch} from '../../types/actions';
+import {fetchGuitarsAction} from '../../store/api-actions';
+import {useEffect} from 'react';
 
 const mapStateToProps = (state: State) => ({
   guitars: getGuitars(state),
+  sortingType: getSortingType(state),
+  sortingOrder: getSortingOrder(state),
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  fetchGuitars(sortingType: string, sortingOrder: string) {
+    dispatch(fetchGuitarsAction(sortingType, sortingOrder));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Main (props: ConnectedComponentProps): JSX.Element {
-  const {guitars} = props;
+  const {guitars, sortingType, sortingOrder, fetchGuitars} = props;
+
+  useEffect(() => fetchGuitars(sortingType, sortingOrder), [sortingType, sortingOrder, fetchGuitars]);
 
   return (
     <>

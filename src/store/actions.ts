@@ -15,9 +15,9 @@ export const changeSortingType = (sortingType: string) => ({
   },
 } as const);
 
-export const changeSortingValue = (sortingValue: string) => ({
+export const changeSortingOrder = (sortingOrder: string) => ({
   type: ActionType.ChangeSortingValue,
   payload: {
-    sortingValue,
+    sortingOrder: sortingOrder,
   },
 } as const);

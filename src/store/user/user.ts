@@ -2,8 +2,8 @@ import {User} from '../../types/state';
 import {Actions, ActionType} from '../../types/actions';
 
 const initialState = {
-  sortingType: undefined,
-  sortingValue: undefined,
+  sortingType: '',
+  sortingOrder: '',
 };
 
 export const user = (state: User = initialState, action: Actions): User => {
@@ -15,9 +15,9 @@ export const user = (state: User = initialState, action: Actions): User => {
       };
     }
     case ActionType.ChangeSortingValue: {
-      const {sortingValue} = action.payload;
+      const {sortingOrder} = action.payload;
       return {...state,
-        sortingValue: sortingValue,
+        sortingOrder: sortingOrder,
       };
     }
     default: return state;
