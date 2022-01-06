@@ -13,3 +13,13 @@ export const fetchGuitarsAction = (): ThunkActionResult =>
           }});
     dispatch(loadGuitars(data));
   };
+
+export const fetchSortedGuitarsAction = (sortingType:string, sortingValue:string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<Guitar[]>(APIRoute.Guitars,
+      {params:
+          {[Params.Sort]: sortingType,
+            [Params.Order]: sortingValue,
+          }});
+    dispatch(loadGuitars(data));
+  };
