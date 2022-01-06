@@ -1,7 +1,7 @@
 import {Guitar} from '../../types/types';
 import {FormEvent, useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {APIRoute} from '../../const';
 import {debouncedFetchSought} from '../../utils';
 
 function Header ():JSX.Element {
@@ -40,7 +40,7 @@ function Header ():JSX.Element {
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
           <ul style={{zIndex: 1}} className="form-search__select-list" hidden={data === undefined}>
-            {data?.map((item) => (<li key={item.id} className="form-search__select-item" tabIndex={0} onClick={() => history.push(AppRoute.Main)}>{item.name}</li>))}
+            {data?.map((item) => (<li key={item.id} className="form-search__select-item" tabIndex={0} onClick={() => history.push(`${APIRoute.Guitars}/${item.id}`)}>{item.name}</li>))}
           </ul>
         </div>
         <a className="header__cart-link" href="#" aria-label="Корзина">

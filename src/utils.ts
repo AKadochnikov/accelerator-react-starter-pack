@@ -3,6 +3,7 @@ import {api} from './services/api';
 import {APIRoute} from './const';
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
+import {Params} from './const';
 
 export const adaptImgPath = (imgPath: string):string => {
   const guitarString = imgPath.slice(4);
@@ -15,7 +16,13 @@ const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undef
     cb(undefined);
     return;
   }
-  api.get(APIRoute.Guitars, {params: {'name_like': value}}).then((response) => cb(response.data));
+  api.get(APIRoute.Guitars, {params: {[Params.NameLike]: value}}).then((response) => {
+    if(response.data.length === 0) {
+      cb(undefined);
+      return;
+    }
+    cb(response.data);
+  });
 };
 
 export const debouncedFetchSought = debounce(fetchSought, 1000);
