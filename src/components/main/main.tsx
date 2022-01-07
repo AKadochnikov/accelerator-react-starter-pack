@@ -11,6 +11,7 @@ import {ConnectedProps, connect} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/actions';
 import {fetchGuitarsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 
 const mapStateToProps = (state: State) => ({
   guitars: getGuitars(state),
@@ -32,7 +33,10 @@ type ConnectedComponentProps = PropsFromRedux;
 function Main (props: ConnectedComponentProps): JSX.Element {
   const {guitars, sortingType, sortingOrder, fetchGuitars} = props;
 
+  const history = useHistory();
+
   useEffect(() => fetchGuitars(sortingType, sortingOrder), [sortingType, sortingOrder, fetchGuitars]);
+  useEffect(() => history.push('/?price_gte=10'), [history]);
 
   return (
     <>
