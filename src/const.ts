@@ -21,6 +21,10 @@ export enum Params {
   End = '_end',
   Sort = '_sort',
   Order = '_order',
+  StringCount = 'stringCount',
+  PriceMin = 'price_gte',
+  PriceMax = 'price_lte',
+  GuitarType = 'type',
 }
 
 export enum SortingParams {
@@ -28,4 +32,17 @@ export enum SortingParams {
   Rating = 'rating',
   Asc = 'asc',
   Desc = 'desc',
+}
+
+export enum StringsCount {
+  Four = 4,
+  Six = 6,
+  Seven = 7,
+  Twelve = 12,
+}
+
+export enum GuitarType {
+  Acoustic = 'acoustic',
+  Electric = 'electric',
+  Ukulele = 'ukulele',
 }
