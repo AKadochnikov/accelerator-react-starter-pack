@@ -5,23 +5,28 @@ import CatalogCards from '../catalog-cards/catalog-cards';
 import CatalogSort from '../catalog-sort/catalog-sort';
 import CatalogFilter from '../catalog-filter/catalog-filter';
 import {getGuitars} from '../../store/data/selectors';
-import {getSortingType, getSortingOrder} from '../../store/user/selectors';
+import {getIsInit, getParams} from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {ConnectedProps, connect} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/actions';
 import {fetchGuitarsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
+import {initLoadParams} from '../../store/actions';
+import {Params} from '../../const';
 
 const mapStateToProps = (state: State) => ({
   guitars: getGuitars(state),
-  sortingType: getSortingType(state),
-  sortingOrder: getSortingOrder(state),
+  params: getParams(state),
+  isInit: getIsInit(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  fetchGuitars(sortingType: string, sortingOrder: string) {
-    dispatch(fetchGuitarsAction(sortingType, sortingOrder));
+  fetchGuitars(params: string) {
+    dispatch(fetchGuitarsAction(params));
+  },
+  initParams(searchParams: string) {
+    dispatch(initLoadParams(searchParams));
   },
 });
 
@@ -31,12 +36,29 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Main (props: ConnectedComponentProps): JSX.Element {
-  const {guitars, sortingType, sortingOrder, fetchGuitars} = props;
+  const {guitars, params, fetchGuitars, initParams, isInit} = props;
+  const location = useLocation();
+  const search = new URLSearchParams(location.search);
 
   const history = useHistory();
 
-  useEffect(() => fetchGuitars(sortingType, sortingOrder), [sortingType, sortingOrder, fetchGuitars]);
-  useEffect(() => history.push('/?price_gte=10'), [history]);
+  if (!search.has(Params.Start)) {
+    search.set(Params.Start, '0');
+    search.set(Params.End, '9');
+  }
+
+  if(params !== search.toString() && isInit === false) {
+    initParams(search.toString());
+  } else if (isInit === false) {
+    initParams(params);
+  }
+
+  useEffect(() => fetchGuitars(params), [fetchGuitars, params]);
+  useEffect(() => {
+    if (isInit === true) {
+      history.push(`/?${params}`);
+    }
+  }, [history, params]);
 
   return (
     <>

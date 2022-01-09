@@ -2,22 +2,23 @@ import {User} from '../../types/state';
 import {Actions, ActionType} from '../../types/actions';
 
 const initialState = {
-  sortingType: '',
-  sortingOrder: '',
+  params: '',
+  isInit: false,
 };
 
 export const user = (state: User = initialState, action: Actions): User => {
   switch (action.type){
-    case ActionType.ChangeSortingType: {
-      const {sortingType} = action.payload;
+    case ActionType.ChangeParams: {
+      const {params} = action.payload;
       return {...state,
-        sortingType: sortingType,
+        params: params,
       };
     }
-    case ActionType.ChangeSortingValue: {
-      const {sortingOrder} = action.payload;
+    case ActionType.InitParams: {
+      const {params} = action.payload;
       return {...state,
-        sortingOrder: sortingOrder,
+        params: params,
+        isInit: true,
       };
     }
     default: return state;

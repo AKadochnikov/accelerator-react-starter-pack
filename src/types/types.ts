@@ -9,3 +9,8 @@ export type Guitar = {
   rating: number,
   price: number
 };
+
+export type Param = {
+  query: string,
+  value: string,
+};

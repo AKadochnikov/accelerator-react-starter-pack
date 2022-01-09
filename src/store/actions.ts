@@ -8,16 +8,16 @@ export const loadGuitars = (guitars: Guitar[]) => ({
   },
 } as const);
 
-export const changeSortingType = (sortingType: string) => ({
-  type: ActionType.ChangeSortingType,
+export const changeParams = (params: string) => ({
+  type: ActionType.ChangeParams,
   payload: {
-    sortingType,
+    params,
   },
 } as const);
 
-export const changeSortingOrder = (sortingOrder: string) => ({
-  type: ActionType.ChangeSortingValue,
+export const initLoadParams = (params: string) => ({
+  type: ActionType.InitParams,
   payload: {
-    sortingOrder: sortingOrder,
+    params,
   },
 } as const);

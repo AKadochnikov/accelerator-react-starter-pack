@@ -7,8 +7,8 @@ export type Data = {
 };
 
 export type User = {
-  sortingType: string,
-  sortingOrder: string,
+  params: string,
+  isInit: boolean,
 }
 
 export type State = RootState;
