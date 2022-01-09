@@ -9,6 +9,8 @@ export type Data = {
 export type User = {
   params: string,
   isInit: boolean,
+  minPrice: number,
+  maxPrice: number,
 }
 
 export type State = RootState;

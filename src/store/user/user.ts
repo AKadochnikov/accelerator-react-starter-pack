@@ -4,6 +4,8 @@ import {Actions, ActionType} from '../../types/actions';
 const initialState = {
   params: '',
   isInit: false,
+  minPrice: 0,
+  maxPrice: 0,
 };
 
 export const user = (state: User = initialState, action: Actions): User => {
@@ -19,6 +21,18 @@ export const user = (state: User = initialState, action: Actions): User => {
       return {...state,
         params: params,
         isInit: true,
+      };
+    }
+    case ActionType.ChangeMinPrice: {
+      const {value} = action.payload;
+      return {...state,
+        minPrice: value,
+      };
+    }
+    case ActionType.ChangeMaxPrice: {
+      const {value} = action.payload;
+      return {...state,
+        maxPrice: value,
       };
     }
     default: return state;

@@ -21,3 +21,17 @@ export const initLoadParams = (params: string) => ({
     params,
   },
 } as const);
+
+export const changeMinPrice = (value: number) => ({
+  type: ActionType.ChangeMinPrice,
+  payload: {
+    value,
+  },
+} as const);
+
+export const changeMaxPrice = (value: number) => ({
+  type: ActionType.ChangeMaxPrice,
+  payload: {
+    value,
+  },
+} as const);

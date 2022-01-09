@@ -25,4 +25,17 @@ const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undef
   });
 };
 
+const validityMinPrice = (eventTarget: EventTarget & HTMLInputElement, minPrice: number, cb: Dispatch<SetStateAction<string>>) => {
+  if (eventTarget.value !== ''){
+    const value = Number(eventTarget.value);
+    if(value < 1000) {
+      eventTarget.value = '1000';
+      cb(eventTarget.value);
+    }
+  }
+  cb(eventTarget.value);
+};
+
+export const debouncedValidityMinPrice = debounce(validityMinPrice, 1000);
+
 export const debouncedFetchSought = debounce(fetchSought, 1000);

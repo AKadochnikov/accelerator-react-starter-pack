@@ -1,21 +1,31 @@
-import {debounce} from 'ts-debounce';
-import {useHistory} from 'react-router-dom';
-import {ChangeEvent, useState} from 'react';
+import {FormEvent, useState} from 'react';
+import {debouncedValidityMinPrice} from '../../utils';
+import {getMaxPrice, getMinPrice} from '../../store/user/selectors';
+import {State} from '../../types/state';
+import {connect, ConnectedProps} from 'react-redux';
 
+const mapStateToProps = (state: State) => ({
+  minPrice: getMinPrice(state),
+  maxPrice: getMaxPrice(state),
+});
 
-function FilterPrice (): JSX.Element {
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
+
+function FilterPrice (props: ConnectedComponentProps): JSX.Element {
+  const {minPrice, maxPrice} = props;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [minPrice, setMinPrice] = useState<string>('0');
+  const [minCurrentPrice, setMinCurrentPrice] = useState<string>('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [maxPrice, setMaxPrice] = useState<string>('0');
+  const [maxCurrentPrice, setMaxCurrentPrice] = useState<string>('');
 
-  const history = useHistory();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const debouncedHistory = debounce(history.push, 2000);
+  // eslint-disable-next-line no-console
+  console.log(minCurrentPrice);
 
-  const inputMinPriceHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    // eslint-disable-next-line no-console
-    setMinPrice(evt.target.value);
+  const inputMinPriceHandler = (evt: FormEvent<HTMLInputElement>) => {
+    const eventTarget = evt.currentTarget;
+    void debouncedValidityMinPrice(eventTarget, minPrice, setMinCurrentPrice);
   };
 
   return (
@@ -24,15 +34,15 @@ function FilterPrice (): JSX.Element {
       <div className="catalog-filter__price-range">
         <div className="form-input">
           <label className="visually-hidden">Минимальная цена</label>
-          <input onInput={inputMinPriceHandler} type="number" placeholder="1 000" id="priceMin" name="от"/>
+          <input onInput={inputMinPriceHandler} type="number" min={minPrice} max={maxPrice} placeholder={minPrice.toString()} id="priceMin" name="от"/>
         </div>
         <div className="form-input">
           <label className="visually-hidden">Максимальная цена</label>
-          <input type="number" placeholder="30 000" id="priceMax" name="до"/>
+          <input type="number" placeholder={maxPrice.toString()} min={minPrice} max={maxPrice} id="priceMax" name="до"/>
         </div>
       </div>
     </fieldset>
   );
 }
 
-export default FilterPrice;
+export default connector(FilterPrice);

@@ -9,7 +9,7 @@ import {getIsInit, getParams} from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {ConnectedProps, connect} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/actions';
-import {fetchGuitarsAction} from '../../store/api-actions';
+import {fetchGuitarsAction, fetchAllGuitarsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {initLoadParams} from '../../store/actions';
@@ -23,10 +23,13 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   fetchGuitars(params: string) {
-    dispatch(fetchGuitarsAction(params));
+    void dispatch(fetchGuitarsAction(params));
+  },
+  fetchAllGuitars(params: string) {
+    void dispatch(fetchAllGuitarsAction(params));
   },
   initParams(searchParams: string) {
-    dispatch(initLoadParams(searchParams));
+    void dispatch(initLoadParams(searchParams));
   },
 });
 
@@ -36,7 +39,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Main (props: ConnectedComponentProps): JSX.Element {
-  const {guitars, params, fetchGuitars, initParams, isInit} = props;
+  const {guitars, params, fetchGuitars, initParams, isInit, fetchAllGuitars} = props;
   const location = useLocation();
   const search = new URLSearchParams(location.search);
 
@@ -54,6 +57,17 @@ function Main (props: ConnectedComponentProps): JSX.Element {
   }
 
   useEffect(() => fetchGuitars(params), [fetchGuitars, params]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(params);
+    searchParams.delete(Params.PriceMin);
+    searchParams.delete(Params.PriceMax);
+    searchParams.delete(Params.Start);
+    searchParams.delete(Params.End);
+    const adaptedParams = searchParams.toString();
+    fetchAllGuitars(adaptedParams);
+  }, [fetchAllGuitars, params]);
+
   useEffect(() => {
     if (isInit === true) {
       history.push(`/?${params}`);
