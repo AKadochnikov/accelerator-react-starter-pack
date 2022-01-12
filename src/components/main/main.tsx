@@ -51,7 +51,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
 
   const history = useHistory();
 
-  if (!search.has(Params.Start)) {
+  if (!search.has(Params.Start) && !search.has(Params.End)) {
     search.set(Params.Start, '0');
     search.set(Params.End, '9');
   }
@@ -62,7 +62,11 @@ function Main (props: ConnectedComponentProps): JSX.Element {
     initParams(params);
   }
 
-  useEffect(() => fetchGuitars(params), [fetchGuitars, params]);
+  useEffect(() => {
+
+    fetchGuitars(params);
+
+  }, [fetchGuitars, params]);
 
   useEffect(() => {
 
