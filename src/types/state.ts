@@ -11,6 +11,7 @@ export type User = {
   isInit: boolean,
   minPrice: number,
   maxPrice: number,
+  priceStatus: string,
 }
 
 export type State = RootState;

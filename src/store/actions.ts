@@ -35,3 +35,10 @@ export const changeMaxPrice = (value: number) => ({
     value,
   },
 } as const);
+
+export const changeLoadPriceStatus = (value: string) => ({
+  type: ActionType.ChangeLoadStatus,
+  payload: {
+    value,
+  },
+} as const);

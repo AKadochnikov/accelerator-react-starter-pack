@@ -1,7 +1,8 @@
 import {ThunkActionResult} from '../types/actions';
-import {changeMaxPrice, changeMinPrice, loadGuitars} from './actions';
+import {changeMaxPrice, changeMinPrice, loadGuitars, changeLoadPriceStatus} from './actions';
 import {Guitar} from '../types/types';
 import {APIRoute} from '../const';
+import {PriceLoadStatus} from '../const';
 
 export const fetchGuitarsAction = (params: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -11,12 +12,20 @@ export const fetchGuitarsAction = (params: string): ThunkActionResult =>
     dispatch(loadGuitars(data));
   };
 
-export const fetchAllGuitarsAction = (params: string): ThunkActionResult =>
+export const fetchAllGuitarsAction = (params: string, priceStatus: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Guitar[]>(`${APIRoute.Guitars}/?${params}`);
-    const value = data.map((item) => item.price);
-    const minPrice = Math.min(...value);
-    const maxPrice = Math.max(...value);
-    dispatch(changeMinPrice(minPrice));
-    dispatch(changeMaxPrice(maxPrice));
+    try {
+      const {data} = await api.get<Guitar[]>(`${APIRoute.Guitars}/?${params}`);
+      const value = data.map((item) => item.price);
+      const minPrice = Math.min(...value);
+      const maxPrice = Math.max(...value);
+      dispatch(changeMinPrice(minPrice));
+      dispatch(changeMaxPrice(maxPrice));
+      if (priceStatus === PriceLoadStatus.NotLoaded) {
+        dispatch(changeLoadPriceStatus(PriceLoadStatus.Loaded));
+      }
+    }
+    catch {
+      dispatch(changeLoadPriceStatus(PriceLoadStatus.NotLoaded));
+    }
   };
