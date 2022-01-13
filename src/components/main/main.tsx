@@ -100,12 +100,12 @@ function Main (props: ConnectedComponentProps): JSX.Element {
     searchParams.delete(Params.GuitarType);
     if(guitarCounts.length !== 0) {
       guitarCounts.forEach((count) => {
-        searchParams.set(Params.StringCount, count.toString());
+        searchParams.append(Params.StringCount, count.toString());
       });
     }
     if(guitarTypes.length !== 0) {
       guitarTypes.forEach((type) => {
-        searchParams.set(Params.GuitarType, type);
+        searchParams.append(Params.GuitarType, type);
       });
     }
     onChangeParams(searchParams.toString());

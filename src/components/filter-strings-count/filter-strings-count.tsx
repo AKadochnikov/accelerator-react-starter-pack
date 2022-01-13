@@ -43,9 +43,6 @@ function FilterStringsCount (props: ConnectedComponentProps):JSX.Element {
     setAvailableCounts((getAvailableCounts(guitarTypes)));
   }, [guitarTypes]);
 
-  // eslint-disable-next-line no-console
-  console.log(availableCounts);
-
   return (
     <fieldset className="catalog-filter__block">
       <legend className="catalog-filter__block-title">Количество струн</legend>
