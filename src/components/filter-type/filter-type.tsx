@@ -1,16 +1,15 @@
-import {ChangeEvent, useEffect, useState} from 'react';
-import {State} from '../../types/state';
+import {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/actions';
-import {getGuitarCounts, getGuitarTypes} from '../../store/user/selectors';
 import {changeGuitarTypes} from '../../store/actions';
 import {GuitarType} from '../../const';
-import {getAvailableTypes} from '../../utils';
+import {debouncedChangeType, getAvailableTypes} from '../../utils';
 
-const mapStateToProps = (state: State) => ({
-  guitarTypes: getGuitarTypes(state),
-  guitarCounts: getGuitarCounts(state),
-});
+type FilterTypeProps = {
+  newGuitarTypes: string[];
+  newGuitarCounts: number[];
+  onChange:  Dispatch<SetStateAction<string[]>>
+}
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onChangeType(item: string[]){
@@ -18,43 +17,45 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
+type ConnectedComponentProps = PropsFromRedux & FilterTypeProps;
 
 function FilterType (props: ConnectedComponentProps):JSX.Element {
-  const {guitarTypes, guitarCounts, onChangeType} = props;
+  const {onChangeType, newGuitarTypes, newGuitarCounts, onChange} = props;
   const [availableTypes, setAvailableTypes] = useState<Set<string>>(new Set());
 
   const changeTypeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    const newGuitarTypes = guitarTypes.slice();
-    if(guitarTypes.includes(evt.target.name)) {
-      const index =  newGuitarTypes.indexOf(evt.target.name);
-      newGuitarTypes.splice(index, 1);
-      onChangeType(newGuitarTypes);
+    const newTypes = newGuitarTypes.slice();
+    if(newTypes.includes(evt.target.name)) {
+      const index =  newTypes.indexOf(evt.target.name);
+      newTypes.splice(index, 1);
+      onChange(newTypes);
+      void debouncedChangeType(newTypes, onChangeType);
       return;
     }
-    newGuitarTypes.push(evt.target.name);
-    onChangeType(newGuitarTypes);
+    newTypes.push(evt.target.name);
+    onChange(newTypes);
+    void debouncedChangeType(newTypes, onChangeType);
   };
 
   useEffect(() => {
-    setAvailableTypes(getAvailableTypes(guitarCounts));
-  }, [guitarCounts]);
+    setAvailableTypes(getAvailableTypes(newGuitarCounts));
+  }, [newGuitarCounts]);
 
   return (
     <fieldset className="catalog-filter__block">
       <legend className="catalog-filter__block-title">Тип гитар</legend>
       <div className="form-checkbox catalog-filter__block-item">
-        <input onChange={changeTypeHandler} className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" checked={guitarTypes.includes(GuitarType.Acoustic)} disabled={!availableTypes.has(GuitarType.Acoustic)}/>
+        <input onChange={changeTypeHandler} className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" checked={newGuitarTypes.includes(GuitarType.Acoustic)} disabled={!availableTypes.has(GuitarType.Acoustic)}/>
         <label htmlFor="acoustic">Акустические гитары</label>
       </div>
       <div className="form-checkbox catalog-filter__block-item">
-        <input onChange={changeTypeHandler} className="visually-hidden" type="checkbox" id="electric" name="electric" checked={guitarTypes.includes(GuitarType.Electric)} disabled={!availableTypes.has(GuitarType.Electric)}/>
+        <input onChange={changeTypeHandler} className="visually-hidden" type="checkbox" id="electric" name="electric" checked={newGuitarTypes.includes(GuitarType.Electric)} disabled={!availableTypes.has(GuitarType.Electric)}/>
         <label htmlFor="electric">Электрогитары</label>
       </div>
       <div className="form-checkbox catalog-filter__block-item">
-        <input onChange={changeTypeHandler} className="visually-hidden" type="checkbox" id="ukulele" name="ukulele" checked={guitarTypes.includes(GuitarType.Ukulele)} disabled={!availableTypes.has(GuitarType.Ukulele)}/>
+        <input onChange={changeTypeHandler} className="visually-hidden" type="checkbox" id="ukulele" name="ukulele" checked={newGuitarTypes.includes(GuitarType.Ukulele)} disabled={!availableTypes.has(GuitarType.Ukulele)}/>
         <label htmlFor="ukulele">Укулеле</label>
       </div>
     </fieldset>

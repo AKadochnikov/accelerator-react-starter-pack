@@ -35,6 +35,18 @@ const validityPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: nu
   cb(currentPrice.toString());
 };
 
+const changeCount = (counts: number[], cb: (item: number[]) => void) => {
+  cb(counts);
+};
+
+const changeType = (types: string[], cb: (item: string[]) => void) => {
+  cb(types);
+};
+
+export const debouncedChangeType = debounce(changeType, 1000);
+
+export const debouncedChangeCount = debounce(changeCount, 1000);
+
 export const adaptImgPath = (imgPath: string):string => {
   const guitarString = imgPath.slice(4);
   const defaultPath = 'img/content/';
