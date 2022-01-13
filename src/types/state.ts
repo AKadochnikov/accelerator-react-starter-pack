@@ -12,6 +12,8 @@ export type User = {
   minPrice: number,
   maxPrice: number,
   priceStatus: string,
+  guitarTypes: string[];
+  guitarCounts: number[];
 }
 
 export type State = RootState;

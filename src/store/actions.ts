@@ -42,3 +42,17 @@ export const changeLoadPriceStatus = (value: string) => ({
     value,
   },
 } as const);
+
+export const changeGuitarTypes = (item: string[]) => ({
+  type: ActionType.ChangeGuitarTypes,
+  payload: {
+    item,
+  },
+} as const);
+
+export const changeGuitarCounts = (item: number[]) => ({
+  type: ActionType.ChangeGuitarCounts,
+  payload: {
+    item,
+  },
+} as const);

@@ -52,3 +52,19 @@ export enum PriceLoadStatus {
   Loaded = 'loaded',
   Ready = 'ready',
 }
+
+export const guitarsChar = [
+  {
+    type: GuitarType.Acoustic,
+    counts: [StringsCount.Six, StringsCount.Seven, StringsCount.Twelve],
+  },
+  {
+    type: GuitarType.Electric,
+    counts: [StringsCount.Four, StringsCount.Six, StringsCount.Seven],
+  },
+  {
+    type: GuitarType.Ukulele,
+    counts: [StringsCount.Four],
+  },
+];
+

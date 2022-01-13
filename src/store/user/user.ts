@@ -8,6 +8,8 @@ const initialState = {
   minPrice: 0,
   maxPrice: 0,
   priceStatus: PriceLoadStatus.NotLoaded,
+  guitarTypes: [],
+  guitarCounts: [],
 };
 
 export const user = (state: User = initialState, action: Actions): User => {
@@ -42,6 +44,18 @@ export const user = (state: User = initialState, action: Actions): User => {
       const {value} = action.payload;
       return {...state,
         priceStatus: value};
+    }
+
+    case ActionType.ChangeGuitarTypes: {
+      const {item} = action.payload;
+      return {...state,
+        guitarTypes: item};
+    }
+
+    case ActionType.ChangeGuitarCounts: {
+      const {item} = action.payload;
+      return {...state,
+        guitarCounts: item};
     }
 
     default: return state;

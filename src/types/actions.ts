@@ -1,4 +1,4 @@
-import {loadGuitars, changeParams, initLoadParams, changeMinPrice, changeMaxPrice, changeLoadPriceStatus} from '../store/actions';
+import {loadGuitars, changeParams, initLoadParams, changeMinPrice, changeMaxPrice, changeLoadPriceStatus, changeGuitarTypes, changeGuitarCounts} from '../store/actions';
 import {ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {State} from './state';
@@ -10,6 +10,8 @@ export enum ActionType {
   ChangeMinPrice = 'user/changeMinPrice',
   ChangeMaxPrice = 'user/changeMaxPrice',
   ChangeLoadStatus = 'user/changeLoadStatus',
+  ChangeGuitarTypes = 'user/changeGuitarTypes',
+  ChangeGuitarCounts = 'user/changeGuitarCounts',
 }
 
 export type Actions =
@@ -18,7 +20,9 @@ export type Actions =
   | ReturnType<typeof initLoadParams>
   | ReturnType<typeof changeMinPrice>
   | ReturnType<typeof changeMaxPrice>
-  | ReturnType<typeof changeLoadPriceStatus>;
+  | ReturnType<typeof changeLoadPriceStatus>
+  | ReturnType<typeof changeGuitarTypes>
+  | ReturnType<typeof changeGuitarCounts>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

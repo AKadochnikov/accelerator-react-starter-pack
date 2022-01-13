@@ -1,15 +1,9 @@
 import {debounce} from 'ts-debounce';
 import {api} from './services/api';
-import {APIRoute} from './const';
+import {APIRoute, guitarsChar, GuitarType, StringsCount} from './const';
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {Params} from './const';
-
-export const adaptImgPath = (imgPath: string):string => {
-  const guitarString = imgPath.slice(4);
-  const defaultPath = 'img/content/';
-  return defaultPath.concat(guitarString);
-};
 
 const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undefined>>) => {
   if(value.length === 0) {
@@ -39,6 +33,54 @@ const validityPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: nu
     return;
   }
   cb(currentPrice.toString());
+};
+
+export const adaptImgPath = (imgPath: string):string => {
+  const guitarString = imgPath.slice(4);
+  const defaultPath = 'img/content/';
+  return defaultPath.concat(guitarString);
+};
+
+export const getAvailableTypes = (counts: number[]) => {
+  const availableTypes: Set<string> = new Set();
+  if (counts.length === 0) {
+    availableTypes.add(GuitarType.Acoustic);
+    availableTypes.add(GuitarType.Electric);
+    availableTypes.add(GuitarType.Ukulele);
+    return availableTypes;
+  }
+  guitarsChar.forEach((item) => {
+    item.counts.forEach((count) => {
+      if(counts.includes(count)) {
+        availableTypes.add(item.type);
+        if(availableTypes.size === guitarsChar.length) {
+          return availableTypes;
+        }
+      }
+    });
+    return availableTypes;
+  });
+  return availableTypes;
+};
+
+export const getAvailableCounts = (types: string[]) => {
+  const availableCounts: Set<number> = new Set();
+  if (types.length === 0) {
+    availableCounts.add(StringsCount.Four);
+    availableCounts.add(StringsCount.Six);
+    availableCounts.add(StringsCount.Seven);
+    availableCounts.add(StringsCount.Twelve);
+    return availableCounts;
+  }
+  guitarsChar.forEach((item) => {
+    if(types.includes(item.type)) {
+      item.counts.forEach((count) => {
+        availableCounts.add(count);
+      });
+      return availableCounts;
+    }
+  });
+  return availableCounts;
 };
 
 export const debouncedValidityPrice = debounce(validityPrice, 1000);

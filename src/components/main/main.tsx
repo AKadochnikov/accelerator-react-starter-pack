@@ -62,11 +62,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
     initParams(params);
   }
 
-  useEffect(() => {
-
-    fetchGuitars(params);
-
-  }, [fetchGuitars, params]);
+  useEffect(() => fetchGuitars(params), [fetchGuitars, params]);
 
   useEffect(() => {
 
