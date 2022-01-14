@@ -56,3 +56,10 @@ export const changeGuitarCounts = (item: number[]) => ({
     item,
   },
 } as const);
+
+export const changeTotalGuitars = (value: number) => ({
+  type: ActionType.ChangeTotalGuitars,
+  payload: {
+    value,
+  },
+} as const);

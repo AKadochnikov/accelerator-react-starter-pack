@@ -20,6 +20,7 @@ import {
   changeGuitarTypes, changeGuitarCounts, changeParams
 } from '../../store/actions';
 import {Params, PriceLoadStatus} from '../../const';
+import {memo} from 'react';
 
 const mapStateToProps = (state: State) => ({
   guitars: getGuitars(state),
@@ -129,7 +130,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
     searchParams.delete(Params.Start);
     searchParams.delete(Params.End);
     fetchAllGuitars(searchParams.toString(), priceStatus);
-  }, [fetchAllGuitars, params, priceStatus]);
+  }, [fetchAllGuitars, params]);
 
   useEffect(() => {
     if (isInit === true) {
@@ -178,4 +179,4 @@ function Main (props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export default connector(Main);
+export default connector(memo(Main));

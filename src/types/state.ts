@@ -14,6 +14,7 @@ export type User = {
   priceStatus: string,
   guitarTypes: string[];
   guitarCounts: number[];
+  totalGuitars: number;
 }
 
 export type State = RootState;

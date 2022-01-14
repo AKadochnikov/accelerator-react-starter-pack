@@ -1,5 +1,5 @@
 import {ThunkActionResult} from '../types/actions';
-import {changeMaxPrice, changeMinPrice, loadGuitars, changeLoadPriceStatus} from './actions';
+import {changeMaxPrice, changeMinPrice, loadGuitars, changeLoadPriceStatus, changeTotalGuitars} from './actions';
 import {Guitar} from '../types/types';
 import {APIRoute} from '../const';
 import {PriceLoadStatus} from '../const';
@@ -8,8 +8,7 @@ export const fetchGuitarsAction = (params: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     if(params !== '') {
       const {data, headers} = await api.get<Guitar[]>(`${APIRoute.Guitars}/?${params}`);
-      // eslint-disable-next-line no-console
-      console.log(headers['x-total-count']);
+      changeTotalGuitars(headers['x-total-count']);
       dispatch(loadGuitars(data));
     }
   };

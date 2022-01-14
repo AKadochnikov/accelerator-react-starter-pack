@@ -10,6 +10,7 @@ const initialState = {
   priceStatus: PriceLoadStatus.NotLoaded,
   guitarTypes: [],
   guitarCounts: [],
+  totalGuitars: 0,
 };
 
 export const user = (state: User = initialState, action: Actions): User => {
@@ -56,6 +57,13 @@ export const user = (state: User = initialState, action: Actions): User => {
       const {item} = action.payload;
       return {...state,
         guitarCounts: item};
+    }
+
+    case ActionType.ChangeTotalGuitars: {
+      const {value} = action.payload;
+      return {...state,
+        totalGuitars: value,
+      };
     }
 
     default: return state;
