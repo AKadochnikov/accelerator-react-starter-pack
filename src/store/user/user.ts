@@ -11,6 +11,9 @@ const initialState = {
   guitarTypes: [],
   guitarCounts: [],
   totalGuitars: 0,
+  page: 1,
+  start: 0,
+  end: 9,
 };
 
 export const user = (state: User = initialState, action: Actions): User => {
@@ -21,6 +24,7 @@ export const user = (state: User = initialState, action: Actions): User => {
         params: params,
       };
     }
+
     case ActionType.InitParams: {
       const {params} = action.payload;
       return {...state,
@@ -28,12 +32,14 @@ export const user = (state: User = initialState, action: Actions): User => {
         isInit: true,
       };
     }
+
     case ActionType.ChangeMinPrice: {
       const {value} = action.payload;
       return {...state,
         minPrice: value,
       };
     }
+
     case ActionType.ChangeMaxPrice: {
       const {value} = action.payload;
       return {...state,

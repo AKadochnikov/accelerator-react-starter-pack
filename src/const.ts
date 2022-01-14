@@ -25,6 +25,7 @@ export enum Params {
   PriceMin = 'price_gte',
   PriceMax = 'price_lte',
   GuitarType = 'type',
+  Page = 'page'
 }
 
 export enum SortingParams {

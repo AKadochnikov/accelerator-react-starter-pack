@@ -63,3 +63,24 @@ export const changeTotalGuitars = (value: number) => ({
     value,
   },
 } as const);
+
+export const changePage = (value: number) => ({
+  type: ActionType.ChangePage,
+  payload: {
+    value,
+  },
+} as const);
+
+export const changeStart = (value: number) => ({
+  type: ActionType.ChangeStart,
+  payload: {
+    value,
+  },
+} as const);
+
+export const changeEnd = (value: number) => ({
+  type: ActionType.ChangeEnd,
+  payload: {
+    value,
+  },
+} as const);

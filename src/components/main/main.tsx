@@ -4,8 +4,17 @@ import Footer from '../footer/footer';
 import CatalogCards from '../catalog-cards/catalog-cards';
 import CatalogSort from '../catalog-sort/catalog-sort';
 import CatalogFilter from '../catalog-filter/catalog-filter';
+import Pagination from '../pagination/pagination';
 import {getGuitars} from '../../store/data/selectors';
-import {getGuitarCounts, getGuitarTypes, getIsInit, getParams, getPriceLoadStatus} from '../../store/user/selectors';
+import {
+  getEnd,
+  getGuitarCounts,
+  getGuitarTypes,
+  getIsInit,
+  getPage,
+  getParams,
+  getPriceLoadStatus, getStart
+} from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {ConnectedProps, connect} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/actions';
@@ -17,7 +26,12 @@ import {
   changeLoadPriceStatus,
   changeMinPrice,
   changeMaxPrice,
-  changeGuitarTypes, changeGuitarCounts, changeParams
+  changeGuitarTypes,
+  changeGuitarCounts,
+  changeParams,
+  changeStart,
+  changeEnd,
+  changePage
 } from '../../store/actions';
 import {Params, PriceLoadStatus} from '../../const';
 import {memo} from 'react';
@@ -29,6 +43,9 @@ const mapStateToProps = (state: State) => ({
   priceStatus: getPriceLoadStatus(state),
   guitarTypes: getGuitarTypes(state),
   guitarCounts: getGuitarCounts(state),
+  page: getPage(state),
+  start: getStart(state),
+  end: getEnd(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -55,6 +72,15 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onChangeParams(params: string) {
     dispatch(changeParams(params));
   },
+  onChangeStart(value: number) {
+    dispatch(changeStart(value));
+  },
+  onChangeEnd(value: number) {
+    dispatch(changeEnd(value));
+  },
+  onChangePage(value:number) {
+    dispatch(changePage(value));
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -63,7 +89,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Main (props: ConnectedComponentProps): JSX.Element {
-  const {guitars, params, fetchGuitars, initParams, isInit, fetchAllGuitars, priceStatus, getPriceInURL, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams} = props;
+  const {guitars, params, fetchGuitars, initParams, isInit, fetchAllGuitars, priceStatus, getPriceInURL, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
   const location = useLocation();
   const search = new URLSearchParams(location.search);
 
@@ -85,6 +111,22 @@ function Main (props: ConnectedComponentProps): JSX.Element {
     counts.forEach((count) => {
       newCounts.push(Number(count));
     });
+
+    const currentStart = Number(search.get(Params.Start));
+    if (currentStart !== start && search.has(Params.Start)){
+      onChangeStart(currentStart);
+    }
+
+    const currentEnd = Number(search.get(Params.End));
+    if (currentEnd !== end && search.has(Params.End)) {
+      onChangeEnd(currentEnd);
+    }
+
+    const currentPage = Number(search.get(Params.Page));
+    if (currentPage !== page && search.has(Params.Page)) {
+      onChangePage(currentPage);
+    }
+
     changeTypes(newTypes);
     changeCounts(newCounts);
     initParams(search.toString());
@@ -156,20 +198,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
               <CatalogFilter/>
               <CatalogSort/>
               <CatalogCards guitars={guitars}/>
-              <div className="pagination page-content__pagination">
-                <ul className="pagination__list">
-                  <li className="pagination__page pagination__page--active">
-                    <a className="link pagination__page-link" href="1">1</a>
-                  </li>
-                  <li className="pagination__page"><a className="link pagination__page-link" href="2">2</a>
-                  </li>
-                  <li className="pagination__page"><a className="link pagination__page-link" href="3">3</a>
-                  </li>
-                  <li className="pagination__page pagination__page--next" id="next">
-                    <a className="link pagination__page-link" href="2">Далее</a>
-                  </li>
-                </ul>
-              </div>
+              <Pagination/>
             </div>
           </div>
         </main>

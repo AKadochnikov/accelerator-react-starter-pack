@@ -15,6 +15,9 @@ export type User = {
   guitarTypes: string[];
   guitarCounts: number[];
   totalGuitars: number;
+  page: number;
+  start: number;
+  end: number;
 }
 
 export type State = RootState;
