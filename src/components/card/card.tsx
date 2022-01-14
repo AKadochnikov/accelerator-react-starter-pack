@@ -7,7 +7,7 @@ type CardProps = {
 
 function Card (props: CardProps): JSX.Element {
   const {guitar} = props;
-  const {previewImg, name, price, rating, id} = guitar;
+  const {previewImg, name, price, rating, id, comments} = guitar;
   const imgPath = adaptImgPath(previewImg);
   const newRating = new Array(5).fill(null).fill('full', 0, rating);
 
@@ -31,7 +31,7 @@ function Card (props: CardProps): JSX.Element {
               </svg>
             );
           })}
-          <span className="rate__count">9</span><span className="rate__message"/>
+          <span className="rate__count">{comments.length}</span><span className="rate__message"/>
         </div>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽

@@ -1,3 +1,14 @@
+export type comment = {
+  id: string,
+  userName: string,
+  advantage: string,
+  disadvantage: string,
+  comment: string,
+  rating: number,
+  createAt: string,
+  guitarId: number
+};
+
 export type Guitar = {
   id: number,
   name: string,
@@ -8,6 +19,7 @@ export type Guitar = {
   stringCount: number,
   rating: number,
   price: number
+  comments: comment[],
 };
 
 export type Param = {
