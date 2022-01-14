@@ -10,7 +10,7 @@ import {
   getIsInit,
   getPage,
   getParams,
-  getPriceLoadStatus, getStart, getTotalGuitars
+  getPriceLoadStatus, getStart
 } from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {ConnectedProps, connect} from 'react-redux';

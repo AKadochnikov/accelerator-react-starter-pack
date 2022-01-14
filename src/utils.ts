@@ -1,6 +1,6 @@
 import {debounce} from 'ts-debounce';
 import {api} from './services/api';
-import {APIRoute, guitarsChar, GuitarType, MAX_GUITARS, StringsCount} from './const';
+import {APIRoute, guitarsChar, GuitarType, MAX_GUITARS, START_PAGE, StringsCount} from './const';
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {Params} from './const';
@@ -43,9 +43,15 @@ const changeType = (types: string[], cb: (item: string[]) => void) => {
   cb(types);
 };
 
-export const debouncedChangeType = debounce(changeType, 1000);
-
-export const debouncedChangeCount = debounce(changeCount, 1000);
+const changePageStartEnd = (changePage: (value: number) => void, changeParams: (value: string) => void, params: string, page: number) => {
+  const search = new URLSearchParams(params);
+  search.set(Params.Start, '0');
+  search.set(Params.End, '9');
+  if(page !== START_PAGE) {
+    changePage(START_PAGE);
+  }
+  changeParams(search.toString());
+};
 
 export const adaptImgPath = (imgPath: string):string => {
   const guitarString = imgPath.slice(4);
@@ -96,7 +102,7 @@ export const getAvailableCounts = (types: string[]) => {
 };
 
 export const getPagination = (total: number) => {
-  const paginationCounts = Math.ceil(total / 9);
+  const paginationCounts = Math.ceil(total / MAX_GUITARS);
   const paginations = [];
   for(let i = 1; i <= paginationCounts; i++) {
     paginations.push(i);
@@ -104,11 +110,37 @@ export const getPagination = (total: number) => {
   return paginations;
 };
 
-export const getStartEndParams = (value: number) => {
-  const start = (value*MAX_GUITARS)-MAX_GUITARS;
-  // eslint-disable-next-line no-console
-  console.log(start);
+export const getStartEndParams = (value: number, totalGuitars: number) => {
+  const maxPages = Math.ceil(totalGuitars / MAX_GUITARS);
+  const newParams = {
+    start: 0,
+    end: 0,
+  };
+
+  if(maxPages === value) {
+    newParams.start = ((value-1)*MAX_GUITARS);
+    newParams.end = totalGuitars;
+    return newParams;
+  }
+  newParams.end = (value*MAX_GUITARS);
+  newParams.start = newParams.end-MAX_GUITARS;
+  return newParams;
 };
+
+export const changePaginationPageStartEnd = (value: number, totalGuitars: number, onChangePage: (value: number) => void, onChangeParams: (newParams: string) => void, params: string) => {
+  const newParams = getStartEndParams(value, totalGuitars);
+  onChangePage(value);
+  const search = new URLSearchParams(params);
+  search.set(Params.Start, newParams.start.toString());
+  search.set(Params.End, newParams.end.toString());
+  onChangeParams(search.toString());
+};
+
+export const debouncedChangePageStartEnd = debounce(changePageStartEnd, 1000);
+
+export const debouncedChangeType = debounce(changeType, 1000);
+
+export const debouncedChangeCount = debounce(changeCount, 1000);
 
 export const debouncedValidityPrice = debounce(validityPrice, 1000);
 

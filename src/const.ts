@@ -1,6 +1,7 @@
 export const BACKEND_URL = 'https://accelerator-guitar-shop-api-v1.glitch.me';
 export const REQUEST_TIME_OUT = 10000;
 export const MAX_GUITARS = 9;
+export const START_PAGE = 1;
 
 export enum APIRoute {
   Guitars = '/guitars',

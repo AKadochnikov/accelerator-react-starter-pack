@@ -1,10 +1,12 @@
 import {StringsCount} from '../../const';
 import {ThunkAppDispatch} from '../../types/actions';
-import {changeGuitarCounts} from '../../store/actions';
+import {changeGuitarCounts, changePage, changeParams} from '../../store/actions';
 import {connect, ConnectedProps} from 'react-redux';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {debouncedChangeCount, getAvailableCounts} from '../../utils';
+import {debouncedChangeCount, debouncedChangePageStartEnd, getAvailableCounts} from '../../utils';
 import {Dispatch, SetStateAction} from 'react';
+import {State} from '../../types/state';
+import {getPage, getParams} from '../../store/user/selectors';
 
 type FilterStringsCountProps = {
   newGuitarTypes: string[];
@@ -12,18 +14,29 @@ type FilterStringsCountProps = {
   onChange:  Dispatch<SetStateAction<number[]>>
 }
 
+const mapStateToProps = (state: State) => ({
+  params: getParams(state),
+  page: getPage(state),
+});
+
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onChangeCounts(item: number[]){
     dispatch(changeGuitarCounts(item));
   },
+  onChangeParams(value: string) {
+    dispatch(changeParams(value));
+  },
+  onChangePage(value: number) {
+    dispatch(changePage(value));
+  },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & FilterStringsCountProps;
 
 function FilterStringsCount (props: ConnectedComponentProps):JSX.Element {
-  const {onChangeCounts, newGuitarTypes, onChange, newGuitarCounts} = props;
+  const {onChangeCounts, newGuitarTypes, onChange, newGuitarCounts, page, params, onChangeParams, onChangePage} = props;
   const [availableCounts, setAvailableCounts] = useState<Set<number>>(new Set());
 
   const changeCountHandler = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -33,11 +46,13 @@ function FilterStringsCount (props: ConnectedComponentProps):JSX.Element {
       const index = newCounts.indexOf(value);
       newCounts.splice(index, 1);
       onChange(newCounts);
+      void debouncedChangePageStartEnd(onChangePage, onChangeParams, params, page);
       void debouncedChangeCount(newCounts, onChangeCounts);
       return;
     }
     newCounts.push(value);
     onChange(newCounts);
+    void debouncedChangePageStartEnd(onChangePage, onChangeParams, params, page);
     void debouncedChangeCount(newCounts, onChangeCounts);
   };
 

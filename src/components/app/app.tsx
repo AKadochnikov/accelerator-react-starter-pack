@@ -9,7 +9,7 @@ function App(): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <Main/>
         </Route>
-        <Route path={AppRoute.Catalog}>
+        <Route exact path={AppRoute.Catalog}>
           <Main/>
         </Route>
       </Switch>

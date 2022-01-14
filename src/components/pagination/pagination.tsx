@@ -1,27 +1,51 @@
 import {MouseEvent, useEffect, useState} from 'react';
-import {getPagination} from '../../utils';
+import {changePaginationPageStartEnd, getPagination} from '../../utils';
 import {State} from '../../types/state';
-import {getPage, getTotalGuitars} from '../../store/user/selectors';
+import {getPage, getParams, getTotalGuitars} from '../../store/user/selectors';
 import {connect, ConnectedProps} from 'react-redux';
+import {ThunkAppDispatch} from '../../types/actions';
+import {changePage, changeParams} from '../../store/actions';
 
 const mapStateToProps = (state: State) => ({
   totalGuitars: getTotalGuitars(state),
   page: getPage(state),
+  params: getParams(state),
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onChangePage(value: number) {
+    dispatch(changePage(value));
+  },
+  onChangeParams(newParams: string) {
+    dispatch(changeParams(newParams));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Pagination (props: ConnectedComponentProps):JSX.Element {
   const [totalPagination, setTotalPagination] = useState<number[]>([]);
-  const {totalGuitars, page} = props;
+  const {totalGuitars, page, onChangePage, params, onChangeParams} = props;
 
   const handleButtonClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(evt.currentTarget.textContent);
+    const currentValue = Number(evt.currentTarget.textContent);
+    changePaginationPageStartEnd(currentValue, totalGuitars, onChangePage, onChangeParams, params);
+  };
+
+  const handleNextButton = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    const currentValue = page+1;
+    changePaginationPageStartEnd(currentValue, totalGuitars, onChangePage, onChangeParams, params);
+  };
+
+  const handleBackButton = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    const currentValue = page-1;
+    changePaginationPageStartEnd(currentValue, totalGuitars, onChangePage, onChangeParams, params);
   };
 
   useEffect(() => {
@@ -34,7 +58,7 @@ function Pagination (props: ConnectedComponentProps):JSX.Element {
       <ul className="pagination__list">
         {Math.min(...totalPagination) === page? '':
           <li className="pagination__page pagination__page--next" id="next">
-            <a className="link pagination__page-link" href="#">Назад</a>
+            <a onClick={handleBackButton} className="link pagination__page-link" href="#">Назад</a>
           </li>}
         {totalPagination.map((item) => (
           <li key={item} className={`pagination__page ${item === page? 'pagination__page--active' : ''}`}>
@@ -43,7 +67,7 @@ function Pagination (props: ConnectedComponentProps):JSX.Element {
         ))}
         {Math.max(...totalPagination) === page? '':
           <li className="pagination__page pagination__page--next" id="next">
-            <a className="link pagination__page-link" href="#">Далее</a>
+            <a onClick={handleNextButton} className="link pagination__page-link" href="#">Далее</a>
           </li>}
       </ul>
     </div>
