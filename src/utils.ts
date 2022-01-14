@@ -1,6 +1,6 @@
 import {debounce} from 'ts-debounce';
 import {api} from './services/api';
-import {APIRoute, guitarsChar, GuitarType, StringsCount} from './const';
+import {APIRoute, guitarsChar, GuitarType, MAX_GUITARS, StringsCount} from './const';
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {Params} from './const';
@@ -93,6 +93,21 @@ export const getAvailableCounts = (types: string[]) => {
     }
   });
   return availableCounts;
+};
+
+export const getPagination = (total: number) => {
+  const paginationCounts = Math.ceil(total / 9);
+  const paginations = [];
+  for(let i = 1; i <= paginationCounts; i++) {
+    paginations.push(i);
+  }
+  return paginations;
+};
+
+export const getStartEndParams = (value: number) => {
+  const start = (value*MAX_GUITARS)-MAX_GUITARS;
+  // eslint-disable-next-line no-console
+  console.log(start);
 };
 
 export const debouncedValidityPrice = debounce(validityPrice, 1000);

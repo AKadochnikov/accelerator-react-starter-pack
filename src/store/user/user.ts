@@ -72,6 +72,13 @@ export const user = (state: User = initialState, action: Actions): User => {
       };
     }
 
+    case ActionType.ChangePage: {
+      const {value} = action.payload;
+      return {...state,
+        page: value,
+      };
+    }
+
     default: return state;
   }
 };

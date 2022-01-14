@@ -8,7 +8,8 @@ export const fetchGuitarsAction = (params: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     if(params !== '') {
       const {data, headers} = await api.get<Guitar[]>(`${APIRoute.Guitars}/?${params}`);
-      changeTotalGuitars(headers['x-total-count']);
+      const total:string = headers['x-total-count'];
+      dispatch(changeTotalGuitars(Number(total)));
       dispatch(loadGuitars(data));
     }
   };

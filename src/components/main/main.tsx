@@ -1,10 +1,7 @@
 import Icons from '../icons/icons';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import CatalogCards from '../catalog-cards/catalog-cards';
-import CatalogSort from '../catalog-sort/catalog-sort';
-import CatalogFilter from '../catalog-filter/catalog-filter';
-import Pagination from '../pagination/pagination';
+import Catalog from '../catalog';
 import {getGuitars} from '../../store/data/selectors';
 import {
   getEnd,
@@ -13,14 +10,14 @@ import {
   getIsInit,
   getPage,
   getParams,
-  getPriceLoadStatus, getStart
+  getPriceLoadStatus, getStart, getTotalGuitars
 } from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {ConnectedProps, connect} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/actions';
 import {fetchGuitarsAction, fetchAllGuitarsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
-import {useHistory, useLocation} from 'react-router-dom';
+import {useHistory, useLocation, useParams} from 'react-router-dom';
 import {
   initLoadParams,
   changeLoadPriceStatus,
@@ -35,6 +32,8 @@ import {
 } from '../../store/actions';
 import {Params, PriceLoadStatus} from '../../const';
 import {memo} from 'react';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 const mapStateToProps = (state: State) => ({
   guitars: getGuitars(state),
@@ -89,9 +88,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Main (props: ConnectedComponentProps): JSX.Element {
-  const {guitars, params, fetchGuitars, initParams, isInit, fetchAllGuitars, priceStatus, getPriceInURL, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
+  const {params, fetchGuitars, initParams, isInit, fetchAllGuitars, priceStatus, getPriceInURL, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
   const location = useLocation();
   const search = new URLSearchParams(location.search);
+  const {id} = useParams<{id: string}>();
+  const adaptedId = Number(id);
 
   const history = useHistory();
 
@@ -122,9 +123,8 @@ function Main (props: ConnectedComponentProps): JSX.Element {
       onChangeEnd(currentEnd);
     }
 
-    const currentPage = Number(search.get(Params.Page));
-    if (currentPage !== page && search.has(Params.Page)) {
-      onChangePage(currentPage);
+    if (adaptedId !== page && id !== undefined) {
+      onChangePage(adaptedId);
     }
 
     changeTypes(newTypes);
@@ -176,7 +176,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
 
   useEffect(() => {
     if (isInit === true) {
-      history.push(`/?${params}`);
+      history.push(`page_${page}?${params}`);
     }
   }, [history, params]);
 
@@ -189,17 +189,12 @@ function Main (props: ConnectedComponentProps): JSX.Element {
           <div className="container">
             <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
-              <li className="breadcrumbs__item"><a className="link" href="./main.html">Главная</a>
+              <li className="breadcrumbs__item"><Link to={AppRoute.Main} className="link" >Главная</Link>
               </li>
               <li className="breadcrumbs__item"><a className="link">Каталог</a>
               </li>
             </ul>
-            <div className="catalog">
-              <CatalogFilter/>
-              <CatalogSort/>
-              <CatalogCards guitars={guitars}/>
-              <Pagination/>
-            </div>
+            <Catalog/>
           </div>
         </main>
         <Footer/>
