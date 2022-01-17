@@ -66,11 +66,11 @@ function FilterPrice (props: ConnectedComponentProps): JSX.Element {
       <div className="catalog-filter__price-range">
         <div className="form-input">
           <label className="visually-hidden">Минимальная цена</label>
-          <input onInput={inputMinPriceHandler} type="number" min={minPrice} max={maxPrice} placeholder={minPrice.toString()} id="priceMin" name="от"/>
+          <input onInput={inputMinPriceHandler} type="number" min={minPrice} max={maxPrice} placeholder={minPrice.toString()} id="priceMin" name="от" data-testid={'minPrice'}/>
         </div>
         <div className="form-input">
           <label className="visually-hidden">Максимальная цена</label>
-          <input onInput={inputMaxPriceHandler} type="number" min={minPrice} max={maxPrice} placeholder={maxPrice.toString()} id="priceMax" name="до"/>
+          <input onInput={inputMaxPriceHandler} type="number" min={minPrice} max={maxPrice} placeholder={maxPrice.toString()} id="priceMax" name="до" data-testid={'maxPrice'}/>
         </div>
       </div>
     </fieldset>
