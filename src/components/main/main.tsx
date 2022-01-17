@@ -183,7 +183,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
   return (
     <>
       <Icons/>
-      <div className="wrapper">
+      <div className="wrapper" data-testid={'main'}>
         <Header/>
         <main className="page-content">
           <div className="container">
