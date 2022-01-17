@@ -1,9 +1,9 @@
-import CatalogFilter from './catalog-filter/catalog-filter';
-import CatalogSort from './catalog-sort/catalog-sort';
-import CatalogCards from './catalog-cards/catalog-cards';
-import Pagination from './pagination/pagination';
-import {State} from '../types/state';
-import {getGuitars} from '../store/data/selectors';
+import CatalogFilter from '../catalog-filter/catalog-filter';
+import CatalogSort from '../catalog-sort/catalog-sort';
+import CatalogCards from '../catalog-cards/catalog-cards';
+import Pagination from '../pagination/pagination';
+import {State} from '../../types/state';
+import {getGuitars} from '../../store/data/selectors';
 import {connect, ConnectedProps} from 'react-redux';
 
 const mapStateToProps = (state: State) => ({

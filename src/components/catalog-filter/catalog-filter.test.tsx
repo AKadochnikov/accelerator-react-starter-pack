@@ -2,7 +2,7 @@ import CatalogFilter from './catalog-filter';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {store, history} from '../mockStore';
+import {store, history} from '../../mockStore';
 
 describe('Component: CatalogFilter', () => {
   it('should render CatalogFilter component', () => {

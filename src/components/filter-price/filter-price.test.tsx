@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {store, history} from '../mockStore';
+import {store, history} from '../../mockStore';
 import FilterPrice from './filter-price';
 import userEvent from '@testing-library/user-event';
 

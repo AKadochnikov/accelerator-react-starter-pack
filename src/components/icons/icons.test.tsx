@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {history} from '../mockStore';
+import {history} from '../../mockStore';
 import Icons from './icons';
 
 describe('Component: Icons', () => {

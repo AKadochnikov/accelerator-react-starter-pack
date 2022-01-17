@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
-import {api} from '../services/api';
+import {api} from './services/api';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {State} from '../types/state';
+import {State} from './types/state';
 import {Action} from '@reduxjs/toolkit';
-import {NameSpace, PriceLoadStatus} from '../const';
+import {NameSpace, PriceLoadStatus} from './const';
 import {createMemoryHistory} from 'history';
 
 export const mockAPI = new MockAdapter(api);

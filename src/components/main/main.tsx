@@ -1,7 +1,7 @@
 import Icons from '../icons/icons';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import Catalog from '../catalog';
+import Catalog from '../catalog/catalog';
 import {getGuitars} from '../../store/data/selectors';
 import {
   getEnd,

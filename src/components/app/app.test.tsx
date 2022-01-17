@@ -3,7 +3,7 @@ import {Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {AppRoute} from '../../const';
 import App from './app';
-import {store, history, mockAPI} from '../mockStore';
+import {store, history, mockAPI} from '../../mockStore';
 
 const fakeApp = (
   <Provider store={store}>

@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {history, store} from '../mockStore';
+import {history, store} from '../../mockStore';
 import {Provider} from 'react-redux';
 import Pagination from './pagination';
 
