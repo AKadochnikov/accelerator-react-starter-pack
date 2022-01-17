@@ -1,8 +1,9 @@
 import {ThunkActionResult} from '../types/actions';
 import {changeMaxPrice, changeMinPrice, loadGuitars, changeLoadPriceStatus, changeTotalGuitars} from './actions';
 import {Guitar} from '../types/types';
-import {APIRoute} from '../const';
+import {APIRoute, FAIL_MESSAGE} from '../const';
 import {PriceLoadStatus} from '../const';
+import {toast} from 'react-toastify';
 
 export const fetchGuitarsAction = (params: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -29,5 +30,6 @@ export const fetchAllGuitarsAction = (params: string, priceStatus: string): Thun
     }
     catch {
       dispatch(changeLoadPriceStatus(PriceLoadStatus.NotLoaded));
+      toast.info(FAIL_MESSAGE);
     }
   };
