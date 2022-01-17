@@ -60,7 +60,7 @@ describe('Application Routing', () => {
     expect(screen.getByText(/Главная/i)).toBeInTheDocument();
   });
 
-  it('should render "Main" when user navigate to "/page_1"',  () => {
+  it('should render "Main" when user navigate to "/page_:id"',  () => {
     history.push(AppRoute.Catalog);
     render(fakeApp);
 
