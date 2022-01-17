@@ -36,7 +36,7 @@ function Header ():JSX.Element {
               </svg>
               <span className="visually-hidden">Начать поиск</span>
             </button>
-            <input onInput={(evt) => handleInput(evt)} className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?"/>
+            <input onInput={(evt) => handleInput(evt)} className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" data-testid={'search'}/>
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
           <ul style={{zIndex: 1}} className="form-search__select-list" hidden={data === undefined}>
