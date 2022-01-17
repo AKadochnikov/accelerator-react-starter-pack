@@ -1,19 +1,19 @@
-import CatalogFilter from './catalog-filter';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {store, history} from '../mockStore';
+import CatalogSort from './catalog-sort';
 
-describe('Component: CatalogFilter', () => {
-  it('should render CatalogFilter component', () => {
+describe('Component: CatalogSort', () => {
+  it('should render CatalogSort component', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <CatalogFilter/>
+          <CatalogSort/>
         </Router>
       </Provider>,
     );
 
-    expect(screen.getByText(/Фильтр/i)).toBeInTheDocument();
+    expect(screen.getByText(/Сортировать/i)).toBeInTheDocument();
   });
 } );
