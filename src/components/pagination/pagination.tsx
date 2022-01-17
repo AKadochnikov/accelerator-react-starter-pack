@@ -54,7 +54,7 @@ function Pagination (props: ConnectedComponentProps):JSX.Element {
   }, [totalGuitars]);
 
   return (
-    <div className="pagination page-content__pagination">
+    <div className="pagination page-content__pagination" data-testid={'pagination'}>
       <ul className="pagination__list">
         {Math.min(...totalPagination) === page? '':
           <li className="pagination__page pagination__page--next" id="next">
