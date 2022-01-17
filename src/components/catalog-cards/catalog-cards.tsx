@@ -8,7 +8,7 @@ type CatalogCardProps = {
 function CatalogCards (props: CatalogCardProps): JSX.Element {
   const {guitars} = props;
   return (
-    <div className="cards catalog__cards">
+    <div className="cards catalog__cards" data-testid={'catalog-cards'}>
       {guitars.map((guitar) => (<Card key={guitar.id} guitar={guitar}/>)) }
     </div>
   );
