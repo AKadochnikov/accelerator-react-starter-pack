@@ -8,7 +8,7 @@ describe('Reducer: data', () => {
   it('without additional parameters should return initial state', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    expect(data(void 0, {type: ''}))
+    expect(data(void 0, {type: 'UNKNOWN ACTION'}))
       .toEqual({
         guitars: [],
         isDataLoaded: false});
