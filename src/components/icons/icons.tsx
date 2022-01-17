@@ -1,6 +1,6 @@
 function Icons (): JSX.Element {
   return (
-    <div className="visually-hidden">
+    <div className="visually-hidden" data-testid={'icons'}>
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
         <symbol id="icon-arrow-up" viewBox="0 0 9 16">
           <path fillRule="evenodd" clipRule="evenodd"
