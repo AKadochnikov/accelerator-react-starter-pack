@@ -1,43 +1,9 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
-import {AppRoute, PriceLoadStatus} from '../../const';
+import {AppRoute} from '../../const';
 import App from './app';
-import {Action} from '@reduxjs/toolkit';
-import {api} from '../../services/api';
-import MockAdapter from 'axios-mock-adapter';
-import thunk, {ThunkDispatch} from 'redux-thunk';
-import {State} from '../../types/state';
-import {NameSpace} from '../../const';
-
-
-const mockAPI = new MockAdapter(api);
-const middlewares = [thunk.withExtraArgument(api)];
-const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
-
-const store = mockStore({
-  [NameSpace.user]: {
-    params: '',
-    isInit: false,
-    minPrice: 0,
-    maxPrice: 0,
-    priceStatus: PriceLoadStatus.NotLoaded,
-    guitarTypes: [],
-    guitarCounts: [],
-    totalGuitars: 0,
-    page: 1,
-    start: 0,
-    end: 9,
-  },
-  [NameSpace.data]: {
-    guitars: [],
-    isDataLoaded: false,
-  },
-});
-
-const history = createMemoryHistory();
+import {store, history, mockAPI} from '../mockStore';
 
 const fakeApp = (
   <Provider store={store}>

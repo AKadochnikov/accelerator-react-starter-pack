@@ -1,10 +1,8 @@
-import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import Card from './card';
-import {makeFakeGuitars} from '../../mock';
-
-const history = createMemoryHistory();
+import {makeFakeGuitars} from '../../mockGuitars';
+import {history} from '../mockStore';
 
 const fakeGuitars = makeFakeGuitars();
 

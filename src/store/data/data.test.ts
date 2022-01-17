@@ -1,5 +1,5 @@
 import {data} from './data';
-import {makeFakeGuitars} from '../../mock';
+import {makeFakeGuitars} from '../../mockGuitars';
 import {loadGuitars} from '../actions';
 
 const fakeGuitars = makeFakeGuitars();

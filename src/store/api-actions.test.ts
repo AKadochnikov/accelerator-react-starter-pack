@@ -5,7 +5,7 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {State} from '../types/state';
 import {Action} from '@reduxjs/toolkit';
 import {APIRoute, PriceLoadStatus} from '../const';
-import {makeFakeGuitars} from '../mock';
+import {makeFakeGuitars} from '../mockGuitars';
 import {fetchAllGuitarsAction, fetchGuitarsAction} from './api-actions';
 import {changeLoadPriceStatus, changeMaxPrice, changeMinPrice, changeTotalGuitars, loadGuitars} from './actions';
 
