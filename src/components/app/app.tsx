@@ -1,5 +1,6 @@
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Main from '../main/main';
+import NotFound from '../404-not-found/404';
 import {AppRoute} from '../../const';
 
 function App(): JSX.Element {
@@ -11,6 +12,9 @@ function App(): JSX.Element {
         </Route>
         <Route exact path={AppRoute.Catalog}>
           <Main/>
+        </Route>
+        <Route>
+          <NotFound />
         </Route>
       </Switch>
     </BrowserRouter>
