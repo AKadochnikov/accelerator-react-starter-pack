@@ -18,7 +18,7 @@ type ConnectedComponentProps = PropsFromRedux;
 function Catalog (props: ConnectedComponentProps):JSX.Element {
   const {guitars} = props;
   return (
-    <div className="catalog">
+    <div className="catalog" data-testid={'catalog'}>
       <CatalogFilter/>
       <CatalogSort/>
       <CatalogCards guitars={guitars}/>
