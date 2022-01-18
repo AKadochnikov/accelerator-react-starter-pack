@@ -1,13 +1,14 @@
-import {FormEvent, useEffect, useState} from 'react';
+import {FormEvent} from 'react';
 import {debouncedValidityMaxPrice, debouncedValidityMinPrice} from '../../utils';
 import {getPriceLoadStatus, getMaxPrice, getMinPrice, getParams} from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
-import {Params, PriceLoadStatus} from '../../const';
+//import {Params, PriceLoadStatus} from '../../const';
 import {changeParams, changeLoadPriceStatus} from '../../store/actions';
 import {ThunkAppDispatch} from '../../types/actions';
 import {useHistory, useParams} from 'react-router-dom';
 import {useSearch} from '../../hooks/useSearch';
+import {useMinMaxPrice} from '../../hooks/useMinMaxPrice';
 
 const mapStateToProps = (state: State) => ({
   minPrice: getMinPrice(state),
@@ -30,15 +31,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function FilterPrice (props: ConnectedComponentProps): JSX.Element {
-  const {minPrice, maxPrice, params, onChangeParams, priceStatus, onChangeLoadStatus} = props;
-  const [minCurrentPrice, setMinCurrentPrice] = useState<string | null>(null);
-  const [maxCurrentPrice, setMaxCurrentPrice] = useState<string | null>(null);
+  //const {params, onChangeParams, priceStatus, onChangeLoadStatus} = props;
+  //const [minCurrentPrice, setMinCurrentPrice] = useState<string | null>(null);
+  //const [maxCurrentPrice, setMaxCurrentPrice] = useState<string | null>(null);
   const history = useHistory();
   const {id} = useParams<{id: string}>();
   const adaptedId = Number(id);
   const search = useSearch();
+  const [minPrice, maxPrice] = useMinMaxPrice();
+
   // eslint-disable-next-line no-console
-  console.log(search.toString());
+  console.log(minPrice, maxPrice);
 
   const inputMinPriceHandler = (evt: FormEvent<HTMLInputElement>) => {
     const eventTarget = evt.currentTarget;
@@ -50,7 +53,7 @@ function FilterPrice (props: ConnectedComponentProps): JSX.Element {
     void debouncedValidityMaxPrice(eventTarget, maxPrice, minPrice, history, search, adaptedId);
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (priceStatus === PriceLoadStatus.Loaded && minPrice !== 0 && maxPrice !== 0) {
       setMinCurrentPrice(minPrice.toString());
       setMaxCurrentPrice(maxPrice.toString());
@@ -66,7 +69,7 @@ function FilterPrice (props: ConnectedComponentProps): JSX.Element {
     searchParams.set(Params.PriceMin, minCurrentPrice);
     searchParams.set(Params.PriceMax, maxCurrentPrice);
     onChangeParams(searchParams.toString());
-  }, [maxCurrentPrice, minCurrentPrice]);
+  }, [maxCurrentPrice, minCurrentPrice]);*/
 
   return (
     <fieldset className="catalog-filter__block">

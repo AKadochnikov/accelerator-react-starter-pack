@@ -30,7 +30,7 @@ import {
   changeEnd,
   changePage
 } from '../../store/actions';
-import {Params, PriceLoadStatus} from '../../const';
+import {Params} from '../../const';
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
@@ -88,7 +88,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Main (props: ConnectedComponentProps): JSX.Element {
-  const {params, fetchGuitars, initParams, isInit, fetchAllGuitars, priceStatus, getPriceInURL, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
+  const {params, fetchGuitars, initParams, isInit, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
   const location = useLocation();
   const search = new URLSearchParams(location.search);
   const {id} = useParams<{id: string}>();
@@ -155,30 +155,6 @@ function Main (props: ConnectedComponentProps): JSX.Element {
   }, [guitarTypes, guitarCounts]);
 
   useEffect(() => fetchGuitars(params), [fetchGuitars, params]);
-
-  useEffect(() => {
-
-    const searchParams = new URLSearchParams(params);
-
-    if (priceStatus === PriceLoadStatus.NotLoaded && search.has(Params.PriceMin) && search.has(Params.PriceMax)){
-      const minValue = search.get(Params.PriceMin);
-      const maxValue = search.get(Params.PriceMax);
-      getPriceInURL(PriceLoadStatus.Loaded, Number(minValue), Number(maxValue));
-      fetchAllGuitars(searchParams.toString(), PriceLoadStatus.Loaded);
-      return;
-    }
-    searchParams.delete(Params.PriceMin);
-    searchParams.delete(Params.PriceMax);
-    searchParams.delete(Params.Start);
-    searchParams.delete(Params.End);
-    fetchAllGuitars(searchParams.toString(), priceStatus);
-  }, [fetchAllGuitars, params]);
-
-  /*useEffect(() => {
-    if (isInit === true) {
-      history.push(`page_${page}?${params}`);
-    }
-  }, [history, params]);*/
 
   return (
     <>
