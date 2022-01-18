@@ -1,11 +1,8 @@
 import {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import {ThunkAppDispatch} from '../../types/actions';
-import {changeGuitarTypes, changePage, changeParams} from '../../store/actions';
 import {GuitarType} from '../../const';
-import {debouncedChangePageStartEnd, debouncedChangeType, getAvailableTypes} from '../../utils';
-import {State} from '../../types/state';
-import {getPage, getParams} from '../../store/user/selectors';
+import {debouncedChangeCountAndType, getAvailableTypes} from '../../utils';
+import {useHistory} from 'react-router-dom';
+import {useSearch} from '../../hooks/useSearch';
 
 type FilterTypeProps = {
   newGuitarTypes: string[];
@@ -13,30 +10,11 @@ type FilterTypeProps = {
   onChange:  Dispatch<SetStateAction<string[]>>
 }
 
-const mapStateToProps = (state: State) => ({
-  params: getParams(state),
-  page: getPage(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onChangeType(item: string[]){
-    dispatch(changeGuitarTypes(item));
-  },
-  onChangeParams(value: string) {
-    dispatch(changeParams(value));
-  },
-  onChangePage(value: number) {
-    dispatch(changePage(value));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & FilterTypeProps;
-
-function FilterType (props: ConnectedComponentProps):JSX.Element {
-  const {onChangeType, newGuitarTypes, newGuitarCounts, onChange, params, page, onChangePage, onChangeParams} = props;
+function FilterType (props: FilterTypeProps):JSX.Element {
+  const {newGuitarTypes, newGuitarCounts, onChange} = props;
   const [availableTypes, setAvailableTypes] = useState<Set<string>>(new Set());
+  const history = useHistory();
+  const search = useSearch();
 
   const changeTypeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     const newTypes = newGuitarTypes.slice();
@@ -44,14 +22,12 @@ function FilterType (props: ConnectedComponentProps):JSX.Element {
       const index =  newTypes.indexOf(evt.target.name);
       newTypes.splice(index, 1);
       onChange(newTypes);
-      void debouncedChangePageStartEnd(onChangePage, onChangeParams, params, page);
-      void debouncedChangeType(newTypes, onChangeType);
+      void debouncedChangeCountAndType(newGuitarCounts, newTypes, history, search);
       return;
     }
     newTypes.push(evt.target.name);
     onChange(newTypes);
-    void debouncedChangePageStartEnd(onChangePage, onChangeParams, params, page);
-    void debouncedChangeType(newTypes, onChangeType);
+    void debouncedChangeCountAndType(newGuitarCounts, newTypes, history, search);
   };
 
   useEffect(() => {
@@ -77,4 +53,4 @@ function FilterType (props: ConnectedComponentProps):JSX.Element {
   );
 }
 
-export default connector(FilterType);
+export default FilterType;

@@ -56,7 +56,7 @@ const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice:
   history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
 };
 
-const changeCount = (counts: number[], types: string[], history: History, search: URLSearchParams) => {
+const changeCountAndType = (counts: number[], types: string[], history: History, search: URLSearchParams) => {
   search.delete(Params.StringCount);
   search.delete(Params.GuitarType);
   if(counts.length !== 0) {
@@ -180,7 +180,7 @@ export const debouncedChangePageStartEnd = debounce(changePageStartEnd, 1000);
 
 export const debouncedChangeType = debounce(changeType, 1000);
 
-export const debouncedChangeCount = debounce(changeCount, 1000);
+export const debouncedChangeCountAndType = debounce(changeCountAndType, 1000);
 
 export const debouncedValidityMinPrice = debounce(validityMinPrice, 1000);
 export const debouncedValidityMaxPrice = debounce(validityMaxPrice, 1000);

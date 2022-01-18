@@ -1,6 +1,6 @@
 import {StringsCount} from '../../const';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {debouncedChangeCount, getAvailableCounts} from '../../utils';
+import {debouncedChangeCountAndType, getAvailableCounts} from '../../utils';
 import {Dispatch, SetStateAction} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useSearch} from '../../hooks/useSearch';
@@ -25,12 +25,12 @@ function FilterStringsCount (props: FilterStringsCountProps):JSX.Element {
       const index = newCounts.indexOf(value);
       newCounts.splice(index, 1);
       onChange(newCounts);
-      void debouncedChangeCount(newCounts, newGuitarTypes, history, search);
+      void debouncedChangeCountAndType(newCounts, newGuitarTypes, history, search);
       return;
     }
     newCounts.push(value);
     onChange(newCounts);
-    void debouncedChangeCount(newCounts, newGuitarTypes, history, search);
+    void debouncedChangeCountAndType(newCounts, newGuitarTypes, history, search);
   };
 
   useEffect(() => {
