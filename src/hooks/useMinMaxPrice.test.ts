@@ -9,7 +9,7 @@ jest.mock('./useSearch', () => ({
 }));
 
 describe('Hook: useMinMaxPrice', () => {
-  it('should array and object',  () => {
+  it('should numbers',  () => {
     (useSearch as jest.Mock<ReturnType<typeof useSearch>,Parameters<typeof useSearch>>).mockReturnValue(new URLSearchParams('_start=0&_end=9'));
     const {result} = renderHook(() => useMinMaxPrice(fakeParams));
 
