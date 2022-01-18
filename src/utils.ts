@@ -72,20 +72,6 @@ const changeCountAndType = (counts: number[], types: string[], history: History,
   history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
 };
 
-const changeType = (types: string[], cb: (item: string[]) => void) => {
-  cb(types);
-};
-
-const changePageStartEnd = (changePage: (value: number) => void, changeParams: (value: string) => void, params: string, page: number) => {
-  const search = new URLSearchParams(params);
-  search.set(Params.Start, '0');
-  search.set(Params.End, '9');
-  if(page !== START_PAGE) {
-    changePage(START_PAGE);
-  }
-  changeParams(search.toString());
-};
-
 export const adaptImgPath = (imgPath: string):string => {
   const guitarString = imgPath.slice(4);
   const defaultPath = 'img/content/';
@@ -175,10 +161,6 @@ export const checkId = (id: string) => {
   }
   return Number(id);
 };
-
-export const debouncedChangePageStartEnd = debounce(changePageStartEnd, 1000);
-
-export const debouncedChangeType = debounce(changeType, 1000);
 
 export const debouncedChangeCountAndType = debounce(changeCountAndType, 1000);
 
