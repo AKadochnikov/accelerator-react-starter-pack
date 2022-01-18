@@ -1,9 +1,10 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {history} from '../../mockStore';
 import Pagination from './pagination';
+import {createMemoryHistory} from 'history';
 
 const fakeTotal = 10;
+const history = createMemoryHistory();
 
 describe('Component: Pagination', () => {
   it('should render Pagination component', () => {

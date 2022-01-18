@@ -21,8 +21,3 @@ export type Guitar = {
   price: number
   comments: comment[],
 };
-
-export type Param = {
-  query: string,
-  value: string,
-};

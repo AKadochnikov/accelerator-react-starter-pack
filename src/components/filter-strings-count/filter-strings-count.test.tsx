@@ -1,8 +1,9 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import {store, history} from '../../mockStore';
 import FilterStringsCount from './filter-strings-count';
+import {createMemoryHistory} from 'history';
+
+const history = createMemoryHistory();
 
 describe('Component: FilterStringsCount', () => {
   const fakeOnChange = jest.fn();
@@ -11,11 +12,9 @@ describe('Component: FilterStringsCount', () => {
 
   it('should render FilterStringsCount component', () => {
     render(
-      <Provider store={store}>
-        <Router history={history}>
-          <FilterStringsCount onChange={fakeOnChange} newGuitarTypes={fakeGuitarTypes} newGuitarCounts={fakeGuitarCounts}/>
-        </Router>
-      </Provider>,
+      <Router history={history}>
+        <FilterStringsCount onChange={fakeOnChange} newGuitarTypes={fakeGuitarTypes} newGuitarCounts={fakeGuitarCounts}/>
+      </Router>,
     );
 
     expect(screen.getByText(/Количество струн/i)).toBeInTheDocument();

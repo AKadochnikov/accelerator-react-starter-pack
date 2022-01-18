@@ -159,15 +159,6 @@ export const changePage = (value: number, total: number, history: History, searc
   history.push(`${AppRoute.Main}page_${value}?${search.toString()}`);
 };
 
-export const changePaginationPageStartEnd = (value: number, totalGuitars: number, onChangePage: (value: number) => void, onChangeParams: (newParams: string) => void, params: string) => {
-  const newParams = getStartEndParams(value, totalGuitars);
-  onChangePage(value);
-  const search = new URLSearchParams(params);
-  search.set(Params.Start, newParams.start.toString());
-  search.set(Params.End, newParams.end.toString());
-  onChangeParams(search.toString());
-};
-
 export const checkId = (id: string) => {
   if(id === undefined) {
     return START_PAGE;

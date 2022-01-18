@@ -1,7 +1,8 @@
 import {render, screen} from '@testing-library/react';
 import NotFound from './404';
 import {Router} from 'react-router-dom';
-import {history} from '../../mockStore';
+import {createMemoryHistory} from 'history';
+const history = createMemoryHistory();
 
 describe('Component: Not-Found', () => {
   it('should Render Not-Found component when user navigate to unknown URL', () => {

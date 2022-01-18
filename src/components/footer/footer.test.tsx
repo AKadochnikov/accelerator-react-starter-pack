@@ -1,7 +1,9 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {history} from '../../mockStore';
 import Footer from './footer';
+import {createMemoryHistory} from 'history';
+
+const history = createMemoryHistory();
 
 describe('Component: Footer', () => {
   it('should render Footer component', () => {

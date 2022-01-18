@@ -1,18 +1,17 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import {store, history} from '../../mockStore';
 import FilterPrice from './filter-price';
 import userEvent from '@testing-library/user-event';
+import {createMemoryHistory} from 'history';
+
+const history = createMemoryHistory();
 
 describe('Component: FilterPrice', () => {
   it('should render FilterPrice component', () => {
     render(
-      <Provider store={store}>
-        <Router history={history}>
-          <FilterPrice/>
-        </Router>
-      </Provider>,
+      <Router history={history}>
+        <FilterPrice/>
+      </Router>,
     );
 
     expect(screen.getByText(/Минимальная цена/i)).toBeInTheDocument();

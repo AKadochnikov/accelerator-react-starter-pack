@@ -1,21 +1,19 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {Provider} from 'react-redux';
 import {AppRoute} from '../../const';
 import App from './app';
-import {store, history, mockAPI} from '../../mockStore';
+import {createMemoryHistory} from 'history';
+
+const history = createMemoryHistory();
 
 const fakeApp = (
-  <Provider store={store}>
-    <Router history={history}>
-      <App/>
-    </Router>
-  </Provider>
+  <Router history={history}>
+    <App/>
+  </Router>
 );
 
 describe('Application Routing', () => {
   beforeEach(() => {
-    mockAPI.reset();
     history.push(AppRoute.Main);
   });
 

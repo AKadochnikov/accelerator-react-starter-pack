@@ -1,9 +1,10 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import CatalogCards from './catalog-cards';
-import {history} from '../../mockStore';
 import {makeFakeGuitars} from '../../mockGuitars';
+import {createMemoryHistory} from 'history';
 
+const history = createMemoryHistory();
 const fakeGuitars = makeFakeGuitars();
 
 describe('Component: CatalogCards', () => {
