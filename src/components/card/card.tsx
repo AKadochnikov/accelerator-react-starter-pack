@@ -20,13 +20,13 @@ function Card (props: CardProps): JSX.Element {
           {newRating.map((item, index) => {
             if (!item) {
               return (
-                <svg key={`${item + index + id}`} width="12" height="11" aria-hidden="true">
+                <svg key={`${index + id}`} width="12" height="11" aria-hidden="true">
                   <use xlinkHref="#icon-star"/>
                 </svg>
               );
             }
             return (
-              <svg key={`${item + index + id}`} width="12" height="11" aria-hidden="true">
+              <svg key={`${index + id}`} width="12" height="11" aria-hidden="true">
                 <use xlinkHref="#icon-full-star"/>
               </svg>
             );
