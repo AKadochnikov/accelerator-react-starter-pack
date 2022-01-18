@@ -10,8 +10,6 @@ function Card (props: CardProps): JSX.Element {
   const {previewImg, name, price, rating, id, comments} = guitar;
   const imgPath = adaptImgPath(previewImg);
   const newRating = new Array(5).fill(null).fill('full', 0, rating);
-  // eslint-disable-next-line no-console
-  console.log(guitar);
 
   return (
     <div className="product-card">

@@ -1,5 +1,5 @@
 import {FormEvent} from 'react';
-import {debouncedValidityMaxPrice, debouncedValidityMinPrice} from '../../utils';
+import {checkId, debouncedValidityMaxPrice, debouncedValidityMinPrice} from '../../utils';
 import {useHistory, useParams} from 'react-router-dom';
 import {useSearch} from '../../hooks/useSearch';
 import {useMinMaxPrice} from '../../hooks/useMinMaxPrice';
@@ -7,18 +7,18 @@ import {useMinMaxPrice} from '../../hooks/useMinMaxPrice';
 function FilterPrice (): JSX.Element {
   const history = useHistory();
   const {id} = useParams<{id: string}>();
-  const adaptedId = Number(id);
+  const currentId = checkId(id);
   const search = useSearch();
   const [minPrice, maxPrice] = useMinMaxPrice();
 
   const inputMinPriceHandler = (evt: FormEvent<HTMLInputElement>) => {
     const eventTarget = evt.currentTarget;
-    void debouncedValidityMinPrice(eventTarget, maxPrice, minPrice, history, search, adaptedId);
+    void debouncedValidityMinPrice(eventTarget, maxPrice, minPrice, history, search, currentId);
   };
 
   const inputMaxPriceHandler = (evt: FormEvent<HTMLInputElement>) => {
     const eventTarget = evt.currentTarget;
-    void debouncedValidityMaxPrice(eventTarget, maxPrice, minPrice, history, search, adaptedId);
+    void debouncedValidityMaxPrice(eventTarget, maxPrice, minPrice, history, search, currentId);
   };
 
   return (

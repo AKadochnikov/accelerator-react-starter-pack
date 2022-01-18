@@ -158,8 +158,10 @@ export const changePaginationPageStartEnd = (value: number, totalGuitars: number
 };
 
 export const checkId = (id: string) => {
-  // eslint-disable-next-line no-console
-  console.log(id);
+  if(id === undefined) {
+    return START_PAGE;
+  }
+  return Number(id);
 };
 
 export const debouncedChangePageStartEnd = debounce(changePageStartEnd, 1000);
