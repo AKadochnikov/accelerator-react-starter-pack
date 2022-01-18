@@ -18,7 +18,7 @@ function Catalog ():JSX.Element {
       <CatalogFilter/>
       <CatalogSort/>
       <CatalogCards guitars={guitars}/>
-      <Pagination/>
+      <Pagination total={totalGuitars}/>
     </div>
   );
 }

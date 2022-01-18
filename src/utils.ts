@@ -21,6 +21,8 @@ const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undef
 };
 
 const validityMinPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, id: number) => {
+  search.set(Params.Start, '0');
+  search.set(Params.End, '9');
   if (eventTarget.value !== ''){
     const value = Number(eventTarget.value);
     if(value > maxPrice) {
@@ -31,14 +33,16 @@ const validityMinPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice:
       search.set(Params.PriceMin, eventTarget.value);
     }
     search.set(Params.PriceMin, eventTarget.value);
-    history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
+    history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
     return;
   }
   search.set(Params.PriceMin, minPrice.toString());
-  history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
+  history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
 };
 
 const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, id: number) => {
+  search.set(Params.Start, '0');
+  search.set(Params.End, '9');
   if (eventTarget.value !== ''){
     const value = Number(eventTarget.value);
     if(value > maxPrice) {
@@ -49,16 +53,18 @@ const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice:
       search.set(Params.PriceMax, eventTarget.value);
     }
     search.set(Params.PriceMax, eventTarget.value);
-    history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
+    history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
     return;
   }
   search.set(Params.PriceMax, maxPrice.toString());
-  history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
+  history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
 };
 
 const changeCountAndType = (counts: number[], types: string[], history: History, search: URLSearchParams) => {
   search.delete(Params.StringCount);
   search.delete(Params.GuitarType);
+  search.set(Params.Start, '0');
+  search.set(Params.End, '9');
   if(counts.length !== 0) {
     counts.forEach((count) => {
       search.append(Params.StringCount, count.toString());
@@ -144,6 +150,13 @@ export const getStartEndParams = (value: number, totalGuitars: number) => {
   newParams.end = (value*MAX_GUITARS);
   newParams.start = newParams.end-MAX_GUITARS;
   return newParams;
+};
+
+export const changePage = (value: number, total: number, history: History, search: URLSearchParams) => {
+  const startEndParams = getStartEndParams(value, total);
+  search.set(Params.Start, startEndParams.start.toString());
+  search.set(Params.End, startEndParams.end.toString());
+  history.push(`${AppRoute.Main}page_${value}?${search.toString()}`);
 };
 
 export const changePaginationPageStartEnd = (value: number, totalGuitars: number, onChangePage: (value: number) => void, onChangeParams: (newParams: string) => void, params: string) => {

@@ -1,49 +1,33 @@
-import {connect, ConnectedProps} from 'react-redux';
-import {SortingParams, Params} from '../../const';
-import {getParams} from '../../store/user/selectors';
-import {State} from '../../types/state';
-import {ThunkAppDispatch} from '../../types/actions';
-import {changeParams} from '../../store/actions';
+import {SortingParams, Params, AppRoute} from '../../const';
 import {MouseEvent} from 'react';
+import {useSearch} from '../../hooks/useSearch';
+import {useHistory, useParams} from 'react-router-dom';
+import {checkId} from '../../utils';
 
-const mapStateToProps = (state: State) => ({
-  params: getParams(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onChangeParams(params: string) {
-    dispatch(changeParams(params));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function CatalogSort (props: PropsFromRedux):JSX.Element {
-
-  const {onChangeParams, params} = props;
-
-  const searchParams = new URLSearchParams(params);
+function CatalogSort ():JSX.Element {
+  const search = useSearch();
+  const history = useHistory();
+  const {id} = useParams<{id: string}>();
+  const page = checkId(id);
 
   const handleTypeChange = (evt: MouseEvent<HTMLButtonElement>) => {
-    searchParams.set(Params.Sort, evt.currentTarget.value);
-    if (!searchParams.has(Params.Order)) {
-      searchParams.set(Params.Order, SortingParams.Asc);
+    search.set(Params.Sort, evt.currentTarget.value);
+    if (!search.has(Params.Order)) {
+      search.set(Params.Order, SortingParams.Asc);
     }
-    onChangeParams(searchParams.toString());
+    history.push(`${AppRoute.Main}page_${page}?${search.toString()}`);
   };
 
   const handleOrderChange = (evt: MouseEvent<HTMLButtonElement>) => {
-    searchParams.set(Params.Order, evt.currentTarget.value);
-    if(!searchParams.has(Params.Sort)) {
-      searchParams.set(Params.Sort, SortingParams.Price);
+    search.set(Params.Order, evt.currentTarget.value);
+    if(!search.has(Params.Sort)) {
+      search.set(Params.Sort, SortingParams.Price);
     }
-    onChangeParams(searchParams.toString());
+    history.push(`${AppRoute.Main}page_${page}?${search.toString()}`);
   };
 
-  const sortingType = searchParams.get(Params.Sort);
-  const sortingOrder = searchParams.get(Params.Order);
+  const sortingType = search.get(Params.Sort);
+  const sortingOrder = search.get(Params.Order);
 
   return (
     <div className="catalog-sort">
@@ -60,4 +44,4 @@ function CatalogSort (props: PropsFromRedux):JSX.Element {
   );
 }
 
-export default connector(CatalogSort);
+export default CatalogSort;
