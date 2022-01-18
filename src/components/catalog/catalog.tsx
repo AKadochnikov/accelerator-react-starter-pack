@@ -2,21 +2,13 @@ import CatalogFilter from '../catalog-filter/catalog-filter';
 import CatalogSort from '../catalog-sort/catalog-sort';
 import CatalogCards from '../catalog-cards/catalog-cards';
 import Pagination from '../pagination/pagination';
-import {State} from '../../types/state';
-import {getGuitars} from '../../store/data/selectors';
-import {connect, ConnectedProps} from 'react-redux';
+import {useFetchGuitars} from '../../hooks/useFetchGuitars';
+import {useSearch} from '../../hooks/useSearch';
 
-const mapStateToProps = (state: State) => ({
-  guitars: getGuitars(state),
-});
+function Catalog ():JSX.Element {
+  const search = useSearch();
+  const guitars = useFetchGuitars(search.toString());
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
-
-function Catalog (props: ConnectedComponentProps):JSX.Element {
-  const {guitars} = props;
   return (
     <div className="catalog" data-testid={'catalog'}>
       <CatalogFilter/>
@@ -27,4 +19,4 @@ function Catalog (props: ConnectedComponentProps):JSX.Element {
   );
 }
 
-export default connector(Catalog);
+export default Catalog;

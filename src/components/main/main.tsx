@@ -88,18 +88,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function Main (props: ConnectedComponentProps): JSX.Element {
-  const {params, fetchGuitars, initParams, isInit, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
+  const {params, initParams, isInit, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
   const location = useLocation();
   const search = new URLSearchParams(location.search);
   const {id} = useParams<{id: string}>();
   const adaptedId = Number(id);
 
   //const history = useHistory();
-
-  if (!search.has(Params.Start) && !search.has(Params.End)) {
-    search.set(Params.Start, '0');
-    search.set(Params.End, '9');
-  }
 
   if(params !== search.toString() && isInit === false) {
     const newTypes = guitarTypes.slice();
@@ -153,8 +148,6 @@ function Main (props: ConnectedComponentProps): JSX.Element {
     }
     onChangeParams(searchParams.toString());
   }, [guitarTypes, guitarCounts]);
-
-  useEffect(() => fetchGuitars(params), [fetchGuitars, params]);
 
   return (
     <>

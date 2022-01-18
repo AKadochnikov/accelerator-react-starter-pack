@@ -1,11 +1,10 @@
 import {useEffect} from 'react';
-import {APIRoute, FAIL_MESSAGE} from '../const';
+import {APIRoute} from '../const';
 import {useSearch} from './useSearch';
 import {Guitar} from '../types/types';
 import {api} from '../services/api';
 import {Params} from '../const';
 import {useState} from 'react';
-import {toast} from 'react-toastify';
 
 export const useMinMaxPrice = () => {
   const [minPrice, setMinPrice] = useState<number>(0);
@@ -22,9 +21,6 @@ export const useMinMaxPrice = () => {
       const value = data.map((item) => item.price);
       setMinPrice(Math.min(...value));
       setMaxPrice(Math.max(...value));
-    })
-    .catch((error) => {
-      toast.info(FAIL_MESSAGE);
     });
 
   useEffect(() => {
