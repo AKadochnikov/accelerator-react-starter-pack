@@ -1,5 +1,6 @@
 import {Guitar} from '../../types/types';
 import {adaptImgPath} from '../../utils';
+import {Link} from 'react-router-dom';
 
 type CardProps = {
   guitar: Guitar,
@@ -37,8 +38,8 @@ function Card (props: CardProps): JSX.Element {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽
         </p>
       </div>
-      <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a>
-        <a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+      <div className="product-card__buttons"><Link className="button button--mini" to={'#'}>Подробнее</Link>
+        <Link className="button button--red button--mini button--add-to-cart" to={'#'}>Купить</Link>
       </div>
     </div>
   );

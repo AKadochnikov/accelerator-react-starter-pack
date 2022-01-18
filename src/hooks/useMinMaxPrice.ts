@@ -23,6 +23,7 @@ export const useMinMaxPrice = (params: string) => {
       setMaxPrice(Math.max(...value));
     });
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     void execute();
   }, [params]);

@@ -25,7 +25,7 @@ export const useFetchGuitars = (params: string) => {
     .catch(() => {
       toast.info(FAIL_MESSAGE);
     });
-
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     void execute();
   }, [params]);
