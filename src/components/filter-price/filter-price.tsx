@@ -1,11 +1,13 @@
 import {FormEvent, useEffect, useState} from 'react';
-import {debouncedValidityPrice} from '../../utils';
+import {debouncedValidityMaxPrice, debouncedValidityMinPrice} from '../../utils';
 import {getPriceLoadStatus, getMaxPrice, getMinPrice, getParams} from '../../store/user/selectors';
 import {State} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
 import {Params, PriceLoadStatus} from '../../const';
 import {changeParams, changeLoadPriceStatus} from '../../store/actions';
 import {ThunkAppDispatch} from '../../types/actions';
+import {useHistory, useParams} from 'react-router-dom';
+import {useSearch} from '../../hooks/useSearch';
 
 const mapStateToProps = (state: State) => ({
   minPrice: getMinPrice(state),
@@ -31,15 +33,21 @@ function FilterPrice (props: ConnectedComponentProps): JSX.Element {
   const {minPrice, maxPrice, params, onChangeParams, priceStatus, onChangeLoadStatus} = props;
   const [minCurrentPrice, setMinCurrentPrice] = useState<string | null>(null);
   const [maxCurrentPrice, setMaxCurrentPrice] = useState<string | null>(null);
+  const history = useHistory();
+  const {id} = useParams<{id: string}>();
+  const adaptedId = Number(id);
+  const search = useSearch();
+  // eslint-disable-next-line no-console
+  console.log(search.toString());
 
   const inputMinPriceHandler = (evt: FormEvent<HTMLInputElement>) => {
     const eventTarget = evt.currentTarget;
-    void debouncedValidityPrice(eventTarget, maxPrice, minPrice, setMinCurrentPrice, minPrice);
+    void debouncedValidityMinPrice(eventTarget, maxPrice, minPrice, history, search, adaptedId);
   };
 
   const inputMaxPriceHandler = (evt: FormEvent<HTMLInputElement>) => {
     const eventTarget = evt.currentTarget;
-    void debouncedValidityPrice(eventTarget, maxPrice, minPrice, setMaxCurrentPrice, maxPrice);
+    void debouncedValidityMaxPrice(eventTarget, maxPrice, minPrice, history, search, adaptedId);
   };
 
   useEffect(() => {

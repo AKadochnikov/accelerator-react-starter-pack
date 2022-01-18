@@ -1,9 +1,10 @@
 import {debounce} from 'ts-debounce';
 import {api} from './services/api';
-import {APIRoute, guitarsChar, GuitarType, MAX_GUITARS, START_PAGE, StringsCount} from './const';
+import {APIRoute, AppRoute, guitarsChar, GuitarType, MAX_GUITARS, START_PAGE, StringsCount} from './const';
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {Params} from './const';
+import {History} from 'history';
 
 const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undefined>>) => {
   if(value.length === 0) {
@@ -19,20 +20,40 @@ const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undef
   });
 };
 
-const validityPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, cb: Dispatch<SetStateAction<string | null>>, currentPrice: number) => {
+const validityMinPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, id: number) => {
   if (eventTarget.value !== ''){
     const value = Number(eventTarget.value);
     if(value > maxPrice) {
       eventTarget.value = maxPrice.toString();
-      cb(eventTarget.value);
+      search.set(Params.PriceMin, eventTarget.value);
     } else if (value < minPrice) {
       eventTarget.value = minPrice.toString();
-      cb(eventTarget.value);
+      search.set(Params.PriceMin, eventTarget.value);
     }
-    cb(eventTarget.value);
+    search.set(Params.PriceMin, eventTarget.value);
+    history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
     return;
   }
-  cb(currentPrice.toString());
+  search.set(Params.PriceMin, minPrice.toString());
+  history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
+};
+
+const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, id: number) => {
+  if (eventTarget.value !== ''){
+    const value = Number(eventTarget.value);
+    if(value > maxPrice) {
+      eventTarget.value = maxPrice.toString();
+      search.set(Params.PriceMax, eventTarget.value);
+    } else if (value < minPrice) {
+      eventTarget.value = minPrice.toString();
+      search.set(Params.PriceMax, eventTarget.value);
+    }
+    search.set(Params.PriceMax, eventTarget.value);
+    history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
+    return;
+  }
+  search.set(Params.PriceMax, maxPrice.toString());
+  history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
 };
 
 const changeCount = (counts: number[], cb: (item: number[]) => void) => {
@@ -142,6 +163,7 @@ export const debouncedChangeType = debounce(changeType, 1000);
 
 export const debouncedChangeCount = debounce(changeCount, 1000);
 
-export const debouncedValidityPrice = debounce(validityPrice, 1000);
+export const debouncedValidityMinPrice = debounce(validityMinPrice, 1000);
+export const debouncedValidityMaxPrice = debounce(validityMaxPrice, 1000);
 
 export const debouncedFetchSought = debounce(fetchSought, 1000);

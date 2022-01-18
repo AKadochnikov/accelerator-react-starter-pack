@@ -17,7 +17,7 @@ import {ConnectedProps, connect} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/actions';
 import {fetchGuitarsAction, fetchAllGuitarsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
-import {useHistory, useLocation, useParams} from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import {
   initLoadParams,
   changeLoadPriceStatus,
@@ -94,7 +94,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
   const {id} = useParams<{id: string}>();
   const adaptedId = Number(id);
 
-  const history = useHistory();
+  //const history = useHistory();
 
   if (!search.has(Params.Start) && !search.has(Params.End)) {
     search.set(Params.Start, '0');
@@ -174,11 +174,11 @@ function Main (props: ConnectedComponentProps): JSX.Element {
     fetchAllGuitars(searchParams.toString(), priceStatus);
   }, [fetchAllGuitars, params]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (isInit === true) {
       history.push(`page_${page}?${params}`);
     }
-  }, [history, params]);
+  }, [history, params]);*/
 
   return (
     <>
