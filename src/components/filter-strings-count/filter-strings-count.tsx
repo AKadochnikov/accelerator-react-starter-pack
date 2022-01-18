@@ -1,43 +1,22 @@
 import {StringsCount} from '../../const';
-import {ThunkAppDispatch} from '../../types/actions';
-import {changeGuitarCounts, changePage, changeParams} from '../../store/actions';
-import {connect, ConnectedProps} from 'react-redux';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {debouncedChangeCount, debouncedChangePageStartEnd, getAvailableCounts} from '../../utils';
+import {debouncedChangeCount, getAvailableCounts} from '../../utils';
 import {Dispatch, SetStateAction} from 'react';
-import {State} from '../../types/state';
-import {getPage, getParams} from '../../store/user/selectors';
+import {useHistory} from 'react-router-dom';
+import {useSearch} from '../../hooks/useSearch';
 
 type FilterStringsCountProps = {
-  newGuitarTypes: string[];
   newGuitarCounts: number[];
+  newGuitarTypes: string[];
   onChange:  Dispatch<SetStateAction<number[]>>
 }
 
-const mapStateToProps = (state: State) => ({
-  params: getParams(state),
-  page: getPage(state),
-});
+function FilterStringsCount (props: FilterStringsCountProps):JSX.Element {
+  const {onChange, newGuitarCounts, newGuitarTypes} = props;
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onChangeCounts(item: number[]){
-    dispatch(changeGuitarCounts(item));
-  },
-  onChangeParams(value: string) {
-    dispatch(changeParams(value));
-  },
-  onChangePage(value: number) {
-    dispatch(changePage(value));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & FilterStringsCountProps;
-
-function FilterStringsCount (props: ConnectedComponentProps):JSX.Element {
-  const {onChangeCounts, newGuitarTypes, onChange, newGuitarCounts, page, params, onChangeParams, onChangePage} = props;
   const [availableCounts, setAvailableCounts] = useState<Set<number>>(new Set());
+  const history = useHistory();
+  const search = useSearch();
 
   const changeCountHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     const newCounts = newGuitarCounts.slice();
@@ -46,14 +25,12 @@ function FilterStringsCount (props: ConnectedComponentProps):JSX.Element {
       const index = newCounts.indexOf(value);
       newCounts.splice(index, 1);
       onChange(newCounts);
-      void debouncedChangePageStartEnd(onChangePage, onChangeParams, params, page);
-      void debouncedChangeCount(newCounts, onChangeCounts);
+      void debouncedChangeCount(newCounts, newGuitarTypes, history, search);
       return;
     }
     newCounts.push(value);
     onChange(newCounts);
-    void debouncedChangePageStartEnd(onChangePage, onChangeParams, params, page);
-    void debouncedChangeCount(newCounts, onChangeCounts);
+    void debouncedChangeCount(newCounts, newGuitarTypes, history, search);
   };
 
   useEffect(() => {
@@ -83,4 +60,4 @@ function FilterStringsCount (props: ConnectedComponentProps):JSX.Element {
   );
 }
 
-export default connector(FilterStringsCount);
+export default FilterStringsCount;

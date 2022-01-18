@@ -2,152 +2,12 @@ import Icons from '../icons/icons';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import Catalog from '../catalog/catalog';
-import {getGuitars} from '../../store/data/selectors';
-import {
-  getEnd,
-  getGuitarCounts,
-  getGuitarTypes,
-  getIsInit,
-  getPage,
-  getParams,
-  getPriceLoadStatus, getStart
-} from '../../store/user/selectors';
-import {State} from '../../types/state';
-import {ConnectedProps, connect} from 'react-redux';
-import {ThunkAppDispatch} from '../../types/actions';
-import {fetchGuitarsAction, fetchAllGuitarsAction} from '../../store/api-actions';
-import {useEffect} from 'react';
-import {useLocation, useParams} from 'react-router-dom';
-import {
-  initLoadParams,
-  changeLoadPriceStatus,
-  changeMinPrice,
-  changeMaxPrice,
-  changeGuitarTypes,
-  changeGuitarCounts,
-  changeParams,
-  changeStart,
-  changeEnd,
-  changePage
-} from '../../store/actions';
-import {Params} from '../../const';
-import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {useSearch} from '../../hooks/useSearch';
 
-const mapStateToProps = (state: State) => ({
-  guitars: getGuitars(state),
-  params: getParams(state),
-  isInit: getIsInit(state),
-  priceStatus: getPriceLoadStatus(state),
-  guitarTypes: getGuitarTypes(state),
-  guitarCounts: getGuitarCounts(state),
-  page: getPage(state),
-  start: getStart(state),
-  end: getEnd(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  fetchGuitars(params: string) {
-    void dispatch(fetchGuitarsAction(params));
-  },
-  fetchAllGuitars(params: string, priceStatus: string) {
-    void dispatch(fetchAllGuitarsAction(params, priceStatus));
-  },
-  initParams(searchParams: string) {
-    void dispatch(initLoadParams(searchParams));
-  },
-  getPriceInURL (status: string, minPrice: number, maxPrice: number) {
-    void dispatch(changeMinPrice(minPrice));
-    void dispatch(changeMaxPrice(maxPrice));
-    void dispatch(changeLoadPriceStatus(status));
-  },
-  changeTypes (types: string[]){
-    dispatch(changeGuitarTypes(types));
-  },
-  changeCounts (counts: number[]){
-    dispatch(changeGuitarCounts(counts));
-  },
-  onChangeParams(params: string) {
-    dispatch(changeParams(params));
-  },
-  onChangeStart(value: number) {
-    dispatch(changeStart(value));
-  },
-  onChangeEnd(value: number) {
-    dispatch(changeEnd(value));
-  },
-  onChangePage(value:number) {
-    dispatch(changePage(value));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
-
-function Main (props: ConnectedComponentProps): JSX.Element {
-  const {params, initParams, isInit, guitarTypes, guitarCounts, changeCounts, changeTypes, onChangeParams, page, start, end, onChangePage, onChangeStart, onChangeEnd} = props;
-  const location = useLocation();
-  const search = new URLSearchParams(location.search);
-  const {id} = useParams<{id: string}>();
-  const adaptedId = Number(id);
-
-  //const history = useHistory();
-
-  if(params !== search.toString() && isInit === false) {
-    const newTypes = guitarTypes.slice();
-    const newCounts = guitarCounts.slice();
-    const counts = search.getAll(Params.StringCount);
-    const types = search.getAll(Params.GuitarType);
-    types.forEach((type) => {
-      newTypes.push(type);
-    });
-    counts.forEach((count) => {
-      newCounts.push(Number(count));
-    });
-
-    const currentStart = Number(search.get(Params.Start));
-    if (currentStart !== start && search.has(Params.Start)){
-      onChangeStart(currentStart);
-    }
-
-    const currentEnd = Number(search.get(Params.End));
-    if (currentEnd !== end && search.has(Params.End)) {
-      onChangeEnd(currentEnd);
-    }
-
-    if (adaptedId !== page && id !== undefined) {
-      onChangePage(adaptedId);
-    }
-
-    changeTypes(newTypes);
-    changeCounts(newCounts);
-    initParams(search.toString());
-  } else if (isInit === false) {
-    initParams(params);
-  }
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(params);
-    if (isInit === false) {
-      return;
-    }
-    searchParams.delete(Params.StringCount);
-    searchParams.delete(Params.GuitarType);
-    if(guitarCounts.length !== 0) {
-      guitarCounts.forEach((count) => {
-        searchParams.append(Params.StringCount, count.toString());
-      });
-    }
-    if(guitarTypes.length !== 0) {
-      guitarTypes.forEach((type) => {
-        searchParams.append(Params.GuitarType, type);
-      });
-    }
-    onChangeParams(searchParams.toString());
-  }, [guitarTypes, guitarCounts]);
+function Main (): JSX.Element {
+  const search = useSearch();
 
   return (
     <>
@@ -160,7 +20,7 @@ function Main (props: ConnectedComponentProps): JSX.Element {
             <ul className="breadcrumbs page-content__breadcrumbs">
               <li className="breadcrumbs__item"><Link to={AppRoute.Main} className="link" >Главная</Link>
               </li>
-              <li className="breadcrumbs__item"><a className="link">Каталог</a>
+              <li className="breadcrumbs__item"><Link to={`${AppRoute.Main}page_1?${search.toString()}`} className="link">Каталог</Link>
               </li>
             </ul>
             <Catalog/>
@@ -172,4 +32,4 @@ function Main (props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export default connector(memo(Main));
+export default Main;

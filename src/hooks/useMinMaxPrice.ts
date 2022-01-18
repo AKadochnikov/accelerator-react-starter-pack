@@ -6,7 +6,7 @@ import {api} from '../services/api';
 import {Params} from '../const';
 import {useState} from 'react';
 
-export const useMinMaxPrice = () => {
+export const useMinMaxPrice = (params: string) => {
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const search = useSearch();
@@ -25,7 +25,7 @@ export const useMinMaxPrice = () => {
 
   useEffect(() => {
     void execute();
-  }, [search]);
+  }, [params]);
 
   return [minPrice, maxPrice];
 };

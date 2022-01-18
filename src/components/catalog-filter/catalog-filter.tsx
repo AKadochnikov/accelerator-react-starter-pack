@@ -1,25 +1,14 @@
 import FilterPrice from '../filter-price/filter-price';
 import FilterType from '../filter-type/filter-type';
 import FilterStringsCount from '../filter-strings-count/filter-strings-count';
-import {connect, ConnectedProps} from 'react-redux';
-import {State} from '../../types/state';
-import {getGuitarCounts, getGuitarTypes} from '../../store/user/selectors';
 import {useState} from 'react';
 import {Params} from '../../const';
+import {useTypesCountsGuitar} from '../../hooks/useTypesCountsGuitar';
 
-const mapStateToProps = (state: State) => ({
-  guitarTypes: getGuitarTypes(state),
-  guitarCounts: getGuitarCounts(state),
-});
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
-
-function CatalogFilter (props: ConnectedComponentProps): JSX.Element {
-  const {guitarTypes, guitarCounts} = props;
-  const [newGuitarCounts, setNewGuitarCounts] = useState<number[]>(guitarCounts.slice());
-  const [newGuitarTypes, setNewGuitarTypes] = useState<string[]>(guitarTypes.slice());
+function CatalogFilter (): JSX.Element {
+  const {currentCounts, currentTypes} = useTypesCountsGuitar();
+  const [newGuitarCounts, setNewGuitarCounts] = useState<number[]>(currentCounts.slice());
+  const [newGuitarTypes, setNewGuitarTypes] = useState<string[]>(currentTypes.slice());
 
   return (
     <form className="catalog-filter">
@@ -31,4 +20,4 @@ function CatalogFilter (props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export default connector(CatalogFilter);
+export default CatalogFilter;

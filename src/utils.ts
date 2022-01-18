@@ -56,8 +56,20 @@ const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice:
   history.push(`${AppRoute.Main}page_${id}?${search.toString()}`);
 };
 
-const changeCount = (counts: number[], cb: (item: number[]) => void) => {
-  cb(counts);
+const changeCount = (counts: number[], types: string[], history: History, search: URLSearchParams) => {
+  search.delete(Params.StringCount);
+  search.delete(Params.GuitarType);
+  if(counts.length !== 0) {
+    counts.forEach((count) => {
+      search.append(Params.StringCount, count.toString());
+    });
+  }
+  if(types.length !== 0) {
+    types.forEach((type) => {
+      search.append(Params.GuitarType, type);
+    });
+  }
+  history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
 };
 
 const changeType = (types: string[], cb: (item: string[]) => void) => {

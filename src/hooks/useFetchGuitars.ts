@@ -8,6 +8,7 @@ import {toast} from 'react-toastify';
 export const useFetchGuitars = (params: string) => {
   const search = useSearch();
   const [guitars, setGuitars] = useState<Guitar[]>([]);
+  const [totalGuitars, setTotalGuitars] = useState<number>(0);
 
   if (!search.has(Params.Start) && !search.has(Params.End)) {
     search.set(Params.Start, '0');
@@ -17,6 +18,8 @@ export const useFetchGuitars = (params: string) => {
   const execute = () => api.get<Guitar[]>(`${APIRoute.Guitars}/?_embed=comments&${search.toString()}`)
     .then((response) => {
       const data = response.data;
+      const header = response.headers;
+      setTotalGuitars(header['x-total-count']);
       setGuitars(data);
     })
     .catch(() => {
@@ -27,5 +30,5 @@ export const useFetchGuitars = (params: string) => {
     void execute();
   }, [params]);
 
-  return guitars;
+  return {guitars, totalGuitars};
 };

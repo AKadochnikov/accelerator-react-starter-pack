@@ -7,7 +7,11 @@ import {useSearch} from '../../hooks/useSearch';
 
 function Catalog ():JSX.Element {
   const search = useSearch();
-  const guitars = useFetchGuitars(search.toString());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {guitars, totalGuitars} = useFetchGuitars(search.toString());
+
+  // eslint-disable-next-line no-console
+  console.log(totalGuitars);
 
   return (
     <div className="catalog" data-testid={'catalog'}>

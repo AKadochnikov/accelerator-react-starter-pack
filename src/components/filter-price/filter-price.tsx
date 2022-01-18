@@ -9,7 +9,8 @@ function FilterPrice (): JSX.Element {
   const {id} = useParams<{id: string}>();
   const currentId = checkId(id);
   const search = useSearch();
-  const [minPrice, maxPrice] = useMinMaxPrice();
+  const params = search.toString();
+  const [minPrice, maxPrice] = useMinMaxPrice(params);
 
   const inputMinPriceHandler = (evt: FormEvent<HTMLInputElement>) => {
     const eventTarget = evt.currentTarget;
