@@ -7,13 +7,13 @@ import {useSearch} from '../../hooks/useSearch';
 
 function Catalog ():JSX.Element {
   const search = useSearch();
-  const {guitars, totalGuitars} = useFetchGuitars(search.toString());
+  const {guitars, totalGuitars, loadStatus} = useFetchGuitars(search.toString());
 
   return (
     <div className="catalog" data-testid={'catalog'}>
       <CatalogFilter/>
       <CatalogSort/>
-      <CatalogCards guitars={guitars}/>
+      <CatalogCards guitars={guitars} loadStatus={loadStatus}/>
       <Pagination total={totalGuitars}/>
     </div>
   );
