@@ -19,35 +19,51 @@ const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undef
   });
 };
 
-const validityMinPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, id: number) => {
+const validityMinPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, cb:  Dispatch<SetStateAction<number>>, currentMaxPrice: number) => {
   search.set(Params.Start, '0');
   search.set(Params.End, '9');
   if (eventTarget.value !== ''){
     const value = Number(eventTarget.value);
     if(value > maxPrice) {
+      cb(maxPrice);
       eventTarget.value = maxPrice.toString();
       search.set(Params.PriceMin, eventTarget.value);
     } else if (value < minPrice) {
+      cb(minPrice);
       eventTarget.value = minPrice.toString();
+      search.set(Params.PriceMin, eventTarget.value);
+    } else if (value > currentMaxPrice && currentMaxPrice !== 0) {
+      cb(currentMaxPrice);
+      eventTarget.value = currentMaxPrice.toString();
       search.set(Params.PriceMin, eventTarget.value);
     }
     search.set(Params.PriceMin, eventTarget.value);
     history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
     return;
   }
-  search.set(Params.PriceMin, minPrice.toString());
+  search.delete(Params.PriceMin);
   history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
 };
 
-const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, id: number) => {
+const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice: number, minPrice:number, history: History, search: URLSearchParams, cb:  Dispatch<SetStateAction<number>>, currentMinPrice: number) => {
   search.set(Params.Start, '0');
   search.set(Params.End, '9');
   if (eventTarget.value !== ''){
     const value = Number(eventTarget.value);
     if(value > maxPrice) {
+      cb(maxPrice);
       eventTarget.value = maxPrice.toString();
       search.set(Params.PriceMax, eventTarget.value);
+    } else if (value < currentMinPrice && currentMinPrice < minPrice) {
+      cb(minPrice);
+      eventTarget.value = minPrice.toString();
+      search.set(Params.PriceMax, eventTarget.value);
+    } else if (value < currentMinPrice) {
+      cb(currentMinPrice);
+      eventTarget.value = currentMinPrice.toString();
+      search.set(Params.PriceMax, eventTarget.value);
     } else if (value < minPrice) {
+      cb(minPrice);
       eventTarget.value = minPrice.toString();
       search.set(Params.PriceMax, eventTarget.value);
     }
@@ -55,7 +71,7 @@ const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice:
     history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
     return;
   }
-  search.set(Params.PriceMax, maxPrice.toString());
+  search.delete(Params.PriceMax);
   history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
 };
 
