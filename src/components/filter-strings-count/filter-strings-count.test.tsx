@@ -6,14 +6,15 @@ import {createMemoryHistory} from 'history';
 const history = createMemoryHistory();
 
 describe('Component: FilterStringsCount', () => {
-  const fakeOnChange = jest.fn();
+  const fakeOnChangeCounts = jest.fn();
+  const fakeOnChangeTypes = jest.fn();
   const fakeGuitarTypes = [''];
   const fakeGuitarCounts = [3];
 
   it('should render FilterStringsCount component', () => {
     render(
       <Router history={history}>
-        <FilterStringsCount onChange={fakeOnChange} newGuitarTypes={fakeGuitarTypes} newGuitarCounts={fakeGuitarCounts}/>
+        <FilterStringsCount onChangeCounts={fakeOnChangeCounts} onChangeTypes={fakeOnChangeTypes} newGuitarTypes={fakeGuitarTypes} newGuitarCounts={fakeGuitarCounts}/>
       </Router>,
     );
 

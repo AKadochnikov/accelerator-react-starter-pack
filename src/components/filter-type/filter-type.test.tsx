@@ -6,14 +6,15 @@ import {createMemoryHistory} from 'history';
 const history = createMemoryHistory();
 
 describe('Component: FilterType', () => {
-  const fakeOnChange = jest.fn();
+  const fakeOnChangeCounts = jest.fn();
+  const fakeOnChangeTypes = jest.fn();
   const fakeGuitarTypes = [''];
   const fakeGuitarCounts = [3];
 
   it('should render FilterType component', () => {
     render(
       <Router history={history}>
-        <FilterType onChange={fakeOnChange} newGuitarCounts={fakeGuitarCounts} newGuitarTypes={fakeGuitarTypes}/>
+        <FilterType onChangeCounts={fakeOnChangeCounts} onChangeTypes={fakeOnChangeTypes} newGuitarCounts={fakeGuitarCounts} newGuitarTypes={fakeGuitarTypes}/>
       </Router>,
     );
 

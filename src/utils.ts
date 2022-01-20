@@ -59,18 +59,30 @@ const validityMaxPrice = (eventTarget: EventTarget & HTMLInputElement, maxPrice:
   history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
 };
 
+export const getFilteredCounts = (counts: number[], types: string[]) => {
+  const availableCounts = getAvailableCounts(types);
+  return counts.filter((item) => availableCounts.has(item));
+};
+
+export const getFilteredTypes = (counts: number[], types: string[]) => {
+  const availableTypes = getAvailableTypes(counts);
+  return types.filter((item) => availableTypes.has(item));
+};
+
 const changeCountAndType = (counts: number[], types: string[], history: History, search: URLSearchParams) => {
   search.delete(Params.StringCount);
   search.delete(Params.GuitarType);
   search.set(Params.Start, '0');
   search.set(Params.End, '9');
   if(counts.length !== 0) {
-    counts.forEach((count) => {
+    const filteredCounts = getFilteredCounts(counts, types);
+    filteredCounts.forEach((count) => {
       search.append(Params.StringCount, count.toString());
     });
   }
   if(types.length !== 0) {
-    types.forEach((type) => {
+    const filteredTypes = getFilteredTypes(counts, types);
+    filteredTypes.forEach((type) => {
       search.append(Params.GuitarType, type);
     });
   }

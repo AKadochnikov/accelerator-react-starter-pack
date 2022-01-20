@@ -1,6 +1,6 @@
 import {StringsCount} from '../../const';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {debouncedChangeCountAndType, getAvailableCounts} from '../../utils';
+import {debouncedChangeCountAndType, getAvailableCounts, getFilteredTypes} from '../../utils';
 import {Dispatch, SetStateAction} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useSearch} from '../../hooks/useSearch';
@@ -8,11 +8,12 @@ import {useSearch} from '../../hooks/useSearch';
 type FilterStringsCountProps = {
   newGuitarCounts: number[];
   newGuitarTypes: string[];
-  onChange:  Dispatch<SetStateAction<number[]>>
+  onChangeCounts:  Dispatch<SetStateAction<number[]>>
+  onChangeTypes:  Dispatch<SetStateAction<string[]>>
 }
 
 function FilterStringsCount (props: FilterStringsCountProps):JSX.Element {
-  const {onChange, newGuitarCounts, newGuitarTypes} = props;
+  const {onChangeCounts, newGuitarCounts, newGuitarTypes, onChangeTypes} = props;
 
   const [availableCounts, setAvailableCounts] = useState<Set<number>>(new Set());
   const history = useHistory();
@@ -24,12 +25,14 @@ function FilterStringsCount (props: FilterStringsCountProps):JSX.Element {
     if (newCounts.includes(value)) {
       const index = newCounts.indexOf(value);
       newCounts.splice(index, 1);
-      onChange(newCounts);
+      onChangeCounts(newCounts);
+      onChangeTypes(getFilteredTypes(newCounts, newGuitarTypes));
       void debouncedChangeCountAndType(newCounts, newGuitarTypes, history, search);
       return;
     }
     newCounts.push(value);
-    onChange(newCounts);
+    onChangeCounts(newCounts);
+    onChangeTypes(getFilteredTypes(newCounts, newGuitarTypes));
     void debouncedChangeCountAndType(newCounts, newGuitarTypes, history, search);
   };
 

@@ -14,8 +14,8 @@ function CatalogFilter (): JSX.Element {
     <form className="catalog-filter">
       <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>
       <FilterPrice/>
-      <FilterType key={Params.GuitarType} newGuitarCounts={newGuitarCounts} newGuitarTypes={newGuitarTypes} onChange={setNewGuitarTypes}/>
-      <FilterStringsCount key={Params.StringCount} newGuitarCounts={newGuitarCounts} newGuitarTypes={newGuitarTypes} onChange={setNewGuitarCounts}/>
+      <FilterType key={Params.GuitarType} newGuitarCounts={newGuitarCounts} newGuitarTypes={newGuitarTypes} onChangeTypes={setNewGuitarTypes} onChangeCounts={setNewGuitarCounts}/>
+      <FilterStringsCount key={Params.StringCount} newGuitarCounts={newGuitarCounts} newGuitarTypes={newGuitarTypes} onChangeCounts={setNewGuitarCounts} onChangeTypes={setNewGuitarTypes}/>
     </form>
   );
 }
