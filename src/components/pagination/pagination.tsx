@@ -38,6 +38,10 @@ function Pagination (props: PaginationProps):JSX.Element {
     setTotalPagination(newTotalPagination);
   }, [total]);
 
+  if (totalPagination.length === 0) {
+    return (<div>   </div>);
+  }
+
   return (
     <div className="pagination page-content__pagination" data-testid={'pagination'}>
       <ul className="pagination__list">
