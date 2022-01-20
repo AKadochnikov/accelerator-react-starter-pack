@@ -221,7 +221,7 @@ export const checkId = (id: string) => {
 
 export const debouncedChangeCountAndType = debounce(changeCountAndType, 1000);
 
-export const debouncedValidityMinPrice = debounce(validityMinPrice, 1000);
-export const debouncedValidityMaxPrice = debounce(validityMaxPrice, 1000);
+export const debouncedValidityMinPrice = debounce(validityMinPrice, 500);
+export const debouncedValidityMaxPrice = debounce(validityMaxPrice, 500);
 
 export const debouncedFetchSought = debounce(fetchSought, 1000);
