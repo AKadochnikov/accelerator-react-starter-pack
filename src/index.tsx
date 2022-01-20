@@ -10,6 +10,6 @@ ReactDOM.render(
     <BrowserRouter>
       <ToastContainer/>
       <App />
-    </BrowserRouter>s
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'));

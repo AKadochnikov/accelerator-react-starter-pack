@@ -1,9 +1,8 @@
 import {debounce} from 'ts-debounce';
 import {api} from './services/api';
-import {APIRoute, AppRoute, guitarsChar, GuitarType, MAX_GUITARS, START_PAGE, StringsCount} from './const';
+import {APIRoute, AppRoute, guitarsChar, GuitarType, MAX_GUITARS, Params, START_PAGE, StringsCount} from './const';
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
-import {Params} from './const';
 import {History} from 'history';
 
 const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undefined>>) => {
@@ -16,7 +15,7 @@ const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undef
       cb(undefined);
       return;
     }
-    cb(response.data);
+    cb(sortSoughtGuitars(response.data, value));
   });
 };
 
@@ -76,6 +75,32 @@ const changeCountAndType = (counts: number[], types: string[], history: History,
     });
   }
   history.push(`${AppRoute.Main}page_${START_PAGE}?${search.toString()}`);
+};
+
+export const sortSoughtGuitars = (guitars: Guitar[], value: string) =>
+  guitars.sort((a, b) => {
+    const nameA = a.name;
+    const nameB = b.name;
+    const scoreA = getScore(nameA, value);
+    const scoreB = getScore(nameB, value);
+    return scoreB - scoreA;
+  });
+
+const getScore = (name: string, value: string) => {
+  let score = 0;
+  const currentValue = value.toLowerCase().split('');
+  const currentName: Array<string | null> = name.toLowerCase().split('');
+  currentValue.forEach((chart) => {
+    const index = currentName.indexOf(chart);
+    if (index !== -1){
+      score = score + 100 - index;
+      if(index === 0) {
+        currentName.splice(0, 1, null);
+      }
+      currentName.splice(0, index+1, null);
+    }
+  });
+  return score;
 };
 
 export const adaptImgPath = (imgPath: string):string => {
