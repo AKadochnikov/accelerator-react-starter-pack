@@ -5,7 +5,7 @@ const loadingIdStyle: CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '78vh',
+  height: '970px',
 };
 
 const loadingClassStyle: CSSProperties = {
