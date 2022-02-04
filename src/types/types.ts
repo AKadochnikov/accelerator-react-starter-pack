@@ -21,3 +21,7 @@ export type Guitar = {
   price: number
   comments: comment[],
 };
+
+export type Params = {
+  id: string;
+}

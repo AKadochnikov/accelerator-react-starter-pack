@@ -1,10 +1,34 @@
-import Icons from './icons/icons';
-import Header from './header/header';
+import Icons from '../icons/icons';
+import Header from '../header/header';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../const';
-import Footer from './footer/footer';
+import {AppRoute, LoadingStatus} from '../../const';
+import Footer from '../footer/footer';
+import {useParams} from 'react-router-dom';
+import {Params} from '../../types/types';
+import {useFetchGuitar} from '../../hooks/useFetchGuitar';
+import {adaptImgPath, getRussianType} from '../../utils';
+import Loading from '../loading/loading';
+import NotFound from '../404-not-found/404';
 
 function Product (): JSX.Element {
+  const params: Params = useParams();
+  const currentId = params.id;
+
+  const {guitar, loadStatus} = useFetchGuitar(currentId);
+
+  if (guitar === null && loadStatus === LoadingStatus.Loading) {
+    return <Loading/>;
+  } else if (loadStatus === LoadingStatus.Error) {
+    return <NotFound/>;
+  } else if (guitar === null){
+    return <Loading/>;
+  }
+
+  const {previewImg, name, type, description, vendorCode, stringCount, price} = guitar;
+
+  const imgPath = adaptImgPath(previewImg);
+  const russianType = getRussianType(type);
+
   return (
     <>
       <Icons/>
@@ -18,13 +42,13 @@ function Product (): JSX.Element {
               </li>
               <li className="breadcrumbs__item"><Link to={`${AppRoute.Main}page_1`} className="link">Каталог</Link>
               </li>
-              <li className="breadcrumbs__item"><a className="link">Товар</a>
+              <li className="breadcrumbs__item"><Link to={`${AppRoute.CurrentGuitar}${currentId}`} className="link">{name}</Link>
               </li>
             </ul>
             <div className="product-container">
-              <img className="product-container__img" src="img/content/guitar-2.jpg" width="90" height="235" alt=""></img>
+              <img className="product-container__img" src={`/${imgPath}`} width="90" height="235" alt={`${name} ${type}`}/>
               <div className="product-container__info-wrapper">
-                <h2 className="product-container__title title title--big title--uppercase">СURT Z30 Plus</h2>
+                <h2 className="product-container__title title title--big title--uppercase">{name}</h2>
                 <div className="rate product-container__rating" aria-hidden="true">
                   <span className="visually-hidden">Рейтинг:</span>
                   <svg width="14" height="14" aria-hidden="true">
@@ -44,35 +68,32 @@ function Product (): JSX.Element {
                   </svg>
                   <span className="rate__count"/><span className="rate__message"/>
                 </div>
-                <div className="tabs"><a className="button button--medium tabs__button" href="#characteristics">Характеристики</a>
-                  <a className="button button--black-border button--medium tabs__button" href="#description">Описание</a>
+                <div className="tabs"><a className="button button--medium tabs__button" href="#">Характеристики</a>
+                  <a className="button button--black-border button--medium tabs__button" href="#">Описание</a>
                   <div className="tabs__content" id="characteristics">
                     <table className="tabs__table">
                       <tr className="tabs__table-row">
                         <td className="tabs__title">Артикул:</td>
-                        <td className="tabs__value">SO754565</td>
+                        <td className="tabs__value">{vendorCode}</td>
                       </tr>
                       <tr className="tabs__table-row">
                         <td className="tabs__title">Тип:</td>
-                        <td className="tabs__value">Электрогитара</td>
+                        <td className="tabs__value">{russianType}</td>
                       </tr>
                       <tr className="tabs__table-row">
                         <td className="tabs__title">Количество струн:</td>
-                        <td className="tabs__value">6 струнная</td>
+                        <td className="tabs__value">{stringCount} струнная</td>
                       </tr>
                     </table>
-                    <p className="tabs__product-description hidden">Гитара подходит как для старта обучения, так и для
-                      домашних занятий или использования в полевых условиях, например, в походах или для проведения
-                      уличных
-                      выступлений. Доступная стоимость, качество и надежная конструкция, а также приятный внешний вид,
-                      который сделает вас звездой вечеринки.
+                    <p className="tabs__product-description hidden">
+                      {description}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="product-container__price-wrapper">
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
-                <p className="product-container__price-info product-container__price-info--value">52 000 ₽</p>
+                <p className="product-container__price-info product-container__price-info--value">{price} ₽</p>
                 <a className="button button--red button--big product-container__button" href="#">Добавить в корзину</a>
               </div>
             </div>

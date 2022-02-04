@@ -1,6 +1,16 @@
 import {debounce} from 'ts-debounce';
 import {api} from './services/api';
-import {APIRoute, AppRoute, guitarsChar, GuitarType, MAX_GUITARS, Params, START_PAGE, StringsCount} from './const';
+import {
+  APIRoute,
+  AppRoute,
+  guitarsChar,
+  GuitarType,
+  MAX_GUITARS,
+  Params,
+  RussianGuitarType,
+  START_PAGE,
+  StringsCount
+} from './const';
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {History} from 'history';
@@ -217,6 +227,20 @@ export const checkId = (id: string) => {
     return START_PAGE;
   }
   return Number(id);
+};
+
+export const getRussianType = (type: string) => {
+  switch (type) {
+    case GuitarType.Acoustic: {
+      return RussianGuitarType.Acoustic;
+    }
+    case GuitarType.Electric: {
+      return RussianGuitarType.Electric;
+    }
+    case GuitarType.Ukulele: {
+      return RussianGuitarType.Ukulele;
+    }
+  }
 };
 
 export const debouncedChangeCountAndType = debounce(changeCountAndType, 1000);

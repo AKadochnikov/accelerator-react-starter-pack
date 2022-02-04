@@ -17,7 +17,8 @@ export enum APIRoute {
 export enum AppRoute {
   Main = '/',
   Catalog ='/page_:id',
-  Guitar = '/guitars/:id'
+  Guitar = '/guitars/:id',
+  CurrentGuitar = '/guitars/',
 }
 
 export enum NameSpace {
@@ -56,6 +57,12 @@ export enum GuitarType {
   Acoustic = 'acoustic',
   Electric = 'electric',
   Ukulele = 'ukulele',
+}
+
+export enum RussianGuitarType {
+  Acoustic = 'Акустическая',
+  Electric = 'Электронная',
+  Ukulele = 'Акулеле',
 }
 
 export enum PriceLoadStatus {

@@ -8,13 +8,13 @@ type CardProps = {
 
 function Card (props: CardProps): JSX.Element {
   const {guitar} = props;
-  const {previewImg, name, price, rating, id, comments} = guitar;
+  const {previewImg, name, price, rating, id, comments, type} = guitar;
   const imgPath = adaptImgPath(previewImg);
   const newRating = new Array(5).fill(null).fill('full', 0, rating);
 
   return (
     <div className="product-card">
-      <img src={imgPath} width="75" height="190" alt="СURT Z30 Plus Acoustics"/>
+      <img src={imgPath} width="75" height="190" alt={`${name} ${type}`}/>
       <div className="product-card__info">
         <div className="rate product-card__rate" aria-hidden="true">
           <span className="visually-hidden">Рейтинг:</span>
