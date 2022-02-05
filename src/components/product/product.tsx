@@ -17,6 +17,7 @@ function Product (): JSX.Element {
   const currentId = params.id;
   const isCatalog = false;
 
+
   const {guitar, loadStatus} = useFetchGuitar(currentId);
 
   if (guitar === null && loadStatus === LoadingStatus.Loading) {
@@ -28,6 +29,7 @@ function Product (): JSX.Element {
   }
 
   const {previewImg, name, type, description, vendorCode, stringCount, price, comments, rating, id} = guitar;
+  document.title = name;
 
   const imgPath = adaptImgPath(previewImg);
 

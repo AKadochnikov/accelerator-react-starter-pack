@@ -9,6 +9,7 @@ import {useSearch} from '../../hooks/useSearch';
 function Main (): JSX.Element {
   const search = useSearch();
   const isCatalog = true;
+  document.title = 'Guitar-shop';
 
   return (
     <>
