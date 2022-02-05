@@ -10,7 +10,7 @@ export const useFetchGuitar = (id: string) => {
 
   const execute = () => {
     setLoadStatus(LoadingStatus.Loading);
-    api.get<Guitar>(`${APIRoute.Guitars}/${id}`)
+    api.get<Guitar>(`${APIRoute.Guitars}/${id}?_embed=comments`)
       .then((response) => {
         const data = response.data;
         setGuitar(data);

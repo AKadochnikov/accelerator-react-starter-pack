@@ -1,11 +1,16 @@
 import {Guitar} from '../../types/types';
 import {FormEvent, useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import {APIRoute} from '../../const';
+import {AppRoute} from '../../const';
 import {debouncedFetchSought} from '../../utils';
 import {Link} from 'react-router-dom';
 
-function Header ():JSX.Element {
+type HeaderProps = {
+  isCatalog: boolean;
+}
+
+function Header (props: HeaderProps):JSX.Element {
+  const {isCatalog} = props;
   const [data, setData] = useState<Guitar[] | undefined>(undefined);
   const history = useHistory();
 
@@ -21,7 +26,7 @@ function Header ():JSX.Element {
         </Link>
         <nav className="main-nav">
           <ul className="main-nav__list">
-            <li><Link to={'#top'} className="link main-nav__link link--current">Каталог</Link>
+            <li><Link to={AppRoute.Catalog} className={`link main-nav__link ${isCatalog? 'link--current': ''}`}>Каталог</Link>
             </li>
             <li><Link to={'#top'} className="link main-nav__link">Где купить?</Link>
             </li>
@@ -41,7 +46,7 @@ function Header ():JSX.Element {
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
           <ul style={{zIndex: 1}} className="form-search__select-list" hidden={data === undefined}>
-            {data?.map((item) => (<li key={item.id} className="form-search__select-item" tabIndex={0} onClick={() => history.push(`${APIRoute.Guitars}/${item.id}`)}>{item.name}</li>))}
+            {data?.map((item) => (<li key={item.id} className="form-search__select-item" tabIndex={0} onClick={() => history.push(`${AppRoute.CurrentGuitar}${item.id}`)}>{item.name}</li>))}
           </ul>
         </div>
         <Link to={'#top'} className="header__cart-link" aria-label="Корзина">

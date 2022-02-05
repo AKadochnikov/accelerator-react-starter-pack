@@ -8,12 +8,13 @@ import {useSearch} from '../../hooks/useSearch';
 
 function Main (): JSX.Element {
   const search = useSearch();
+  const isCatalog = true;
 
   return (
     <>
       <Icons/>
       <div className="wrapper" data-testid={'main'}>
-        <Header/>
+        <Header isCatalog={isCatalog}/>
         <main className="page-content">
           <div className="container">
             <h1 className="page-content__title title title--bigger">Каталог гитар</h1>

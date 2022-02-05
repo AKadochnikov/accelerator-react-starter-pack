@@ -9,10 +9,12 @@ import {useFetchGuitar} from '../../hooks/useFetchGuitar';
 import {adaptImgPath, getRussianType} from '../../utils';
 import Loading from '../loading/loading';
 import NotFound from '../404-not-found/404';
+import Rating from '../rating/rating';
 
 function Product (): JSX.Element {
   const params: Params = useParams();
   const currentId = params.id;
+  const isCatalog = false;
 
   const {guitar, loadStatus} = useFetchGuitar(currentId);
 
@@ -24,7 +26,7 @@ function Product (): JSX.Element {
     return <Loading/>;
   }
 
-  const {previewImg, name, type, description, vendorCode, stringCount, price} = guitar;
+  const {previewImg, name, type, description, vendorCode, stringCount, price, comments, rating, id} = guitar;
 
   const imgPath = adaptImgPath(previewImg);
   const russianType = getRussianType(type);
@@ -33,7 +35,7 @@ function Product (): JSX.Element {
     <>
       <Icons/>
       <div className="wrapper">
-        <Header/>
+        <Header isCatalog={isCatalog}/>
         <main className="page-content">
           <div className="container">
             <h1 className="page-content__title title title--bigger">Товар</h1>
@@ -50,23 +52,7 @@ function Product (): JSX.Element {
               <div className="product-container__info-wrapper">
                 <h2 className="product-container__title title title--big title--uppercase">{name}</h2>
                 <div className="rate product-container__rating" aria-hidden="true">
-                  <span className="visually-hidden">Рейтинг:</span>
-                  <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"/>
-                  </svg>
-                  <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"/>
-                  </svg>
-                  <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"/>
-                  </svg>
-                  <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"/>
-                  </svg>
-                  <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-star"/>
-                  </svg>
-                  <span className="rate__count"/><span className="rate__message"/>
+                  <Rating rating={rating} id={id} comments={comments}/>
                 </div>
                 <div className="tabs"><a className="button button--medium tabs__button" href="#">Характеристики</a>
                   <a className="button button--black-border button--medium tabs__button" href="#">Описание</a>
