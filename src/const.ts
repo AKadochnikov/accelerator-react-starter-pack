@@ -26,6 +26,11 @@ export enum NameSpace {
   user = 'USER',
 }
 
+export enum Tabs {
+  Specifications = 'specifications',
+  Description = 'description',
+}
+
 export enum Params {
   NameLike = 'name_like',
   Start = '_start',

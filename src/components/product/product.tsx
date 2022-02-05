@@ -6,10 +6,11 @@ import Footer from '../footer/footer';
 import {useParams} from 'react-router-dom';
 import {Params} from '../../types/types';
 import {useFetchGuitar} from '../../hooks/useFetchGuitar';
-import {adaptImgPath, getRussianType} from '../../utils';
+import {adaptImgPath} from '../../utils';
 import Loading from '../loading/loading';
 import NotFound from '../404-not-found/404';
 import Rating from '../rating/rating';
+import Tab from '../tab/tab';
 
 function Product (): JSX.Element {
   const params: Params = useParams();
@@ -29,7 +30,6 @@ function Product (): JSX.Element {
   const {previewImg, name, type, description, vendorCode, stringCount, price, comments, rating, id} = guitar;
 
   const imgPath = adaptImgPath(previewImg);
-  const russianType = getRussianType(type);
 
   return (
     <>
@@ -54,37 +54,18 @@ function Product (): JSX.Element {
                 <div className="rate product-container__rating" aria-hidden="true">
                   <Rating rating={rating} id={id} comments={comments}/>
                 </div>
-                <div className="tabs"><a className="button button--medium tabs__button" href="#">Характеристики</a>
-                  <a className="button button--black-border button--medium tabs__button" href="#">Описание</a>
-                  <div className="tabs__content" id="characteristics">
-                    <table className="tabs__table">
-                      <tr className="tabs__table-row">
-                        <td className="tabs__title">Артикул:</td>
-                        <td className="tabs__value">{vendorCode}</td>
-                      </tr>
-                      <tr className="tabs__table-row">
-                        <td className="tabs__title">Тип:</td>
-                        <td className="tabs__value">{russianType}</td>
-                      </tr>
-                      <tr className="tabs__table-row">
-                        <td className="tabs__title">Количество струн:</td>
-                        <td className="tabs__value">{stringCount} струнная</td>
-                      </tr>
-                    </table>
-                    <p className="tabs__product-description hidden">
-                      {description}
-                    </p>
-                  </div>
-                </div>
+                <Tab vendorCode={vendorCode} type={type} stringCount={stringCount} description={description}/>
               </div>
               <div className="product-container__price-wrapper">
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
                 <p className="product-container__price-info product-container__price-info--value">{price} ₽</p>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="button button--red button--big product-container__button" href="#">Добавить в корзину</a>
               </div>
             </div>
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
               <div className="review">
                 <div className="review__wrapper">
