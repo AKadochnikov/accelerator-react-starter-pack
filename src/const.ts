@@ -5,6 +5,11 @@ export const START_PAGE = 1;
 export const FAIL_MESSAGE = 'Извините, сервер недоступен';
 export const COMMENT_STEP = 3;
 
+export enum Key {
+  Escape = 'Escape',
+  Esc = 'Esc',
+}
+
 export enum LoadingStatus {
   Loading = 'loading',
   Complete = 'complete',
@@ -13,6 +18,7 @@ export enum LoadingStatus {
 
 export enum APIRoute {
   Guitars = '/guitars',
+  Comments = '/comments'
 }
 
 export enum AppRoute {

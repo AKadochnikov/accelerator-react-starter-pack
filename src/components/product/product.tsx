@@ -12,12 +12,22 @@ import NotFound from '../404-not-found/404';
 import Rating from '../rating/rating';
 import Tab from '../tab/tab';
 import ReviewList from '../review-list/review-list';
+import AddCommentModal from '../add-comment-modal/add-comment-modal';
+import {useState} from 'react';
+import {MouseEvent} from 'react';
 
 function Product (): JSX.Element {
+  const [isOpenedCommentModal, setIsOpenedCommentModal] = useState<boolean>(false);
   const params: Params = useParams();
   const currentId = params.id;
   const isCatalog = false;
   const {guitar, loadStatus} = useFetchGuitar(currentId);
+
+  const handleOpenCommentModal = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    document.body.style.overflow = 'hidden';
+    setIsOpenedCommentModal(!isOpenedCommentModal);
+  };
 
   if (guitar === null && loadStatus === LoadingStatus.Loading) {
     return <Loading/>;
@@ -33,8 +43,13 @@ function Product (): JSX.Element {
 
   const imgPath = adaptImgPath(previewImg);
 
+  if (isOpenedCommentModal) {
+    document.body.setAttribute('aria-hidden', 'true');
+  }
+
   return (
     <>
+      {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} guitarName={name}/>: ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog}/>
@@ -68,7 +83,7 @@ function Product (): JSX.Element {
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
+              <a onClick={handleOpenCommentModal} className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
               <ReviewList comments={comments}/>
               <a className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a>
             </section>
