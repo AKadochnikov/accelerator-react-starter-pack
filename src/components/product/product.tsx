@@ -17,8 +17,6 @@ function Product (): JSX.Element {
   const params: Params = useParams();
   const currentId = params.id;
   const isCatalog = false;
-
-
   const {guitar, loadStatus} = useFetchGuitar(currentId);
 
   if (guitar === null && loadStatus === LoadingStatus.Loading) {
@@ -30,6 +28,7 @@ function Product (): JSX.Element {
   }
 
   const {previewImg, name, type, description, vendorCode, stringCount, price, comments, rating, id} = guitar;
+
   document.title = name;
 
   const imgPath = adaptImgPath(previewImg);
@@ -71,7 +70,6 @@ function Product (): JSX.Element {
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
               <ReviewList comments={comments}/>
-              <button className="button button--medium reviews__more-button">Показать еще отзывы</button>
               <a className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a>
             </section>
           </div>

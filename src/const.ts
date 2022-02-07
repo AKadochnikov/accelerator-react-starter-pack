@@ -3,6 +3,7 @@ export const REQUEST_TIME_OUT = 10000;
 export const MAX_GUITARS = 9;
 export const START_PAGE = 1;
 export const FAIL_MESSAGE = 'Извините, сервер недоступен';
+export const COMMENT_STEP = 3;
 
 export enum LoadingStatus {
   Loading = 'loading',

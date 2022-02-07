@@ -14,6 +14,7 @@ import {
 import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {History} from 'history';
+import {Comment} from './types/types';
 
 const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undefined>>) => {
   if(value.length === 0) {
@@ -242,6 +243,16 @@ export const getRussianType = (type: string) => {
     }
   }
 };
+
+export const getActiveComments = (step: number, comments: Comment[], cb: Dispatch<SetStateAction<Comment[]>>) => {
+  const sortedComments = comments.slice().sort((commentA: Comment, commentB: Comment) => Date.parse(commentB.createAt) - Date.parse(commentA.createAt));
+  if(step >= sortedComments.length) {
+    cb(sortedComments);
+  }
+  sortedComments.splice(step);
+  cb(sortedComments);
+};
+
 
 export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
 
