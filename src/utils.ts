@@ -243,6 +243,8 @@ export const getRussianType = (type: string) => {
   }
 };
 
+export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
+
 export const debouncedChangeCountAndType = debounce(changeCountAndType, 1000);
 
 export const debouncedValidityMinPrice = debounce(validityMinPrice, 500);

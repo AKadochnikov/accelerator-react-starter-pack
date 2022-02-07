@@ -1,4 +1,4 @@
-export type comment = {
+export type Comment = {
   id: string,
   userName: string,
   advantage: string,
@@ -19,7 +19,7 @@ export type Guitar = {
   stringCount: number,
   rating: number,
   price: number
-  comments: comment[],
+  comments: Comment[],
 };
 
 export type Params = {
