@@ -253,22 +253,30 @@ export const getActiveComments = (step: number, comments: Comment[], cb: Dispatc
   cb(sortedComments);
 };
 
-export const postComment = () => {
-
+export const postComment = (id: number, name: string, advantage: string, disadvantage: string, comment: string, rating: number, disableForm:  Dispatch<SetStateAction<boolean>>, disableSubmit: Dispatch<SetStateAction<boolean>>, setIsOpenedCommentModal: Dispatch<SetStateAction<boolean>>, setIsOpenedSuccessModal: Dispatch<SetStateAction<boolean>>) => {
+  disableForm(true);
+  disableSubmit(true);
   api.post(APIRoute.Comments, {
-    guitarId: 20,
-    userName: 'Артём',
-    advantage: 'Рекомендую!',
-    disadvantage: 'Покрытие.',
-    comment: 'Хорошая гитара для начинающих, сделана качественно. Лучше за эти деньги не найти.',
-    rating: 3,
-  }).then((response) => {
+    guitarId: id,
+    userName: name,
+    advantage: advantage,
+    disadvantage: disadvantage,
+    comment: comment,
+    rating: rating,
+  })
+    .then((response) => {
     // eslint-disable-next-line no-console
-    console.log(response.data);
-  });
+      console.log(response.data);
+      setIsOpenedCommentModal(false);
+      setIsOpenedSuccessModal(true);
+    })
+    .catch(() => {
+      disableForm(false);
+      disableSubmit(false);
+      // eslint-disable-next-line no-alert
+      alert('Oops');
+    });
 };
-
-postComment();
 
 export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
 

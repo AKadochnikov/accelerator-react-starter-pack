@@ -1,21 +1,28 @@
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction, useRef, useState} from 'react';
 import {Key} from '../../const';
 import FocusTrap from 'focus-trap-react';
 import {FormEvent, MouseEvent} from 'react';
+import {postComment} from '../../utils';
 
 type AddCommentModalProps = {
   setIsOpenedCommentModal: Dispatch<SetStateAction<boolean>>
+  setIsOpenedSuccessModal: Dispatch<SetStateAction<boolean>>
   guitarName: string;
+  id: number;
 }
 
 
 function AddCommentModal(props: AddCommentModalProps): JSX.Element {
-  const {setIsOpenedCommentModal, guitarName} = props;
+  const {setIsOpenedCommentModal, setIsOpenedSuccessModal, guitarName, id} = props;
   const [isValidRating, setIsValidRating] = useState<boolean>(true);
   const [isValidInput, setIsValidInput] = useState<boolean>(true);
   const [isDisabledSubmit, setIsDisabledSubmit] = useState<boolean>(false);
   const [nameValue, setNameValue] = useState<string>('');
   const [ratingValue, setRatingValue] = useState<number>(0);
+  const advantageRef = useRef<HTMLInputElement | null>(null);
+  const disadvantageRef = useRef<HTMLInputElement | null>(null);
+  const commentRef = useRef<HTMLTextAreaElement | null>(null);
+  const [isFormDisabled, setIsFormDisabled] = useState<boolean>(false);
 
   const handleKeyDown = (evt: KeyboardEvent) => {
     if(evt.key === Key.Escape || evt.key === Key.Esc) {
@@ -40,6 +47,7 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
     } else if (ratingValue === 0) {
       setIsDisabledSubmit(true);
       setIsValidRating(false);
+      setIsValidInput(true);
     } else {
       setIsDisabledSubmit(false);
       setIsValidInput(true);
@@ -55,6 +63,7 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
     } else if (nameValue === '') {
       setIsDisabledSubmit(true);
       setIsValidInput(false);
+      setIsValidRating(true);
     } else {
       setIsDisabledSubmit(false);
       setIsValidRating(true);
@@ -63,8 +72,24 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
 
   const handleSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('Hello');
+    if(nameValue === '' || ratingValue === 0) {
+      setIsValidInput(false);
+      setIsValidRating(false);
+      return;
+    }
+    let advantageValue = '-';
+    let disadvantageValue = '-';
+    let commentValue = '-';
+    if (advantageRef.current?.value) {
+      advantageValue = advantageRef.current?.value;
+    }
+    if (disadvantageRef.current?.value) {
+      disadvantageValue = disadvantageRef.current?.value;
+    }
+    if (commentRef.current?.value) {
+      commentValue = commentRef.current?.value;
+    }
+    postComment(id, nameValue, advantageValue, disadvantageValue, commentValue, ratingValue, setIsFormDisabled, setIsDisabledSubmit, setIsOpenedCommentModal, setIsOpenedSuccessModal);
   };
 
   return (
@@ -79,20 +104,20 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
               <div className="form-review__wrapper">
                 <div className="form-review__name-wrapper">
                   <label className="form-review__label form-review__label--required" htmlFor="user-name">Ваше Имя</label>
-                  <input onInput={handleInput} className="form-review__input form-review__input--name" id="user-name" type="text" autoComplete="off"/>
+                  <input onInput={handleInput} className="form-review__input form-review__input--name" id="user-name" type="text" autoComplete="off" disabled={isFormDisabled}/>
                   <span className="form-review__warning" aria-live='polite'>{isValidInput? '' : 'Заполните поле'}</span>
                 </div>
                 <div><span className="form-review__label form-review__label--required">Ваша Оценка</span>
                   <div className="rate rate--reverse">
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-5" name="rate" value="5"/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-5" name="rate" value="5" disabled={isFormDisabled}/>
                     <label className="rate__label" htmlFor="star-5" title="Отлично"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-4" name="rate" value="4"/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-4" name="rate" value="4" disabled={isFormDisabled}/>
                     <label className="rate__label" htmlFor="star-4" title="Хорошо"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-3" name="rate" value="3"/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-3" name="rate" value="3" disabled={isFormDisabled}/>
                     <label className="rate__label" htmlFor="star-3" title="Нормально"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-2" name="rate" value="2"/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-2" name="rate" value="2" disabled={isFormDisabled}/>
                     <label className="rate__label" htmlFor="star-2" title="Плохо"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-1" name="rate" value="1"/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-1" name="rate" value="1" disabled={isFormDisabled}/>
                     <label className="rate__label" htmlFor="star-1" title="Ужасно"/>
                     <span className="rate__count"/>
                     <span className="rate__message" aria-live='polite'>{isValidRating? '' : 'Поставьте оценку'}</span>
@@ -100,11 +125,11 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
                 </div>
               </div>
               <label className="form-review__label" htmlFor="user-name">Достоинства</label>
-              <input className="form-review__input" id="pros" type="text" autoComplete="off"/>
+              <input ref={advantageRef} className="form-review__input" id="pros" type="text" autoComplete="off" disabled={isFormDisabled}/>
               <label className="form-review__label" htmlFor="user-name">Недостатки</label>
-              <input className="form-review__input" id="user-name" type="text" autoComplete="off"/>
+              <input ref={disadvantageRef} className="form-review__input" id="user-name" type="text" autoComplete="off" disabled={isFormDisabled}/>
               <label className="form-review__label" htmlFor="user-name">Комментарий</label>
-              <textarea className="form-review__input form-review__input--textarea" id="user-name" rows={10} autoComplete="off"/>
+              <textarea ref={commentRef} className="form-review__input form-review__input--textarea" id="user-name" rows={10} autoComplete="off" disabled={isFormDisabled}/>
               <button onClick={handleSubmit} className="button button--medium-20 form-review__button" type="submit" disabled={isDisabledSubmit}>Отправить отзыв</button>
             </form>
             <button onClick={handleCloseClick} className="modal__close-btn button-cross" type="button" aria-label="Закрыть">

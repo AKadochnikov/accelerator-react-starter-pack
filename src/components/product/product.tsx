@@ -15,9 +15,11 @@ import ReviewList from '../review-list/review-list';
 import AddCommentModal from '../add-comment-modal/add-comment-modal';
 import {useState} from 'react';
 import {MouseEvent} from 'react';
+import SuccessModal from '../success-modal/success-modal';
 
 function Product (): JSX.Element {
   const [isOpenedCommentModal, setIsOpenedCommentModal] = useState<boolean>(false);
+  const [isOpenedSuccessModal, setIsOpenedSuccessModal] = useState<boolean>(false);
   const params: Params = useParams();
   const currentId = params.id;
   const isCatalog = false;
@@ -49,7 +51,7 @@ function Product (): JSX.Element {
 
   return (
     <>
-      {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} guitarName={name}/>: ''}
+      {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} setIsOpenedSuccessModal={setIsOpenedSuccessModal} guitarName={name} id={id}/>: ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog}/>
@@ -84,6 +86,7 @@ function Product (): JSX.Element {
               <h3 className="reviews__title title title--bigger">Отзывы</h3>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a onClick={handleOpenCommentModal} className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
+              {isOpenedSuccessModal? <SuccessModal setIsOpen={setIsOpenedSuccessModal}/> : ''}
               <ReviewList comments={comments}/>
               <a className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a>
             </section>
