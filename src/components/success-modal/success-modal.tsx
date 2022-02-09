@@ -33,9 +33,9 @@ function SuccessModal (props: SuccessModalProps): JSX.Element {
 
   return (
     <FocusTrap>
-      <div className="modal is-active modal--success">
+      <div className="modal is-active modal--success" data-testid={'modal-success'}>
         <div className="modal__wrapper">
-          <div className="modal__overlay"/>
+          <div className="modal__overlay" onClick={handleCloseClick}/>
           <div className="modal__content">
             <svg className="modal__icon" width="26" height="20" aria-hidden="true">
               <use xlinkHref="#icon-success"/>

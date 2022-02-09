@@ -15,6 +15,7 @@ jest.mock('../../hooks/useFetchGuitar', () => ({
 
 describe('Component: AddCommentModal',  () => {
   it('should is rendered on button click in Product component',   () => {
+    // noinspection DuplicatedCode
     (useFetchGuitar as jest.Mock<ReturnType<typeof useFetchGuitar>,Parameters<typeof useFetchGuitar>>).mockReturnValue({guitar: fakeGuitar, loadStatus: LoadingStatus.Complete});
     render(
       <MemoryRouter initialEntries={[`${AppRoute.CurrentGuitar}1`]}>
@@ -37,7 +38,7 @@ describe('Component: AddCommentModal',  () => {
     expect(screen.getByTestId('name-input')).toHaveValue('Alex');
   });
 
-  it('should check rating value and have value 1, 2, 3, 4, 5', () => {
+  it('should check rating value', () => {
     (useFetchGuitar as jest.Mock<ReturnType<typeof useFetchGuitar>,Parameters<typeof useFetchGuitar>>).mockReturnValue({guitar: fakeGuitar, loadStatus: LoadingStatus.Complete});
     render(
       <MemoryRouter initialEntries={[`${AppRoute.CurrentGuitar}1`]}>

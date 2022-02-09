@@ -8,7 +8,7 @@ defaultFallbackInView(true);
 const history = createMemoryHistory();
 
 
-describe('Component: RatingTemplate', () => {
+describe('Component: ReviewList', () => {
   it('should is rendered component', () => {
     render(<Router history={history}><ReviewList comments={fakeGuitar.comments}/></Router>);
 
