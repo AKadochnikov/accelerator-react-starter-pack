@@ -63,7 +63,7 @@ function Product (): JSX.Element {
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog}/>
-        <main className="page-content">
+        <main className="page-content" data-testid={'product'}>
           <div className="container">
             <h1 className="page-content__title title title--bigger">Товар</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">

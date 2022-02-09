@@ -13,8 +13,8 @@ jest.mock('../../hooks/useFetchGuitar', () => ({
 }));
 
 
-describe('Component: add-comment-modal',  () => {
-  it('should is rendered on button click',   () => {
+describe('Component: AddCommentModal',  () => {
+  it('should is rendered on button click in Product component',   () => {
     (useFetchGuitar as jest.Mock<ReturnType<typeof useFetchGuitar>,Parameters<typeof useFetchGuitar>>).mockReturnValue({guitar: fakeGuitar, loadStatus: LoadingStatus.Complete});
     render(
       <MemoryRouter initialEntries={[`${AppRoute.CurrentGuitar}1`]}>
