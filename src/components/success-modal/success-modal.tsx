@@ -12,18 +12,20 @@ type SuccessModalProps = {
 
 function SuccessModal (props: SuccessModalProps): JSX.Element {
   const {setIsOpen, setComments, id} = props;
-  const handleKeyDown = (evt: KeyboardEvent) => {
+  const handleKeyDownSuccess = (evt: KeyboardEvent) => {
     if(evt.key === Key.Escape || evt.key === Key.Esc) {
+      getComments(id, setComments);
       setIsOpen(false);
-      document.body.removeEventListener('keydown', handleKeyDown);
+      document.body.removeEventListener('keydown', handleKeyDownSuccess);
     }
   };
 
-  document.body.addEventListener('keydown', handleKeyDown);
+  document.body.addEventListener('keydown', handleKeyDownSuccess);
   const handleCloseClick = () => {
+    getComments(id, setComments);
     document.body.style.overflow = 'scroll';
     setIsOpen(false);
-    document.body.removeEventListener('keydown', handleKeyDown);
+    document.body.removeEventListener('keydown', handleKeyDownSuccess);
   };
 
   const handleClickButton = (evt: MouseEvent<HTMLButtonElement>) => {
