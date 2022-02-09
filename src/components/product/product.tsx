@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute, LoadingStatus} from '../../const';
 import Footer from '../footer/footer';
 import {useParams} from 'react-router-dom';
-import {Params} from '../../types/types';
+import {Comment, Params} from '../../types/types';
 import {useFetchGuitar} from '../../hooks/useFetchGuitar';
 import {adaptImgPath} from '../../utils';
 import Loading from '../loading/loading';
@@ -13,13 +13,14 @@ import Rating from '../rating/rating';
 import Tab from '../tab/tab';
 import ReviewList from '../review-list/review-list';
 import AddCommentModal from '../add-comment-modal/add-comment-modal';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {MouseEvent} from 'react';
 import SuccessModal from '../success-modal/success-modal';
 
 function Product (): JSX.Element {
   const [isOpenedCommentModal, setIsOpenedCommentModal] = useState<boolean>(false);
   const [isOpenedSuccessModal, setIsOpenedSuccessModal] = useState<boolean>(false);
+  const [comments, setComments] = useState<Comment[]>([]);
   const params: Params = useParams();
   const currentId = params.id;
   const isCatalog = false;
@@ -31,6 +32,12 @@ function Product (): JSX.Element {
     setIsOpenedCommentModal(!isOpenedCommentModal);
   };
 
+  useEffect(() => {
+    if(guitar) {
+      setComments(guitar.comments);
+    }
+  }, [guitar]);
+
   if (guitar === null && loadStatus === LoadingStatus.Loading) {
     return <Loading/>;
   } else if (loadStatus === LoadingStatus.Error) {
@@ -39,7 +46,7 @@ function Product (): JSX.Element {
     return <Loading/>;
   }
 
-  const {previewImg, name, type, description, vendorCode, stringCount, price, comments, rating, id} = guitar;
+  const {previewImg, name, type, description, vendorCode, stringCount, price, rating, id} = guitar;
 
   document.title = name;
 
@@ -52,6 +59,7 @@ function Product (): JSX.Element {
   return (
     <>
       {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} setIsOpenedSuccessModal={setIsOpenedSuccessModal} guitarName={name} id={id}/>: ''}
+      {isOpenedSuccessModal? <SuccessModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog}/>
@@ -86,9 +94,7 @@ function Product (): JSX.Element {
               <h3 className="reviews__title title title--bigger">Отзывы</h3>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a onClick={handleOpenCommentModal} className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
-              {isOpenedSuccessModal? <SuccessModal setIsOpen={setIsOpenedSuccessModal}/> : ''}
               <ReviewList comments={comments}/>
-              <a className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a>
             </section>
           </div>
         </main>

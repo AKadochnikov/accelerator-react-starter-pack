@@ -1,13 +1,17 @@
 import {Key} from '../../const';
 import FocusTrap from 'focus-trap-react';
-import {Dispatch, SetStateAction} from 'react';
+import {Dispatch, SetStateAction, MouseEvent} from 'react';
+import {Comment} from '../../types/types';
+import {getComments} from '../../utils';
 
 type SuccessModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>
+  setComments: Dispatch<SetStateAction<Comment[]>>
+  id: number;
 }
 
 function SuccessModal (props: SuccessModalProps): JSX.Element {
-  const {setIsOpen} = props;
+  const {setIsOpen, setComments, id} = props;
   const handleKeyDown = (evt: KeyboardEvent) => {
     if(evt.key === Key.Escape || evt.key === Key.Esc) {
       setIsOpen(false);
@@ -22,6 +26,11 @@ function SuccessModal (props: SuccessModalProps): JSX.Element {
     document.body.removeEventListener('keydown', handleKeyDown);
   };
 
+  const handleClickButton = (evt: MouseEvent<HTMLButtonElement>) => {
+    getComments(id, setComments);
+    handleCloseClick();
+  };
+
   return (
     <FocusTrap>
       <div className="modal is-active modal--success">
@@ -33,7 +42,7 @@ function SuccessModal (props: SuccessModalProps): JSX.Element {
             </svg>
             <p className="modal__message">Спасибо за ваш отзыв!</p>
             <div className="modal__button-container modal__button-container--review">
-              <button className="button button--small modal__button modal__button--review">К покупкам!</button>
+              <button onClick={handleClickButton} className="button button--small modal__button modal__button--review">К покупкам!</button>
             </div>
             <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть">
               <span className="button-cross__icon"/>

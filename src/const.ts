@@ -4,6 +4,7 @@ export const MAX_GUITARS = 9;
 export const START_PAGE = 1;
 export const FAIL_MESSAGE = 'Извините, сервер недоступен';
 export const COMMENT_STEP = 3;
+export const FAIL_GET_COMMENTS = 'Извините, сервер недоступен. Обновите пожалуйста страницу.';
 
 export enum Key {
   Escape = 'Escape',
@@ -19,6 +20,7 @@ export enum LoadingStatus {
 export enum APIRoute {
   Guitars = '/guitars',
   Comments = '/comments'
+
 }
 
 export enum AppRoute {

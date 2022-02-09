@@ -2,7 +2,7 @@ import {debounce} from 'ts-debounce';
 import {api} from './services/api';
 import {
   APIRoute,
-  AppRoute,
+  AppRoute, FAIL_GET_COMMENTS, FAIL_MESSAGE,
   guitarsChar,
   GuitarType,
   MAX_GUITARS,
@@ -15,6 +15,7 @@ import {Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {History} from 'history';
 import {Comment} from './types/types';
+import {toast} from 'react-toastify';
 
 const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undefined>>) => {
   if(value.length === 0) {
@@ -265,16 +266,21 @@ export const postComment = (id: number, name: string, advantage: string, disadva
     rating: rating,
   })
     .then((response) => {
-    // eslint-disable-next-line no-console
-      console.log(response.data);
       setIsOpenedCommentModal(false);
       setIsOpenedSuccessModal(true);
     })
     .catch(() => {
       disableForm(false);
       disableSubmit(false);
-      // eslint-disable-next-line no-alert
-      alert('Oops');
+      toast.info(FAIL_MESSAGE);
+    });
+};
+
+export const getComments = (id: number, cb: Dispatch<SetStateAction<Comment[]>>) => {
+  api.get(`${APIRoute.Guitars}/${id}/comments`)
+    .then((response) => cb(response.data))
+    .catch(() => {
+      toast.info(FAIL_GET_COMMENTS);
     });
 };
 
