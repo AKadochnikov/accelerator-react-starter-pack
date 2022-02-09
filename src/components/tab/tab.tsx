@@ -25,13 +25,13 @@ function Tab (props: TabProps): JSX.Element {
   };
 
   return (
-    <div className="tabs">
+    <div className="tabs" data-testid={'tab-component'}>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Specifications? '' : 'button--black-border'}`} href="#" datatype={Tabs.Specifications}>Характеристики</a>
+      <a onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Specifications? '' : 'button--black-border'}`} href="#" datatype={Tabs.Specifications} data-testid={'spec-button'}>Характеристики</a>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Description? '' : 'button--black-border'}`} href="#" datatype={Tabs.Description}>Описание</a>
+      <a onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Description? '' : 'button--black-border'}`} href="#" datatype={Tabs.Description} data-testid={'desc-button'}>Описание</a>
       <div className="tabs__content" id="characteristics">
-        <table className="tabs__table" hidden={activeTab === Tabs.Description}>
+        <table className="tabs__table" hidden={activeTab === Tabs.Description} data-testid={'spec-table'}>
           <tbody>
             <tr className="tabs__table-row">
               <td className="tabs__title">Артикул:</td>
@@ -47,7 +47,7 @@ function Tab (props: TabProps): JSX.Element {
             </tr>
           </tbody>
         </table>
-        <p className="tabs__product-description" hidden={activeTab === Tabs.Specifications}>
+        <p className="tabs__product-description" hidden={activeTab === Tabs.Specifications} data-testid={'description'}>
           {description}
         </p>
       </div>
