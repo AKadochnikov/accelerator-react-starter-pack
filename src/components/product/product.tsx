@@ -93,7 +93,7 @@ function Product (): JSX.Element {
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a onClick={handleOpenCommentModal} className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
+              <a onClick={handleOpenCommentModal} className="button button--red-border button--big reviews__sumbit-button" href="#" data-testid={'add-comment-button'}>Оставить отзыв</a>
               <ReviewList comments={comments}/>
             </section>
           </div>

@@ -94,7 +94,7 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
 
   return (
     <FocusTrap>
-      <div className="modal is-active modal--review">
+      <div className="modal is-active modal--review" data-testid={'comment-modal'}>
         <div className="modal__wrapper">
           <div onClick={handleCloseClick} className="modal__overlay"/>
           <div className="modal__content">
@@ -104,20 +104,20 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
               <div className="form-review__wrapper">
                 <div className="form-review__name-wrapper">
                   <label className="form-review__label form-review__label--required" htmlFor="user-name">Ваше Имя</label>
-                  <input onInput={handleInput} className="form-review__input form-review__input--name" id="user-name" type="text" autoComplete="off" disabled={isFormDisabled}/>
+                  <input onInput={handleInput} className="form-review__input form-review__input--name" id="user-name" type="text" autoComplete="off" disabled={isFormDisabled} data-testid={'name-input'}/>
                   <span className="form-review__warning" aria-live='polite'>{isValidInput? '' : 'Заполните поле'}</span>
                 </div>
                 <div><span className="form-review__label form-review__label--required">Ваша Оценка</span>
                   <div className="rate rate--reverse">
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-5" name="rate" value="5" disabled={isFormDisabled}/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-5" name="rate" value="5" disabled={isFormDisabled} data-testid={'rate-5'}/>
                     <label className="rate__label" htmlFor="star-5" title="Отлично"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-4" name="rate" value="4" disabled={isFormDisabled}/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-4" name="rate" value="4" disabled={isFormDisabled} data-testid={'rate-4'}/>
                     <label className="rate__label" htmlFor="star-4" title="Хорошо"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-3" name="rate" value="3" disabled={isFormDisabled}/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-3" name="rate" value="3" disabled={isFormDisabled} data-testid={'rate-3'}/>
                     <label className="rate__label" htmlFor="star-3" title="Нормально"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-2" name="rate" value="2" disabled={isFormDisabled}/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-2" name="rate" value="2" disabled={isFormDisabled} data-testid={'rate-2'}/>
                     <label className="rate__label" htmlFor="star-2" title="Плохо"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-1" name="rate" value="1" disabled={isFormDisabled}/>
+                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-1" name="rate" value="1" disabled={isFormDisabled} data-testid={'rate-1'}/>
                     <label className="rate__label" htmlFor="star-1" title="Ужасно"/>
                     <span className="rate__count"/>
                     <span className="rate__message" aria-live='polite'>{isValidRating? '' : 'Поставьте оценку'}</span>
