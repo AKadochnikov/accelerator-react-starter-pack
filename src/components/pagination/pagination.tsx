@@ -1,7 +1,7 @@
 import {MouseEvent, useEffect, useState} from 'react';
 import {changePage, checkId, getPagination} from '../../utils';
 import {useHistory, useParams} from 'react-router-dom';
-import {useSearch} from '../../hooks/useSearch';
+import {useSearch} from '../../hooks/use-search';
 
 type PaginationProps = {
   total: number;

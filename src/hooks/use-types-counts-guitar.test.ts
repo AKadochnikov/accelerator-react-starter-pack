@@ -1,9 +1,9 @@
 import {renderHook} from '@testing-library/react-hooks';
-import {useSearch} from './useSearch';
-import {useTypesCountsGuitar} from './useTypesCountsGuitar';
+import {useSearch} from './use-search';
+import {useTypesCountsGuitar} from './use-types-counts-guitar';
 
 
-jest.mock('./useSearch', () => ({
+jest.mock('./use-search', () => ({
   useSearch: jest.fn(),
 }));
 

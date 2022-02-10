@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import ReviewList from './review-list';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import {fakeGuitar} from '../../mockGuitars';
+import {fakeGuitar} from '../../mock-guitars';
 import {defaultFallbackInView} from 'react-intersection-observer';
 defaultFallbackInView(true);
 const history = createMemoryHistory();

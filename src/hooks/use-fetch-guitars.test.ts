@@ -1,8 +1,8 @@
 import {renderHook} from '@testing-library/react-hooks';
-import {useFetchGuitars} from './useFetchGuitars';
-import {useSearch} from './useSearch';
+import {useFetchGuitars} from './use-fetch-guitars';
+import {useSearch} from './use-search';
 const fakeParams = '';
-jest.mock('./useSearch', () => ({
+jest.mock('./use-search', () => ({
   useSearch: jest.fn(),
 }));
 describe('Hook: useFetchGuitars', () => {

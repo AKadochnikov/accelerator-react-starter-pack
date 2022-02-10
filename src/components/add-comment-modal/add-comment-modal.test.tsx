@@ -1,14 +1,14 @@
 import Product from '../product/product';
 import {render, screen} from '@testing-library/react';
 import {AppRoute, LoadingStatus} from '../../const';
-import {useFetchGuitar} from '../../hooks/useFetchGuitar';
-import {fakeGuitar} from '../../mockGuitars';
+import {useFetchGuitar} from '../../hooks/use-fetch-guitar';
+import {fakeGuitar} from '../../mock-guitars';
 import {MemoryRouter} from 'react-router-dom';
 import {defaultFallbackInView} from 'react-intersection-observer';
 import userEvent from '@testing-library/user-event';
 defaultFallbackInView(true);
 
-jest.mock('../../hooks/useFetchGuitar', () => ({
+jest.mock('../../hooks/use-fetch-guitar', () => ({
   useFetchGuitar: jest.fn(),
 }));
 

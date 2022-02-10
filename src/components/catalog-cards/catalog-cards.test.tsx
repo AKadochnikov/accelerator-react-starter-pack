@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import CatalogCards from './catalog-cards';
-import {makeFakeGuitars} from '../../mockGuitars';
+import {makeFakeGuitars} from '../../mock-guitars';
 import {createMemoryHistory} from 'history';
 import {LoadingStatus} from '../../const';
 

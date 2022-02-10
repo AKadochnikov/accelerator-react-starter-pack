@@ -4,7 +4,7 @@ import Footer from '../footer/footer';
 import Catalog from '../catalog/catalog';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {useSearch} from '../../hooks/useSearch';
+import {useSearch} from '../../hooks/use-search';
 
 function Main (): JSX.Element {
   const search = useSearch();

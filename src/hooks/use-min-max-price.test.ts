@@ -1,10 +1,10 @@
 import {renderHook} from '@testing-library/react-hooks';
-import {useSearch} from './useSearch';
-import {useMinMaxPrice} from './useMinMaxPrice';
+import {useSearch} from './use-search';
+import {useMinMaxPrice} from './use-min-max-price';
 
 const fakeParams = '';
 
-jest.mock('./useSearch', () => ({
+jest.mock('./use-search', () => ({
   useSearch: jest.fn(),
 }));
 

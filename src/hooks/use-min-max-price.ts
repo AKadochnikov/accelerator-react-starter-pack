@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {APIRoute} from '../const';
-import {useSearch} from './useSearch';
+import {useSearch} from './use-search';
 import {Guitar} from '../types/types';
 import {api} from '../services/api';
 import {Params} from '../const';

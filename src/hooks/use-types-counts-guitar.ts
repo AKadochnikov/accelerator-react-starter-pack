@@ -1,4 +1,4 @@
-import {useSearch} from './useSearch';
+import {useSearch} from './use-search';
 import {Params} from '../const';
 
 export const useTypesCountsGuitar = () => {

@@ -1,4 +1,4 @@
-import { useSearch } from './useSearch';
+import { useSearch } from './use-search';
 import { useCallback, useEffect, useState } from 'react';
 import { Guitar } from '../types/types';
 import { api } from '../services/api';

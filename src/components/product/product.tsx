@@ -5,7 +5,7 @@ import {AppRoute, LoadingStatus} from '../../const';
 import Footer from '../footer/footer';
 import {useParams} from 'react-router-dom';
 import {Comment, Params} from '../../types/types';
-import {useFetchGuitar} from '../../hooks/useFetchGuitar';
+import {useFetchGuitar} from '../../hooks/use-fetch-guitar';
 import {adaptImgPath} from '../../utils';
 import Loading from '../loading/loading';
 import NotFound from '../404-not-found/404';

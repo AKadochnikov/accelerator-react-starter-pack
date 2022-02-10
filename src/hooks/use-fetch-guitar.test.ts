@@ -1,5 +1,5 @@
 import {renderHook} from '@testing-library/react-hooks';
-import {useFetchGuitar} from './useFetchGuitar';
+import {useFetchGuitar} from './use-fetch-guitar';
 
 const id = '1';
 const fakeId = '1ol';

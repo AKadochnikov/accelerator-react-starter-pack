@@ -1,8 +1,8 @@
 import {FormEvent, useEffect, useState} from 'react';
 import {debouncedValidityMaxPrice, debouncedValidityMinPrice} from '../../utils';
 import {useHistory} from 'react-router-dom';
-import {useSearch} from '../../hooks/useSearch';
-import {useMinMaxPrice} from '../../hooks/useMinMaxPrice';
+import {useSearch} from '../../hooks/use-search';
+import {useMinMaxPrice} from '../../hooks/use-min-max-price';
 import {Params} from '../../const';
 
 function FilterPrice (): JSX.Element {
