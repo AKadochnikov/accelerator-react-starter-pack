@@ -20,9 +20,6 @@ function Header (props: HeaderProps):JSX.Element {
 
   const handleInput = (evt: FormEvent<HTMLInputElement>) => {
     let value = '';
-    if (searchInput !== '') {
-      value = searchInput + evt.currentTarget.value;
-    }
     value = evt.currentTarget.value;
     setSearchInput(value);
     void debouncedFetchSought(value, setData);
