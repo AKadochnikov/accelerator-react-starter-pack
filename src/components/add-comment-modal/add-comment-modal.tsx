@@ -108,17 +108,17 @@ function AddCommentModal(props: AddCommentModalProps): JSX.Element {
                   <span className="form-review__warning" aria-live='polite'>{isValidInput? '' : 'Заполните поле'}</span>
                 </div>
                 <div><span className="form-review__label form-review__label--required">Ваша Оценка</span>
-                  <div className="rate rate--reverse">
+                  <div dir='rtl' className="rate rate--reverse">
                     <input onClick={handleRating} className="visually-hidden" type="radio" id="star-5" name="rate" value="5" disabled={isFormDisabled} data-testid={'rate-5'}/>
-                    <label className="rate__label" htmlFor="star-5" title="Отлично"/>
+                    <label className="rate__label" tabIndex={0} htmlFor="star-5" title="Отлично"/>
                     <input onClick={handleRating} className="visually-hidden" type="radio" id="star-4" name="rate" value="4" disabled={isFormDisabled} data-testid={'rate-4'}/>
-                    <label className="rate__label" htmlFor="star-4" title="Хорошо"/>
+                    <label className="rate__label" tabIndex={0} htmlFor="star-4" title="Хорошо"/>
                     <input onClick={handleRating} className="visually-hidden" type="radio" id="star-3" name="rate" value="3" disabled={isFormDisabled} data-testid={'rate-3'}/>
-                    <label className="rate__label" htmlFor="star-3" title="Нормально"/>
-                    <input onClick={handleRating} className="visually-hidden" type="radio" id="star-2" name="rate" value="2" disabled={isFormDisabled} data-testid={'rate-2'}/>
-                    <label className="rate__label" htmlFor="star-2" title="Плохо"/>
+                    <label className="rate__label" tabIndex={0} htmlFor="star-3" title="Нормально"/>
+                    <input onClick={handleRating}  className="visually-hidden" type="radio" id="star-2" name="rate" value="2" disabled={isFormDisabled} data-testid={'rate-2'}/>
+                    <label className="rate__label" tabIndex={0} htmlFor="star-2" title="Плохо"/>
                     <input onClick={handleRating} className="visually-hidden" type="radio" id="star-1" name="rate" value="1" disabled={isFormDisabled} data-testid={'rate-1'}/>
-                    <label className="rate__label" htmlFor="star-1" title="Ужасно"/>
+                    <label className="rate__label" tabIndex={0} htmlFor="star-1" title="Ужасно"/>
                     <span className="rate__count"/>
                     <span className="rate__message" aria-live='polite'>{isValidRating? '' : 'Поставьте оценку'}</span>
                   </div>

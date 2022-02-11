@@ -9,6 +9,7 @@ export const FAIL_GET_COMMENTS = 'Извините, сервер недосту�
 export enum Key {
   Escape = 'Escape',
   Esc = 'Esc',
+  Enter = 'Enter',
 }
 
 export enum LoadingStatus {
