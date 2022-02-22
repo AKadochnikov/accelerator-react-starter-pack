@@ -16,6 +16,7 @@ import AddCommentModal from '../add-comment-modal/add-comment-modal';
 import {useEffect, useState} from 'react';
 import {MouseEvent} from 'react';
 import SuccessModal from '../success-modal/success-modal';
+import {isCatalog} from '../../const';
 
 function Product (): JSX.Element {
   const [isOpenedCommentModal, setIsOpenedCommentModal] = useState<boolean>(false);
@@ -23,7 +24,6 @@ function Product (): JSX.Element {
   const [comments, setComments] = useState<Comment[]>([]);
   const params: Params = useParams();
   const currentId = params.id;
-  const isCatalog = false;
   const {guitar, loadStatus} = useFetchGuitar(currentId);
 
   const handleOpenCommentModal = (evt: MouseEvent<HTMLAnchorElement>) => {
@@ -62,7 +62,7 @@ function Product (): JSX.Element {
       {isOpenedSuccessModal? <SuccessModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
       <Icons/>
       <div className="wrapper">
-        <Header isCatalog={isCatalog}/>
+        <Header isCatalog={isCatalog.no}/>
         <main className="page-content" data-testid={'product'}>
           <div className="container">
             <h1 className="page-content__title title title--bigger">Товар</h1>

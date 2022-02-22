@@ -95,7 +95,7 @@ function Header (props: HeaderProps):JSX.Element {
               ))}
           </ul>
         </div>
-        <Link to={'#top'} className="header__cart-link" aria-label="Корзина">
+        <Link to={AppRoute.Cart} className="header__cart-link" aria-label="Корзина">
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"/>
           </svg>

@@ -6,6 +6,11 @@ export const FAIL_MESSAGE = 'Извините, сервер недоступен
 export const COMMENT_STEP = 3;
 export const FAIL_GET_COMMENTS = 'Извините, сервер недоступен. Обновите пожалуйста страницу.';
 
+export const isCatalog = {
+  yes: true,
+  no: false,
+};
+
 export enum Key {
   Escape = 'Escape',
   Esc = 'Esc',
@@ -29,6 +34,7 @@ export enum AppRoute {
   Catalog ='/page_:id',
   Guitar = '/guitars/:id',
   CurrentGuitar = '/guitars/',
+  Cart = '/cart'
 }
 
 export enum NameSpace {
