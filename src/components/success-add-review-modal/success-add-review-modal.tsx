@@ -4,13 +4,13 @@ import {Dispatch, SetStateAction, MouseEvent} from 'react';
 import {Comment} from '../../types/types';
 import {getComments} from '../../utils';
 
-type SuccessModalProps = {
+type SuccessAddReviewModalProps = {
   setIsOpen: Dispatch<SetStateAction<boolean>>
   setComments: Dispatch<SetStateAction<Comment[]>>
   id: number;
 }
 
-function SuccessModal (props: SuccessModalProps): JSX.Element {
+function SuccessAddReviewModal (props: SuccessAddReviewModalProps): JSX.Element {
   const {setIsOpen, setComments, id} = props;
   const handleKeyDownSuccess = (evt: KeyboardEvent) => {
     if(evt.key === Key.Escape || evt.key === Key.Esc) {
@@ -57,4 +57,4 @@ function SuccessModal (props: SuccessModalProps): JSX.Element {
   );
 }
 
-export default SuccessModal;
+export default SuccessAddReviewModal;

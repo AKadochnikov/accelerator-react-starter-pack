@@ -15,7 +15,7 @@ import ReviewList from '../review-list/review-list';
 import AddCommentModal from '../add-comment-modal/add-comment-modal';
 import {useEffect, useState} from 'react';
 import {MouseEvent} from 'react';
-import SuccessModal from '../success-modal/success-modal';
+import SuccessAddReviewModal from '../success-add-review-modal/success-add-review-modal';
 import {isCatalog} from '../../const';
 
 function Product (): JSX.Element {
@@ -59,7 +59,7 @@ function Product (): JSX.Element {
   return (
     <>
       {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} setIsOpenedSuccessModal={setIsOpenedSuccessModal} guitarName={name} id={id}/>: ''}
-      {isOpenedSuccessModal? <SuccessModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
+      {isOpenedSuccessModal? <SuccessAddReviewModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog.no}/>
