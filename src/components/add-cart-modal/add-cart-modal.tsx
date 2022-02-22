@@ -3,7 +3,7 @@ import FocusTrap from 'focus-trap-react';
 function AddCartModal(): JSX.Element {
   return (
     <FocusTrap>
-      <div className="modal is-active modal-for-ui-kit">
+      <div className="modal is-active">
         <div className="modal__wrapper">
           <div className="modal__overlay" data-close-modal/>
           <div className="modal__content">
