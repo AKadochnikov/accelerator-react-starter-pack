@@ -57,7 +57,6 @@ export enum Params {
   PriceMin = 'price_gte',
   PriceMax = 'price_lte',
   GuitarType = 'type',
-  Page = 'page'
 }
 
 export enum SortingParams {
@@ -84,12 +83,6 @@ export enum RussianGuitarType {
   Acoustic = 'Акустическая',
   Electric = 'Электронная',
   Ukulele = 'Акулеле',
-}
-
-export enum PriceLoadStatus {
-  NotLoaded = 'notLoaded',
-  Loaded = 'loaded',
-  Ready = 'ready',
 }
 
 export const guitarsChar = [
