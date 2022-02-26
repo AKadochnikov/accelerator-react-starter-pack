@@ -10,7 +10,6 @@ type AddCommentModalProps = {
   id: number;
 }
 
-
 function AddCommentModal(props: AddCommentModalProps): JSX.Element {
   const {setIsOpenedCommentModal, setIsOpenedSuccessModal, guitarName, id} = props;
   const {isDisabledSubmit, isValidInput, isValidRating, isFormDisabled, handleInput, handleRating, handleSubmit, advantageRef, commentRef, disadvantageRef} = useAddCommentForm(setIsOpenedCommentModal, setIsOpenedSuccessModal, id);

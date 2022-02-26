@@ -14,23 +14,17 @@ import Tab from '../tab/tab';
 import ReviewList from '../review-list/review-list';
 import AddCommentModal from '../add-comment-modal/add-comment-modal';
 import {useEffect, useState} from 'react';
-import {MouseEvent} from 'react';
 import SuccessAddReviewModal from '../success-add-review-modal/success-add-review-modal';
 import {isCatalog} from '../../const';
+import {useOpenCommentModal} from '../../hooks/use-open-comment-modal/use-open-comment-modal';
 
 function Product (): JSX.Element {
-  const [isOpenedCommentModal, setIsOpenedCommentModal] = useState<boolean>(false);
   const [isOpenedSuccessModal, setIsOpenedSuccessModal] = useState<boolean>(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const params: Params = useParams();
   const currentId = params.id;
   const {guitar, loadStatus} = useFetchGuitar(currentId);
-
-  const handleOpenCommentModal = (evt: MouseEvent<HTMLAnchorElement>) => {
-    evt.preventDefault();
-    document.body.style.overflow = 'hidden';
-    setIsOpenedCommentModal(!isOpenedCommentModal);
-  };
+  const {isOpenedCommentModal, setIsOpenedCommentModal, handleOpenCommentModal} = useOpenCommentModal();
 
   useEffect(() => {
     if(guitar) {
