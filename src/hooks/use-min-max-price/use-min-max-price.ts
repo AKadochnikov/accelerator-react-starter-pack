@@ -1,9 +1,9 @@
 import {useEffect} from 'react';
-import {APIRoute} from '../const';
-import {useSearch} from './use-search';
-import {Guitar} from '../types/types';
-import {api} from '../services/api';
-import {Params} from '../const';
+import {APIRoute} from '../../const';
+import {useSearch} from '../use-search/use-search';
+import {Guitar} from '../../types/types';
+import {api} from '../../services/api';
+import {Params} from '../../const';
 import {useState} from 'react';
 
 export const useMinMaxPrice = (params: string) => {

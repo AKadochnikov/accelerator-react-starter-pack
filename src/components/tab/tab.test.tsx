@@ -3,7 +3,7 @@ import Tab from './tab';
 import {MemoryRouter, Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {fakeGuitar} from '../../mock-guitars';
-import {useFetchGuitar} from '../../hooks/use-fetch-guitar';
+import {useFetchGuitar} from '../../hooks/use-fetch-guitar/use-fetch-guitar';
 import {AppRoute, LoadingStatus} from '../../const';
 import Product from '../product/product';
 import userEvent from '@testing-library/user-event';

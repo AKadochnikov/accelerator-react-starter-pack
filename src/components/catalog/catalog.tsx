@@ -2,8 +2,8 @@ import CatalogFilter from '../catalog-filter/catalog-filter';
 import CatalogSort from '../catalog-sort/catalog-sort';
 import CatalogCards from '../catalog-cards/catalog-cards';
 import Pagination from '../pagination/pagination';
-import {useFetchGuitars} from '../../hooks/use-fetch-guitars';
-import {useSearch} from '../../hooks/use-search';
+import {useFetchGuitars} from '../../hooks/use-fetch-guitars/use-fetch-guitars';
+import {useSearch} from '../../hooks/use-search/use-search';
 
 function Catalog ():JSX.Element {
   const search = useSearch();

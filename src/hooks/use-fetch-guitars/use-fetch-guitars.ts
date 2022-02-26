@@ -1,8 +1,8 @@
-import { useSearch } from './use-search';
+import { useSearch } from '../use-search/use-search';
 import { useCallback, useEffect, useState } from 'react';
-import { Guitar } from '../types/types';
-import { api } from '../services/api';
-import { APIRoute, FAIL_MESSAGE, LoadingStatus, Params } from '../const';
+import { Guitar } from '../../types/types';
+import { api } from '../../services/api';
+import { APIRoute, FAIL_MESSAGE, LoadingStatus, Params } from '../../const';
 import { toast } from 'react-toastify';
 
 export const useFetchGuitars = (params: string) => {

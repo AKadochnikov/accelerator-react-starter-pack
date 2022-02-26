@@ -2,7 +2,7 @@ import {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from 'react'
 import {GuitarType} from '../../const';
 import {debouncedChangeCountAndType, getAvailableTypes, getFilteredCounts} from '../../utils';
 import {useHistory} from 'react-router-dom';
-import {useSearch} from '../../hooks/use-search';
+import {useSearch} from '../../hooks/use-search/use-search';
 
 type FilterTypeProps = {
   newGuitarTypes: string[];

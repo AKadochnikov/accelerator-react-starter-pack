@@ -193,11 +193,11 @@ export const getAvailableCounts = (types: string[]) => {
 
 export const getPagination = (total: number) => {
   const paginationCounts = Math.ceil(total / MAX_GUITARS);
-  const paginations = [];
+  const pagination = [];
   for(let i = 1; i <= paginationCounts; i++) {
-    paginations.push(i);
+    pagination.push(i);
   }
-  return paginations;
+  return pagination;
 };
 
 export const getStartEndParams = (value: number, totalGuitars: number) => {

@@ -3,7 +3,7 @@ import FilterType from '../filter-type/filter-type';
 import FilterStringsCount from '../filter-strings-count/filter-strings-count';
 import {useState} from 'react';
 import {Params} from '../../const';
-import {useTypesCountsGuitar} from '../../hooks/use-types-counts-guitar';
+import {useTypesCountsGuitar} from '../../hooks/use-types-counts-guitar/use-types-counts-guitar';
 
 function CatalogFilter (): JSX.Element {
   const {currentCounts, currentTypes} = useTypesCountsGuitar();

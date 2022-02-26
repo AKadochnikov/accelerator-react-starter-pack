@@ -3,7 +3,7 @@ import {ChangeEvent, useEffect, useState} from 'react';
 import {debouncedChangeCountAndType, getAvailableCounts, getFilteredTypes} from '../../utils';
 import {Dispatch, SetStateAction} from 'react';
 import {useHistory} from 'react-router-dom';
-import {useSearch} from '../../hooks/use-search';
+import {useSearch} from '../../hooks/use-search/use-search';
 
 type FilterStringsCountProps = {
   newGuitarCounts: number[];

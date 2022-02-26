@@ -1,5 +1,5 @@
-import {useSearch} from './use-search';
-import {Params} from '../const';
+import {useSearch} from '../use-search/use-search';
+import {Params} from '../../const';
 
 export const useTypesCountsGuitar = () => {
   const search = useSearch();

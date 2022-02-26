@@ -1,20 +1,16 @@
 import {renderHook} from '@testing-library/react-hooks';
-import {useSearch} from './use-search';
-import {useTypesCountsGuitar} from './use-types-counts-guitar';
-
-
+import {useFetchGuitars} from './use-fetch-guitars';
+import {useSearch} from '../use-search/use-search';
+const fakeParams = '';
 jest.mock('./use-search', () => ({
   useSearch: jest.fn(),
 }));
-
 describe('Hook: useFetchGuitars', () => {
   it('should array and object',  () => {
     (useSearch as jest.Mock<ReturnType<typeof useSearch>,Parameters<typeof useSearch>>).mockReturnValue(new URLSearchParams('_start=0&_end=9'));
-    const {result} = renderHook(() => useTypesCountsGuitar());
-
-    const {currentTypes, currentCounts} = result.current;
-
-    expect(Array.isArray(currentTypes)).toBe(true);
-    expect(Array.isArray(currentCounts)).toBe(true);
+    const {result} = renderHook(() => useFetchGuitars(fakeParams));
+    const {guitars, totalGuitars} = result.current;
+    expect(Array.isArray(guitars)).toBe(true);
+    expect(typeof totalGuitars).toBe('number');
   });
 });

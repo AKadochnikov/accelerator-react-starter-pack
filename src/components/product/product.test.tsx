@@ -1,7 +1,7 @@
 import Product from '../product/product';
 import {render, screen} from '@testing-library/react';
 import {AppRoute, LoadingStatus} from '../../const';
-import {useFetchGuitar} from '../../hooks/use-fetch-guitar';
+import {useFetchGuitar} from '../../hooks/use-fetch-guitar/use-fetch-guitar';
 import {MemoryRouter} from 'react-router-dom';
 import {defaultFallbackInView} from 'react-intersection-observer';
 import {fakeGuitar} from '../../mock-guitars';

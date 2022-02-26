@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Guitar } from '../types/types';
-import { api } from '../services/api';
-import { APIRoute, FAIL_MESSAGE, LoadingStatus } from '../const';
+import { Guitar } from '../../types/types';
+import { api } from '../../services/api';
+import { APIRoute, FAIL_MESSAGE, LoadingStatus } from '../../const';
 import { toast } from 'react-toastify';
 
 export const useFetchGuitar = (id: string) => {

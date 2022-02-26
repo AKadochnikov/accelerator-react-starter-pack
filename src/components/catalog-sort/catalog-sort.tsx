@@ -1,6 +1,6 @@
 import {SortingParams, Params, AppRoute} from '../../const';
 import {MouseEvent} from 'react';
-import {useSearch} from '../../hooks/use-search';
+import {useSearch} from '../../hooks/use-search/use-search';
 import {useHistory, useParams} from 'react-router-dom';
 import {checkId} from '../../utils';
 
