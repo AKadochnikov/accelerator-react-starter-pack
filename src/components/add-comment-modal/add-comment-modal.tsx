@@ -1,8 +1,7 @@
-import {Dispatch, SetStateAction, useRef, useState} from 'react';
-import {Key} from '../../const';
+import {Dispatch, SetStateAction} from 'react';
 import FocusTrap from 'focus-trap-react';
-import {FormEvent, MouseEvent} from 'react';
-import {postComment} from '../../utils';
+import {useCloseCartModal} from '../../hooks/use-close-cart-modal/use-close-cart-modal';
+import {useAddCommentForm} from '../../hooks/use-add-comment-form/use-add-comment-form';
 
 type AddCommentModalProps = {
   setIsOpenedCommentModal: Dispatch<SetStateAction<boolean>>
@@ -14,83 +13,10 @@ type AddCommentModalProps = {
 
 function AddCommentModal(props: AddCommentModalProps): JSX.Element {
   const {setIsOpenedCommentModal, setIsOpenedSuccessModal, guitarName, id} = props;
-  const [isValidRating, setIsValidRating] = useState<boolean>(true);
-  const [isValidInput, setIsValidInput] = useState<boolean>(true);
-  const [isDisabledSubmit, setIsDisabledSubmit] = useState<boolean>(false);
-  const [nameValue, setNameValue] = useState<string>('');
-  const [ratingValue, setRatingValue] = useState<number>(0);
-  const advantageRef = useRef<HTMLInputElement | null>(null);
-  const disadvantageRef = useRef<HTMLInputElement | null>(null);
-  const commentRef = useRef<HTMLTextAreaElement | null>(null);
-  const [isFormDisabled, setIsFormDisabled] = useState<boolean>(false);
-
-  const handleKeyDown = (evt: KeyboardEvent) => {
-    if(evt.key === Key.Escape || evt.key === Key.Esc) {
-      setIsOpenedCommentModal(false);
-      document.body.removeEventListener('keydown', handleKeyDown);
-    }
-  };
+  const {isDisabledSubmit, isValidInput, isValidRating, isFormDisabled, handleInput, handleRating, handleSubmit, advantageRef, commentRef, disadvantageRef} = useAddCommentForm(setIsOpenedCommentModal, setIsOpenedSuccessModal, id);
+  const {handleCloseClick, handleKeyDown} = useCloseCartModal(setIsOpenedCommentModal);
 
   document.body.addEventListener('keydown', handleKeyDown);
-  const handleCloseClick = () => {
-    document.body.style.overflow = 'scroll';
-    setIsOpenedCommentModal(false);
-    document.body.removeEventListener('keydown', handleKeyDown);
-  };
-
-  const handleInput = (evt: FormEvent<HTMLInputElement>) => {
-    const currentValue = evt.currentTarget.value;
-    setNameValue(currentValue);
-    if (currentValue === '') {
-      setIsDisabledSubmit(true);
-      setIsValidInput(false);
-    } else if (ratingValue === 0) {
-      setIsDisabledSubmit(true);
-      setIsValidRating(false);
-      setIsValidInput(true);
-    } else {
-      setIsDisabledSubmit(false);
-      setIsValidInput(true);
-    }
-  };
-
-  const handleRating = (evt: MouseEvent<HTMLInputElement>) => {
-    const currentValue = Number(evt.currentTarget.value);
-    setRatingValue(currentValue);
-    if (currentValue === 0) {
-      setIsDisabledSubmit(true);
-      setIsValidRating(false);
-    } else if (nameValue === '') {
-      setIsDisabledSubmit(true);
-      setIsValidInput(false);
-      setIsValidRating(true);
-    } else {
-      setIsDisabledSubmit(false);
-      setIsValidRating(true);
-    }
-  };
-
-  const handleSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
-    evt.preventDefault();
-    if(nameValue === '' || ratingValue === 0) {
-      setIsValidInput(false);
-      setIsValidRating(false);
-      return;
-    }
-    let advantageValue = '-';
-    let disadvantageValue = '-';
-    let commentValue = '-';
-    if (advantageRef.current?.value) {
-      advantageValue = advantageRef.current?.value;
-    }
-    if (disadvantageRef.current?.value) {
-      disadvantageValue = disadvantageRef.current?.value;
-    }
-    if (commentRef.current?.value) {
-      commentValue = commentRef.current?.value;
-    }
-    postComment(id, nameValue, advantageValue, disadvantageValue, commentValue, ratingValue, setIsFormDisabled, setIsDisabledSubmit, setIsOpenedCommentModal, setIsOpenedSuccessModal);
-  };
 
   return (
     <FocusTrap>

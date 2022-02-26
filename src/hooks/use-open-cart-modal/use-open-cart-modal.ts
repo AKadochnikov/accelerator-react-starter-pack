@@ -6,7 +6,8 @@ export const useOpenCartModal = () => {
 
   const handleOpenCartModal = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    setIsOpenedCartModal(!isOpenedCartModal);
+    document.body.style.overflow = 'hidden';
+    setIsOpenedCartModal(true);
   };
 
   return {handleOpenCartModal, isOpenedCartModal, setIsOpenedCartModal};
