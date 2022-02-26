@@ -5,6 +5,8 @@ import {AppRoute, Key} from '../../const';
 import {debouncedFetchSought} from '../../utils';
 import {Link} from 'react-router-dom';
 import {KeyboardEvent} from 'react';
+import {useSelector} from 'react-redux';
+import {getGuitarsId} from '../../store/data/selectors';
 
 type HeaderProps = {
   isCatalog: boolean;
@@ -17,6 +19,7 @@ function Header (props: HeaderProps):JSX.Element {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const formRef = useRef<HTMLDivElement | null>(null);
   const history = useHistory();
+  const guitarsId = useSelector(getGuitarsId);
 
   const handleInput = (evt: FormEvent<HTMLInputElement>) => {
     let value = '';
@@ -99,7 +102,7 @@ function Header (props: HeaderProps):JSX.Element {
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"/>
           </svg>
-          <span className="visually-hidden">Перейти в корзину</span><span className="header__cart-count">2</span>
+          <span className="visually-hidden">Перейти в корзину</span>{guitarsId.length !== 0? <span className="header__cart-count">{guitarsId.length}</span> : ''}
         </Link>
       </div>
     </header>

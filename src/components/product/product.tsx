@@ -57,7 +57,7 @@ function Product (): JSX.Element {
     <>
       {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} setIsOpenedSuccessModal={setIsOpenedSuccessModal} guitarName={name} id={id}/>: ''}
       {isOpenedSuccessModal? <SuccessAddReviewModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
-      {isOpenedCartModal? <AddCartModal setIsOpenedCartModal={setIsOpenedCartModal} type={type} name={name} stringCount={stringCount} price={price} vendorCode={vendorCode} imgPath={imgPath}/> : ''}
+      {isOpenedCartModal? <AddCartModal setIsOpenedCartModal={setIsOpenedCartModal} type={type} name={name} stringCount={stringCount} price={price} vendorCode={vendorCode} imgPath={imgPath} id={id}/> : ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog.no}/>

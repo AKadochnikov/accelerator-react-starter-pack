@@ -2,6 +2,7 @@ import FocusTrap from 'focus-trap-react';
 import {Dispatch, SetStateAction} from 'react';
 import {useCloseCartModal} from '../../hooks/use-close-cart-modal/use-close-cart-modal';
 import {getRussianType} from '../../utils';
+import {useAddGuitarId} from '../../hooks/use-add-guitar-id/use-add-guitar-id';
 
 type AddCartModalProps = {
   setIsOpenedCartModal: Dispatch<SetStateAction<boolean>>;
@@ -11,11 +12,13 @@ type AddCartModalProps = {
   stringCount: number;
   price: number;
   imgPath: string;
+  id: number
 }
 
 function AddCartModal(props: AddCartModalProps): JSX.Element {
-  const {setIsOpenedCartModal, stringCount, type, name, vendorCode, price, imgPath} = props;
+  const {setIsOpenedCartModal, stringCount, type, name, vendorCode, price, imgPath, id} = props;
   const {handleKeyDown, handleCloseClick} = useCloseCartModal(setIsOpenedCartModal);
+  const {handleAddCartButton} = useAddGuitarId(id, setIsOpenedCartModal, handleKeyDown);
   const russianType = getRussianType(type);
 
   document.body.addEventListener('keydown', handleKeyDown);
@@ -38,7 +41,7 @@ function AddCartModal(props: AddCartModalProps): JSX.Element {
               </div>
             </div>
             <div className="modal__button-container">
-              <button className="button button--red button--big modal__button modal__button--add">Добавить в корзину</button>
+              <button onClick={handleAddCartButton} className="button button--red button--big modal__button modal__button--add">Добавить в корзину</button>
             </div>
             <button onClick={handleCloseClick} className="modal__close-btn button-cross" type="button" aria-label="Закрыть">
               <span className="button-cross__icon"/>
