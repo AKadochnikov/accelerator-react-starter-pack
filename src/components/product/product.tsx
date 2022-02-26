@@ -17,6 +17,8 @@ import {useEffect, useState} from 'react';
 import SuccessAddReviewModal from '../success-add-review-modal/success-add-review-modal';
 import {isCatalog} from '../../const';
 import {useOpenCommentModal} from '../../hooks/use-open-comment-modal/use-open-comment-modal';
+import {useOpenCartModal} from '../../hooks/use-open-cart-modal/use-open-cart-modal';
+import AddCartModal from '../add-cart-modal/add-cart-modal';
 
 function Product (): JSX.Element {
   const [isOpenedSuccessModal, setIsOpenedSuccessModal] = useState<boolean>(false);
@@ -25,6 +27,7 @@ function Product (): JSX.Element {
   const currentId = params.id;
   const {guitar, loadStatus} = useFetchGuitar(currentId);
   const {isOpenedCommentModal, setIsOpenedCommentModal, handleOpenCommentModal} = useOpenCommentModal();
+  const {handleOpenCartModal, isOpenedCartModal, setIsOpenedCartModal} = useOpenCartModal();
 
   useEffect(() => {
     if(guitar) {
@@ -54,6 +57,7 @@ function Product (): JSX.Element {
     <>
       {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} setIsOpenedSuccessModal={setIsOpenedSuccessModal} guitarName={name} id={id}/>: ''}
       {isOpenedSuccessModal? <SuccessAddReviewModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
+      {isOpenedCartModal? <AddCartModal setIsOpenedCartModal={setIsOpenedCartModal} type={type} name={name} stringCount={stringCount} price={price} vendorCode={vendorCode} imgPath={imgPath}/> : ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog.no}/>
@@ -81,7 +85,7 @@ function Product (): JSX.Element {
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
                 <p className="product-container__price-info product-container__price-info--value">{price} ₽</p>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a className="button button--red button--big product-container__button" href="#">Добавить в корзину</a>
+                <a onClick={handleOpenCartModal} className="button button--red button--big product-container__button" href="#">Добавить в корзину</a>
               </div>
             </div>
             <section className="reviews">
