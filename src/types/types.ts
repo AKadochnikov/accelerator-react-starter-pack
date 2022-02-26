@@ -25,3 +25,8 @@ export type Guitar = {
 export type Params = {
   id: string;
 }
+
+export type AddedGuitar = {
+  id: number;
+  count: number;
+}

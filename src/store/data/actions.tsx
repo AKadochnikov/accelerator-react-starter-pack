@@ -1,3 +1,3 @@
 import {data} from './data';
 
-export const {addCartGuitars, addGuitarsId} = data.actions;
+export const {addCartGuitars, addGuitar} = data.actions;

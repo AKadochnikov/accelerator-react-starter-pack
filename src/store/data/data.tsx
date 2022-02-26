@@ -1,15 +1,15 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Guitar} from '../../types/types';
+import {AddedGuitar, Guitar} from '../../types/types';
 import {NameSpace} from '../../const';
 
 export interface dataState {
   cartGuitars: Guitar[];
-  guitarsId: number[];
+  addedGuitars: AddedGuitar[];
 }
 
 const initialState: dataState = {
   cartGuitars: [],
-  guitarsId: [],
+  addedGuitars: [],
 };
 
 export const data = createSlice({
@@ -19,8 +19,8 @@ export const data = createSlice({
     addCartGuitars: (state, action: PayloadAction<Guitar[]>) => {
       state.cartGuitars = action.payload;
     },
-    addGuitarsId: (state, action: PayloadAction<number[]>) => {
-      state.guitarsId = action.payload;
+    addGuitar: (state, action: PayloadAction<AddedGuitar[]>) => {
+      state.addedGuitars = action.payload;
     },
   },
 });

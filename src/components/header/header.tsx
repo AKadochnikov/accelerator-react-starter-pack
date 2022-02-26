@@ -6,7 +6,7 @@ import {debouncedFetchSought} from '../../utils';
 import {Link} from 'react-router-dom';
 import {KeyboardEvent} from 'react';
 import {useSelector} from 'react-redux';
-import {getGuitarsId} from '../../store/data/selectors';
+import {getAddedGuitars} from '../../store/data/selectors';
 
 type HeaderProps = {
   isCatalog: boolean;
@@ -19,7 +19,7 @@ function Header (props: HeaderProps):JSX.Element {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const formRef = useRef<HTMLDivElement | null>(null);
   const history = useHistory();
-  const guitarsId = useSelector(getGuitarsId);
+  const guitarsId = useSelector(getAddedGuitars);
 
   const handleInput = (evt: FormEvent<HTMLInputElement>) => {
     let value = '';
