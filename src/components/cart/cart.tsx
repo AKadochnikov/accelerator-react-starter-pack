@@ -3,8 +3,13 @@ import {AppRoute, isCatalog} from '../../const';
 import {Link} from 'react-router-dom';
 import Icons from '../icons/icons';
 import Footer from '../footer/footer';
+import {useGetGuitarsQuery} from '../../services/guitar-api/guitar-api';
 
 function Cart (): JSX.Element {
+  const {data} = useGetGuitarsQuery('');
+  // eslint-disable-next-line no-console
+  console.log(data);
+
   return (
     <>
       <Icons/>

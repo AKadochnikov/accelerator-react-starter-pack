@@ -1,12 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
-import dataReducer from './data/data';
+import {guitarsApi} from '../services/guitar-api/guitar-api';
+import {rootReducer} from './root-reducer';
 
 export const store = configureStore({
-  reducer: {
-    data: dataReducer,
-  },
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(guitarsApi.middleware),
 });
 
-export type rootState = ReturnType<typeof store.getState>;
+export type rootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;

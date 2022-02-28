@@ -39,7 +39,7 @@ export enum AppRoute {
 
 export enum NameSpace {
   data = 'DATA',
-  user = 'USER',
+  GuitarsApi = 'GUITARS_API'
 }
 
 export enum Tabs {
