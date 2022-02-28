@@ -4,7 +4,7 @@ import {Dispatch, MouseEvent, SetStateAction} from 'react';
 import {addGuitar} from '../../store/data/actions';
 import {AddedGuitar} from '../../types/types';
 
-export const useAddGuitarId = (id: number, setIsOpenedCartModal: Dispatch<SetStateAction<boolean>>, handleKeyDown: (evt: KeyboardEvent) => void) => {
+export const useAddGuitar = (id: number, setIsOpenedCartModal: Dispatch<SetStateAction<boolean>>, handleKeyDown: (evt: KeyboardEvent) => void, setIsOpenedSuccessCartModal: Dispatch<SetStateAction<boolean>>) => {
   const addedGuitars = useSelector(getAddedGuitars);
   const dispatch = useDispatch();
 
@@ -27,8 +27,8 @@ export const useAddGuitarId = (id: number, setIsOpenedCartModal: Dispatch<SetSta
 
     dispatch(addGuitar(guitars));
     document.body.removeEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'scroll';
     setIsOpenedCartModal(false);
+    setIsOpenedSuccessCartModal(true);
   };
 
   return {handleAddCartButton};

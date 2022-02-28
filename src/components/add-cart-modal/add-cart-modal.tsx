@@ -2,10 +2,11 @@ import FocusTrap from 'focus-trap-react';
 import {Dispatch, SetStateAction} from 'react';
 import {useCloseCartModal} from '../../hooks/use-close-cart-modal/use-close-cart-modal';
 import {getRussianType} from '../../utils';
-import {useAddGuitarId} from '../../hooks/use-add-guitar-id/use-add-guitar-id';
+import {useAddGuitar} from '../../hooks/use-add-guitar-id/use-add-guitar';
 
 type AddCartModalProps = {
   setIsOpenedCartModal: Dispatch<SetStateAction<boolean>>;
+  setIsOpenedSuccessCartModal: Dispatch<SetStateAction<boolean>>
   name: string;
   vendorCode: string;
   type: string;
@@ -16,9 +17,9 @@ type AddCartModalProps = {
 }
 
 function AddCartModal(props: AddCartModalProps): JSX.Element {
-  const {setIsOpenedCartModal, stringCount, type, name, vendorCode, price, imgPath, id} = props;
+  const {setIsOpenedCartModal, stringCount, type, name, vendorCode, price, imgPath, id, setIsOpenedSuccessCartModal} = props;
   const {handleKeyDown, handleCloseClick} = useCloseCartModal(setIsOpenedCartModal);
-  const {handleAddCartButton} = useAddGuitarId(id, setIsOpenedCartModal, handleKeyDown);
+  const {handleAddCartButton} = useAddGuitar(id, setIsOpenedCartModal, handleKeyDown, setIsOpenedSuccessCartModal);
   const russianType = getRussianType(type);
 
   document.body.addEventListener('keydown', handleKeyDown);

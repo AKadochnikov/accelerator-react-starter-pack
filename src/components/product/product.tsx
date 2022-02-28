@@ -19,6 +19,8 @@ import {isCatalog} from '../../const';
 import {useOpenCommentModal} from '../../hooks/use-open-comment-modal/use-open-comment-modal';
 import {useOpenCartModal} from '../../hooks/use-open-cart-modal/use-open-cart-modal';
 import AddCartModal from '../add-cart-modal/add-cart-modal';
+import {useOpenSuccessCartModal} from '../../hooks/use-open-success-cart-modal/use-open-success-cart-modal';
+import SuccessAddCartModal from '../success-add-cart-modal/success-add-cart-modal';
 
 function Product (): JSX.Element {
   const [isOpenedSuccessModal, setIsOpenedSuccessModal] = useState<boolean>(false);
@@ -28,6 +30,7 @@ function Product (): JSX.Element {
   const {guitar, loadStatus} = useFetchGuitar(currentId);
   const {isOpenedCommentModal, setIsOpenedCommentModal, handleOpenCommentModal} = useOpenCommentModal();
   const {handleOpenCartModal, isOpenedCartModal, setIsOpenedCartModal} = useOpenCartModal();
+  const {isOpenedSuccessCartModal, setIsOpenedSuccessCartModal} = useOpenSuccessCartModal();
 
   useEffect(() => {
     if(guitar) {
@@ -57,7 +60,8 @@ function Product (): JSX.Element {
     <>
       {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} setIsOpenedSuccessModal={setIsOpenedSuccessModal} guitarName={name} id={id}/>: ''}
       {isOpenedSuccessModal? <SuccessAddReviewModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
-      {isOpenedCartModal? <AddCartModal setIsOpenedCartModal={setIsOpenedCartModal} type={type} name={name} stringCount={stringCount} price={price} vendorCode={vendorCode} imgPath={imgPath} id={id}/> : ''}
+      {isOpenedCartModal? <AddCartModal setIsOpenedCartModal={setIsOpenedCartModal} setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal} type={type} name={name} stringCount={stringCount} price={price} vendorCode={vendorCode} imgPath={imgPath} id={id}/> : ''}
+      {isOpenedSuccessCartModal? <SuccessAddCartModal setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal}/> : ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog.no}/>

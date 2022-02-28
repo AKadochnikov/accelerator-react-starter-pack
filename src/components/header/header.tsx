@@ -73,7 +73,7 @@ function Header (props: HeaderProps):JSX.Element {
         </Link>
         <nav className="main-nav">
           <ul className="main-nav__list">
-            <li><Link to={AppRoute.Catalog} className={`link main-nav__link ${isCatalog? 'link--current': ''}`}>Каталог</Link>
+            <li><Link to={AppRoute.Main} className={`link main-nav__link ${isCatalog? 'link--current': ''}`}>Каталог</Link>
             </li>
             <li><Link to={'#top'} className="link main-nav__link">Где купить?</Link>
             </li>
