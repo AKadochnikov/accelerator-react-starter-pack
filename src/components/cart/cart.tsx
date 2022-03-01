@@ -4,11 +4,28 @@ import {Link} from 'react-router-dom';
 import Icons from '../icons/icons';
 import Footer from '../footer/footer';
 import {useGetGuitarsQuery} from '../../services/guitar-api/guitar-api';
+import Loading from '../loading/loading';
+import CartItem from '../cart-item';
+import {Guitar} from '../../types/types';
+import {useSelector} from 'react-redux';
+import {getAddedGuitars} from '../../store/data/selectors';
+import {getCurrentGuitars} from '../../utils';
 
 function Cart (): JSX.Element {
-  const {data} = useGetGuitarsQuery('');
-  // eslint-disable-next-line no-console
-  console.log(data);
+  const {data, isFetching} = useGetGuitarsQuery('');
+  const addedGuitars = useSelector(getAddedGuitars);
+  let guitars: Guitar[] = [];
+
+  if (data) {
+    guitars = getCurrentGuitars(data, addedGuitars);
+  }
+
+  const totalPrice = guitars.map((item) => {
+    if(item.count){
+      return item.count * item.price;
+    }
+    return item.price;
+  }).reduce((itemA, itemB) => itemA + itemB);
 
   return (
     <>
@@ -27,34 +44,7 @@ function Cart (): JSX.Element {
               </li>
             </ul>
             <div className="cart">
-              <div className="cart-item">
-                <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить">
-                  <span className="button-cross__icon"/>
-                  <span className="cart-item__close-button-interactive-area"/>
-                </button>
-                <div className="cart-item__image"><img src="img/content/guitar-2.jpg" width="55" height="130" alt="ЭлектроГитара Честер bass"/>
-                </div>
-                <div className="product-info cart-item__info">
-                  <p className="product-info__title">ЭлектроГитара Честер bass</p>
-                  <p className="product-info__info">Артикул: SO757575</p>
-                  <p className="product-info__info">Электрогитара, 6 струнная</p>
-                </div>
-                <div className="cart-item__price">17 500 ₽</div>
-                <div className="quantity cart-item__quantity">
-                  <button className="quantity__button" aria-label="Уменьшить количество">
-                    <svg width="8" height="8" aria-hidden="true">
-                      <use xlinkHref="#icon-minus"/>
-                    </svg>
-                  </button>
-                  <input className="quantity__input" type="number" placeholder="1" id="2-count" name="2-count" max="99"/>
-                  <button className="quantity__button" aria-label="Увеличить количество">
-                    <svg width="8" height="8" aria-hidden="true">
-                      <use xlinkHref="#icon-plus"/>
-                    </svg>
-                  </button>
-                </div>
-                <div className="cart-item__price-total">17 500 ₽</div>
-              </div>
+              {isFetching? <Loading/> : guitars.map((item: Guitar) => <CartItem key={item.id} guitar={item}/>)}
               <div className="cart__footer">
                 <div className="cart__coupon coupon">
                   <h2 className="title title--little coupon__title">Промокод на скидку</h2>
@@ -70,7 +60,7 @@ function Cart (): JSX.Element {
                 </div>
                 <div className="cart__total-info">
                   <p className="cart__total-item"><span className="cart__total-value-name">Всего:</span>
-                    <span className="cart__total-value">52 000 ₽</span>
+                    <span className="cart__total-value">{totalPrice} ₽</span>
                   </p>
                   <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span>
                     <span className="cart__total-value cart__total-value--bonus">- 3000 ₽</span>

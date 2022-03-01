@@ -5,6 +5,8 @@ export const START_PAGE = 1;
 export const FAIL_MESSAGE = 'Извините, сервер недоступен';
 export const COMMENT_STEP = 3;
 export const FAIL_GET_COMMENTS = 'Извините, сервер недоступен. Обновите пожалуйста страницу.';
+export const MAX_CART_VALUE = 99;
+export const MIN_CART_VALUE = 1;
 
 export const isCatalog = {
   yes: true,

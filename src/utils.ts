@@ -4,18 +4,19 @@ import {
   APIRoute,
   AppRoute, FAIL_GET_COMMENTS, FAIL_MESSAGE,
   guitarsChar,
-  GuitarType,
+  GuitarType, MAX_CART_VALUE,
   MAX_GUITARS,
   Params,
   RussianGuitarType,
   START_PAGE,
   StringsCount
 } from './const';
-import {Guitar} from './types/types';
+import {AddedGuitar, Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
 import {History} from 'history';
 import {Comment} from './types/types';
 import {toast} from 'react-toastify';
+import {addGuitar} from './store/data/actions';
 
 const fetchSought = (value: string, cb: Dispatch<SetStateAction<Guitar[] | undefined>>) => {
   if(value.length === 0) {
@@ -284,9 +285,35 @@ export const getComments = (id: number, cb: Dispatch<SetStateAction<Comment[]>>)
     });
 };
 
+export const getCurrentGuitars = (allGuitars: Guitar[], addedGuitars: AddedGuitar[]) => {
+  const cartGuitars: Guitar[] = [];
+  addedGuitars.forEach((item) => {
+    const index = allGuitars.findIndex((allGuitarItem) => allGuitarItem.id === item.id);
+    const cartGuitar = {...allGuitars[index], count: item.count};
+    cartGuitars.push(cartGuitar);
+  });
+  return cartGuitars;
+};
+
+export const updateCount = (value: number, dispatch: Dispatch<any>, addedGuitars: AddedGuitar[], id: number, setCurrentCount: Dispatch<SetStateAction<number>>) => {
+  let currentValue = value;
+  if (currentValue > MAX_CART_VALUE) {
+    setCurrentCount(MAX_CART_VALUE);
+    currentValue = MAX_CART_VALUE;
+  }
+  const updatedGuitars = addedGuitars.map((item) => {
+    if (item.id === id) {
+      return {...item, count: currentValue};
+    }
+    return item;
+  });
+  dispatch(addGuitar(updatedGuitars));
+};
+
 export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
 
 export const debouncedChangeCountAndType = debounce(changeCountAndType, 1000);
+export const debouncedUpdateCount = debounce(updateCount, 500);
 
 export const debouncedValidityMinPrice = debounce(validityMinPrice, 500);
 export const debouncedValidityMaxPrice = debounce(validityMaxPrice, 500);

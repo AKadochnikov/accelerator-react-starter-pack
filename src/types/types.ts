@@ -10,6 +10,7 @@ export type Comment = {
 };
 
 export type Guitar = {
+  count?: number;
   id: number,
   name: string,
   vendorCode: string,
