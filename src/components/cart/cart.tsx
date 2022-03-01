@@ -10,22 +10,28 @@ import {Guitar} from '../../types/types';
 import {useSelector} from 'react-redux';
 import {getAddedGuitars} from '../../store/data/selectors';
 import {getCurrentGuitars} from '../../utils';
+import {useEffect, useMemo, useState} from 'react';
 
 function Cart (): JSX.Element {
   const {data, isFetching} = useGetGuitarsQuery('');
   const addedGuitars = useSelector(getAddedGuitars);
-  let guitars: Guitar[] = [];
-
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  let guitars: Guitar[] = useMemo(() => [], []);
   if (data) {
     guitars = getCurrentGuitars(data, addedGuitars);
   }
 
-  const totalPrice = guitars.map((item) => {
-    if(item.count){
-      return item.count * item.price;
+  useEffect(() => {
+    if(guitars.length > 0) {
+      const price = guitars.map((item) => {
+        if(item.count){
+          return item.count * item.price;
+        }
+        return item.price;
+      }).reduce((itemA, itemB) => itemA + itemB);
+      setTotalPrice(price);
     }
-    return item.price;
-  }).reduce((itemA, itemB) => itemA + itemB);
+  }, [guitars]);
 
   return (
     <>
