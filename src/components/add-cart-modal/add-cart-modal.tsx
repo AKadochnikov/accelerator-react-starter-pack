@@ -1,5 +1,5 @@
 import FocusTrap from 'focus-trap-react';
-import {Dispatch, SetStateAction} from 'react';
+import {Dispatch, SetStateAction, useEffect} from 'react';
 import {useCloseCartModal} from '../../hooks/use-close-cart-modal/use-close-cart-modal';
 import {getRussianType} from '../../utils';
 import {useAddGuitar} from '../../hooks/use-add-guitar-id/use-add-guitar';
@@ -22,7 +22,9 @@ function AddCartModal(props: AddCartModalProps): JSX.Element {
   const {handleAddCartButton} = useAddGuitar(id, setIsOpenedCartModal, handleKeyDown, setIsOpenedSuccessCartModal);
   const russianType = getRussianType(type);
 
-  document.body.addEventListener('keydown', handleKeyDown);
+  useEffect(() => {
+    document.body.addEventListener('keydown', handleKeyDown);
+  });
   return (
     <FocusTrap>
       <div className="modal is-active">

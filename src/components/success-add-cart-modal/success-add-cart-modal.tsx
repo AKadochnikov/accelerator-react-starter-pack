@@ -1,5 +1,5 @@
 import {useCloseCartModal} from '../../hooks/use-close-cart-modal/use-close-cart-modal';
-import {Dispatch, SetStateAction, MouseEvent} from 'react';
+import {Dispatch, SetStateAction, MouseEvent, useEffect} from 'react';
 import FocusTrap from 'focus-trap-react';
 import {useHistory} from 'react-router-dom';
 import {AppRoute} from '../../const';
@@ -12,13 +12,16 @@ function SuccessAddCartModal (props: SuccessAddCartModalProps): JSX.Element {
   const {setIsOpenedSuccessCartModal} = props;
   const {handleCloseClick, handleKeyDown} = useCloseCartModal(setIsOpenedSuccessCartModal);
   const history = useHistory();
-  document.body.addEventListener('keydown', handleKeyDown);
 
   const handleClickButton = (evt: MouseEvent<HTMLButtonElement>, path: string) => {
-    handleCloseClick(evt);
+    document.body.removeEventListener('keydown', handleKeyDown);
+    setIsOpenedSuccessCartModal(false);
     history.push(path);
   };
 
+  useEffect(() => {
+    document.body.addEventListener('keydown', handleKeyDown);
+  });
   return (
     <FocusTrap>
       <div className="modal is-active modal--success">

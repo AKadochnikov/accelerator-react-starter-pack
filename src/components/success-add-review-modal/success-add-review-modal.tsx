@@ -1,6 +1,6 @@
 import {Key} from '../../const';
 import FocusTrap from 'focus-trap-react';
-import {Dispatch, SetStateAction, MouseEvent} from 'react';
+import {Dispatch, SetStateAction, MouseEvent, useEffect} from 'react';
 import {Comment} from '../../types/types';
 import {getComments} from '../../utils';
 
@@ -20,7 +20,6 @@ function SuccessAddReviewModal (props: SuccessAddReviewModalProps): JSX.Element 
     }
   };
 
-  document.body.addEventListener('keydown', handleKeyDownSuccess);
   const handleCloseClick = () => {
     getComments(id, setComments);
     document.body.style.overflow = 'scroll';
@@ -32,6 +31,10 @@ function SuccessAddReviewModal (props: SuccessAddReviewModalProps): JSX.Element 
     getComments(id, setComments);
     handleCloseClick();
   };
+
+  useEffect(() => {
+    document.body.addEventListener('keydown', handleKeyDownSuccess);
+  });
 
   return (
     <FocusTrap>

@@ -5,7 +5,7 @@ import Icons from '../icons/icons';
 import Footer from '../footer/footer';
 import {useGetGuitarsQuery} from '../../services/guitar-api/guitar-api';
 import Loading from '../loading/loading';
-import CartItem from '../cart-item';
+import CartItem from '../cart-item/cart-item';
 import {Guitar} from '../../types/types';
 import {useSelector} from 'react-redux';
 import {getAddedGuitars} from '../../store/data/selectors';
@@ -30,7 +30,9 @@ function Cart (): JSX.Element {
         return item.price;
       }).reduce((itemA, itemB) => itemA + itemB);
       setTotalPrice(price);
+      return;
     }
+    setTotalPrice(0);
   }, [guitars]);
 
   return (
