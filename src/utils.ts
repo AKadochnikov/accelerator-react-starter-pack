@@ -9,7 +9,7 @@ import {
   Params,
   RussianGuitarType,
   START_PAGE,
-  StringsCount
+  StringsCount, UNDEFINED_GUITAR_TYPE
 } from './const';
 import {AddedGuitar, Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
@@ -232,7 +232,7 @@ export const checkId = (id: string) => {
   return Number(id);
 };
 
-export const getRussianType = (type: string) => {
+export const getRussianType = (type: string): string => {
   switch (type) {
     case GuitarType.Acoustic: {
       return RussianGuitarType.Acoustic;
@@ -242,6 +242,9 @@ export const getRussianType = (type: string) => {
     }
     case GuitarType.Ukulele: {
       return RussianGuitarType.Ukulele;
+    }
+    default: {
+      return UNDEFINED_GUITAR_TYPE;
     }
   }
 };
@@ -295,18 +298,20 @@ export const getCurrentGuitars = (allGuitars: Guitar[], addedGuitars: AddedGuita
   return cartGuitars;
 };
 
+export const getUpdatedGuitars = (addedGuitars: AddedGuitar[], id: number, value: number) => addedGuitars.map((item) => {
+  if (item.id === id) {
+    return {...item, count: value};
+  }
+  return item;
+});
+
 export const updateCount = (value: number, dispatch: Dispatch<any>, addedGuitars: AddedGuitar[], id: number, setCurrentCount: Dispatch<SetStateAction<number>>) => {
   let currentValue = value;
   if (currentValue > MAX_CART_VALUE) {
     setCurrentCount(MAX_CART_VALUE);
     currentValue = MAX_CART_VALUE;
   }
-  const updatedGuitars = addedGuitars.map((item) => {
-    if (item.id === id) {
-      return {...item, count: currentValue};
-    }
-    return item;
-  });
+  const updatedGuitars = getUpdatedGuitars(addedGuitars, id, currentValue);
   dispatch(addGuitar(updatedGuitars));
 };
 
