@@ -8,7 +8,7 @@ import Loading from '../loading/loading';
 import CartItem from '../cart-item/cart-item';
 import {Guitar} from '../../types/types';
 import {useSelector} from 'react-redux';
-import {getAddedGuitars} from '../../store/data/selectors';
+import {getAddedGuitars, getDiscount} from '../../store/data/selectors';
 import {getCurrentGuitars} from '../../utils';
 import {useEffect, useState} from 'react';
 import {useCoupon} from '../../hooks/use-coupon/use-coupon';
@@ -17,7 +17,8 @@ import {usePrice} from '../../hooks/use-price/use-price';
 function Cart (): JSX.Element {
   const {data, isFetching} = useGetGuitarsQuery('');
   const addedGuitars = useSelector(getAddedGuitars);
-  const {isSuccess, isError, handleCouponValidity, discount, handleInput, isLoading} = useCoupon();
+  const discount = useSelector(getDiscount);
+  const {isSuccess, isError, handleCouponValidity, handleInput, isLoading} = useCoupon();
   const [guitars, setGuitars] = useState<Guitar[]>([]);
   const {totalPrice, resultPrice} = usePrice(guitars, discount);
   useEffect(() => {
