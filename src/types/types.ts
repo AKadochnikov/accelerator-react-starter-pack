@@ -31,3 +31,7 @@ export type AddedGuitar = {
   id: number;
   count: number;
 }
+
+export type Coupon = {
+  coupon: string,
+}

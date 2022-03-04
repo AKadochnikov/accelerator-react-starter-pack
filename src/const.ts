@@ -8,6 +8,7 @@ export const FAIL_GET_COMMENTS = 'Извините, сервер недосту�
 export const MAX_CART_VALUE = 99;
 export const MIN_CART_VALUE = 1;
 export const UNDEFINED_GUITAR_TYPE = 'Гитара';
+export const FAIL_VALIDITY = 'Введите купон без пробелов';
 
 export const isCatalog = {
   yes: true,
@@ -28,8 +29,8 @@ export enum LoadingStatus {
 
 export enum APIRoute {
   Guitars = '/guitars',
-  Comments = '/comments'
-
+  Comments = '/comments',
+  Coupon = '/coupons'
 }
 
 export enum AppRoute {
@@ -41,8 +42,9 @@ export enum AppRoute {
 }
 
 export enum NameSpace {
-  data = 'DATA',
-  GuitarsApi = 'GUITARS_API'
+  Data = 'DATA',
+  GuitarsApi = 'GUITARS_API',
+  CouponApi = 'COUPON_API',
 }
 
 export enum Tabs {

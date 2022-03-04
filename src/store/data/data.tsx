@@ -11,7 +11,7 @@ const initialState: dataState = {
 };
 
 export const data = createSlice({
-  name: NameSpace.data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     addGuitar: (state, action: PayloadAction<AddedGuitar[]>) => {

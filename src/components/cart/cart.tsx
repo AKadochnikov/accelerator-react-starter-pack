@@ -10,30 +10,21 @@ import {Guitar} from '../../types/types';
 import {useSelector} from 'react-redux';
 import {getAddedGuitars} from '../../store/data/selectors';
 import {getCurrentGuitars} from '../../utils';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useCoupon} from '../../hooks/use-coupon/use-coupon';
+import {usePrice} from '../../hooks/use-price/use-price';
 
 function Cart (): JSX.Element {
   const {data, isFetching} = useGetGuitarsQuery('');
   const addedGuitars = useSelector(getAddedGuitars);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  let guitars: Guitar[] = useMemo(() => [], []);
-  if (data) {
-    guitars = getCurrentGuitars(data, addedGuitars);
-  }
-
+  const {isSuccess, isError, handleCouponValidity, discount, handleInput, isLoading} = useCoupon();
+  const [guitars, setGuitars] = useState<Guitar[]>([]);
+  const {totalPrice, resultPrice} = usePrice(guitars, discount);
   useEffect(() => {
-    if(guitars.length > 0) {
-      const price = guitars.map((item) => {
-        if(item.count){
-          return item.count * item.price;
-        }
-        return item.price;
-      }).reduce((itemA, itemB) => itemA + itemB);
-      setTotalPrice(price);
-      return;
+    if (data) {
+      setGuitars(getCurrentGuitars(data, addedGuitars));
     }
-    setTotalPrice(0);
-  }, [guitars]);
+  }, [data, addedGuitars]);
 
   return (
     <>
@@ -60,10 +51,11 @@ function Cart (): JSX.Element {
                   <form className="coupon__form" id="coupon-form" method="post" action="/">
                     <div className="form-input coupon__input">
                       <label className="visually-hidden">Промокод</label>
-                      <input type="text" placeholder="Введите промокод" id="coupon" name="coupon"/>
-                      <p className="form-input__message form-input__message--success">Промокод принят</p>
+                      <input onInput={handleInput} type="text" placeholder="Введите промокод" id="coupon" name="coupon"/>
+                      {isSuccess? <p className="form-input__message form-input__message--success">Промокод принят</p>: ''}
+                      {isError? <p className="form-input__message form-input__message--error">неверный промокод</p>: ''}
                     </div>
-                    <button className="button button--big coupon__button">Применить</button>
+                    <button onClick={handleCouponValidity} className="button button--big coupon__button" disabled={isLoading}>Применить</button>
                   </form>
                 </div>
                 <div className="cart__total-info">
@@ -71,10 +63,10 @@ function Cart (): JSX.Element {
                     <span className="cart__total-value">{totalPrice} ₽</span>
                   </p>
                   <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span>
-                    <span className="cart__total-value cart__total-value--bonus">- 3000 ₽</span>
+                    <span className={`cart__total-value ${discount && addedGuitars.length !== 0? 'cart__total-value--bonus' : ''}`}>{discount? -totalPrice*discount : 0} ₽</span>
                   </p>
                   <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span>
-                    <span className="cart__total-value cart__total-value--payment">49 000 ₽</span>
+                    <span className="cart__total-value cart__total-value--payment">{resultPrice} ₽</span>
                   </p>
                   <button className="button button--red button--big cart__order-button">Оформить заказ</button>
                 </div>
