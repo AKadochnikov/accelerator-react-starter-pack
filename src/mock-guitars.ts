@@ -463,3 +463,15 @@ export const fakeGuitar: Guitar = {
     },
   ],
 };
+
+
+export const makeFakeAddedGuitars = () => ([
+  {
+    id: 1,
+    count: 3,
+  },
+  {
+    id: 2,
+    count: 1,
+  },
+]);

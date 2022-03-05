@@ -2,7 +2,7 @@ import FocusTrap from 'focus-trap-react';
 import {Dispatch, SetStateAction, useEffect} from 'react';
 import {useCloseCartModal} from '../../hooks/use-close-cart-modal/use-close-cart-modal';
 import {getRussianType} from '../../utils';
-import {useAddGuitar} from '../../hooks/use-add-guitar-id/use-add-guitar';
+import {useAddGuitar} from '../../hooks/use-add-guitar/use-add-guitar';
 
 type AddCartModalProps = {
   setIsOpenedCartModal: Dispatch<SetStateAction<boolean>>;
