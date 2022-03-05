@@ -5,7 +5,7 @@ import {useCoupon} from './use-coupon';
 
 const mockStore = configureMockStore();
 
-describe('Hook: useCartItem', () => {
+describe('Hook: useCoupon', () => {
   it('should return correct types',  () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
