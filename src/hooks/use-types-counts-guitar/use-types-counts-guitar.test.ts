@@ -3,7 +3,7 @@ import {useSearch} from '../use-search/use-search';
 import {useTypesCountsGuitar} from './use-types-counts-guitar';
 
 
-jest.mock('./use-search', () => ({
+jest.mock('../use-search/use-search', () => ({
   useSearch: jest.fn(),
 }));
 

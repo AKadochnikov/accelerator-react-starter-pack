@@ -4,7 +4,7 @@ import {useMinMaxPrice} from './use-min-max-price';
 
 const fakeParams = '';
 
-jest.mock('./use-search', () => ({
+jest.mock('../use-search/use-search', () => ({
   useSearch: jest.fn(),
 }));
 
