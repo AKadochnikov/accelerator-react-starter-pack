@@ -6,8 +6,8 @@ import {fakeGuitar} from '../../mock-guitars';
 import {MemoryRouter} from 'react-router-dom';
 import {defaultFallbackInView} from 'react-intersection-observer';
 import userEvent from '@testing-library/user-event';
-import {configureMockStore} from "@jedmao/redux-mock-store";
-import {Provider} from "react-redux";
+import {configureMockStore} from '@jedmao/redux-mock-store';
+import {Provider} from 'react-redux';
 defaultFallbackInView(true);
 
 jest.mock('../../hooks/use-fetch-guitar/use-fetch-guitar', () => ({
