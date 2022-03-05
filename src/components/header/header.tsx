@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import {KeyboardEvent} from 'react';
 import {useSelector} from 'react-redux';
 import {getAddedGuitars} from '../../store/data/selectors';
+import {memo} from 'react';
 
 type HeaderProps = {
   isCatalog: boolean;
@@ -109,4 +110,4 @@ function Header (props: HeaderProps):JSX.Element {
   );
 }
 
-export default Header;
+export default memo(Header);

@@ -3,17 +3,18 @@ import {getAddedGuitars} from '../../store/data/selectors';
 import {MouseEvent} from 'react';
 import {addGuitar} from '../../store/data/actions';
 
-export const useDeleteGuitar = (handleKeyDown: (evt: KeyboardEvent) => void, id: number) => {
+export const useDeleteGuitar = (handleClick: (evt: MouseEvent<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement, globalThis.MouseEvent>) => void, id: number) => {
   const addedGuitars = useSelector(getAddedGuitars);
   const dispatch = useDispatch();
 
-  return (evt: MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteGuitars = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     const index = addedGuitars.findIndex((item) => item.id === id);
     const cartGuitars = addedGuitars.slice();
     cartGuitars.splice(index, 1);
-    document.body.style.overflow = 'scroll';
-    document.body.removeEventListener('keydown', handleKeyDown);
+    handleClick(evt);
     dispatch(addGuitar(cartGuitars));
   };
+
+  return handleDeleteGuitars;
 };

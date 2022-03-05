@@ -21,6 +21,9 @@ function Cart (): JSX.Element {
   const {isSuccess, isError, handleCouponValidity, handleInput, isLoading} = useCoupon();
   const [guitars, setGuitars] = useState<Guitar[]>([]);
   const {totalPrice, resultPrice} = usePrice(guitars, discount);
+
+  document.body.style.overflow = 'scroll';
+
   useEffect(() => {
     if (data) {
       setGuitars(getCurrentGuitars(data, addedGuitars));

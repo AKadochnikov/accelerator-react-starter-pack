@@ -27,7 +27,7 @@ function SuccessAddCartModal (props: SuccessAddCartModalProps): JSX.Element {
       <div className="modal is-active modal--success">
         <div className="modal__wrapper">
           <div onClick={handleCloseClick} className="modal__overlay" data-close-modal/>
-          <div className="modal__content">
+          <div className="modal__content" data-testid={'success-add-cart'}>
             <svg className="modal__icon" width="26" height="20" aria-hidden="true">
               <use xlinkHref="#icon-success"/>
             </svg>

@@ -17,12 +17,12 @@ type DeleteCartModalProps = {
 function DeleteCartModal (props: DeleteCartModalProps): JSX.Element {
   const {name, stringCount, vendorCode, type, price, imagePath, setIsOpenedModal, id} = props;
   const {handleCloseClick, handleKeyDown} = useCloseCartModal(setIsOpenedModal);
-  const handleDeleteGuitar = useDeleteGuitar(handleKeyDown, id);
+  const handleDeleteGuitars = useDeleteGuitar(handleCloseClick, id);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     document.body.addEventListener('keydown', handleKeyDown);
-  });
+  }, [handleKeyDown, id]);
 
   return (
     <FocusTrap>
@@ -43,7 +43,7 @@ function DeleteCartModal (props: DeleteCartModalProps): JSX.Element {
               </div>
             </div>
             <div className="modal__button-container">
-              <button onClick={handleDeleteGuitar} className="button button--small modal__button">Удалить товар</button>
+              <button onClick={handleDeleteGuitars} className="button button--small modal__button">Удалить товар</button>
               <button onClick={handleCloseClick} className="button button--black-border button--small modal__button modal__button--right">Продолжить
               покупки
               </button>
