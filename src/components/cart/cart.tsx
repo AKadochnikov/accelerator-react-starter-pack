@@ -34,7 +34,7 @@ function Cart (): JSX.Element {
         <Header isCatalog={isCatalog.no}/>
         <main className="page-content">
           <div className="container">
-            <h1 className="title title--bigger page-content__title">Корзина</h1>
+            <h1 className="title title--bigger page-content__title" data-testid={'cart'}>Корзина</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
               <li className="breadcrumbs__item"><Link to={AppRoute.Main} className="link">Главная</Link>
               </li>
