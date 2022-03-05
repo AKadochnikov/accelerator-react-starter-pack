@@ -8,10 +8,12 @@ import {AppRoute, LoadingStatus} from '../../const';
 import Product from '../product/product';
 import userEvent from '@testing-library/user-event';
 import {defaultFallbackInView} from 'react-intersection-observer';
+import {Provider} from 'react-redux';
+import {store} from '../../mock-store';
 
 defaultFallbackInView(true);
 
-jest.mock('../../hooks/use-fetch-guitar', () => ({
+jest.mock('../../hooks/use-fetch-guitar/use-fetch-guitar', () => ({
   useFetchGuitar: jest.fn(),
 }));
 
@@ -29,9 +31,11 @@ describe('Component: Tab', () => {
     // noinspection DuplicatedCode
     (useFetchGuitar as jest.Mock<ReturnType<typeof useFetchGuitar>,Parameters<typeof useFetchGuitar>>).mockReturnValue({guitar: fakeGuitar, loadStatus: LoadingStatus.Complete});
     render(
-      <MemoryRouter initialEntries={[`${AppRoute.CurrentGuitar}1`]}>
-        <Product/>
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[`${AppRoute.CurrentGuitar}1`]}>
+          <Product/>
+        </MemoryRouter>
+      </Provider>,
     );
     expect(screen.getByTestId('tab-component')).toBeInTheDocument();
     userEvent.click(screen.getByTestId('desc-button'));

@@ -1,26 +1,18 @@
 import Product from '../product/product';
 import {render, screen} from '@testing-library/react';
-import {AppRoute, LoadingStatus, NameSpace} from '../../const';
+import {AppRoute, LoadingStatus} from '../../const';
 import {useFetchGuitar} from '../../hooks/use-fetch-guitar/use-fetch-guitar';
 import {fakeGuitar} from '../../mock-guitars';
 import {MemoryRouter} from 'react-router-dom';
 import {defaultFallbackInView} from 'react-intersection-observer';
 import userEvent from '@testing-library/user-event';
-import {configureMockStore} from '@jedmao/redux-mock-store';
+import {store} from '../../mock-store';
 import {Provider} from 'react-redux';
 defaultFallbackInView(true);
 
 jest.mock('../../hooks/use-fetch-guitar/use-fetch-guitar', () => ({
   useFetchGuitar: jest.fn(),
 }));
-
-const mockStore = configureMockStore();
-const store = mockStore({
-  [NameSpace.Data]: {
-    addedGuitars: [],
-    discount: 0,
-  },
-});
 
 
 describe('Component: AddCommentModal',  () => {

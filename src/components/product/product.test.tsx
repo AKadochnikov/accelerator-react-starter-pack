@@ -5,9 +5,11 @@ import {useFetchGuitar} from '../../hooks/use-fetch-guitar/use-fetch-guitar';
 import {MemoryRouter} from 'react-router-dom';
 import {defaultFallbackInView} from 'react-intersection-observer';
 import {fakeGuitar} from '../../mock-guitars';
+import {Provider} from 'react-redux';
+import {store} from '../../mock-store';
 defaultFallbackInView(true);
 
-jest.mock('../../hooks/use-fetch-guitar', () => ({
+jest.mock('../../hooks/use-fetch-guitar/use-fetch-guitar', () => ({
   useFetchGuitar: jest.fn(),
 }));
 
@@ -18,9 +20,11 @@ describe('Component: Product',  () => {
       loadStatus: LoadingStatus.Loading,
     });
     render(
-      <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
-        <Product />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
+          <Product />
+        </MemoryRouter>
+      </Provider>,
     );
     expect(screen.getByTestId('loading')).toBeInTheDocument();
   });
@@ -31,9 +35,11 @@ describe('Component: Product',  () => {
       loadStatus: LoadingStatus.Error,
     });
     render(
-      <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
-        <Product />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
+          <Product />
+        </MemoryRouter>
+      </Provider>,
     );
     expect(screen.getByText(/Page not found/i)).toBeInTheDocument();
   });
@@ -44,9 +50,11 @@ describe('Component: Product',  () => {
       loadStatus: LoadingStatus.Loading,
     });
     render(
-      <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
-        <Product />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
+          <Product />
+        </MemoryRouter>
+      </Provider>,
     );
     expect(screen.getByTestId('product')).toBeInTheDocument();
   });
