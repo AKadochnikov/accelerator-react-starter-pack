@@ -40,7 +40,7 @@ function Card (props: CardProps): JSX.Element {
         <div className="product-card__buttons"><Link className="button button--mini" to={`${AppRoute.CurrentGuitar}${id}`}>Подробнее</Link>
           {addedGuitarsId.includes(id)?
             <Link className="button button--red-border button--mini button--in-cart" to={AppRoute.Cart}>В корзине</Link> :
-            <Link onClick={handleOpenCartModal} className="button button--red button--mini button--add-to-cart" to={'#'}>Купить</Link>}
+            <Link onClick={handleOpenCartModal} className="button button--red button--mini button--add-to-cart" to={'#'} data-testid={'add-cart-in-card'}>Купить</Link>}
         </div>
       </div>
     </>

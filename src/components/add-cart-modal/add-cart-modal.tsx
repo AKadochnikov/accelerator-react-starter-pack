@@ -30,7 +30,7 @@ function AddCartModal(props: AddCartModalProps): JSX.Element {
       <div className="modal is-active">
         <div className="modal__wrapper">
           <div onClick={handleCloseClick} className="modal__overlay" data-close-modal/>
-          <div className="modal__content">
+          <div className="modal__content" data-testid={'cart-modal'}>
             <h2 className="modal__header title title--medium">Добавить товар в корзину</h2>
             <div className="modal__info">
               <img className="modal__img" src={imgPath} width="67" height="137" alt="Честер bass"/>
@@ -44,7 +44,7 @@ function AddCartModal(props: AddCartModalProps): JSX.Element {
               </div>
             </div>
             <div className="modal__button-container">
-              <button onClick={handleAddCartButton} className="button button--red button--big modal__button modal__button--add">Добавить в корзину</button>
+              <button onClick={handleAddCartButton} className="button button--red button--big modal__button modal__button--add" data-testid={'add-cart'}>Добавить в корзину</button>
             </div>
             <button onClick={handleCloseClick} className="modal__close-btn button-cross" type="button" aria-label="Закрыть">
               <span className="button-cross__icon"/>
