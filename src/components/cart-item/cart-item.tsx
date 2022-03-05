@@ -36,7 +36,7 @@ function CartItem (props: CartItemProps): JSX.Element {
         </div>
         <div className="cart-item__price">{price} ₽</div>
         <div className="quantity cart-item__quantity">
-          <button onClick={handleDecrementCount} className="quantity__button" aria-label="Уменьшить количество">
+          <button onClick={handleDecrementCount} className="quantity__button" aria-label="Уменьшить количество" data-testid={'decrement-button'}>
             <svg width="8" height="8" aria-hidden="true">
               <use xlinkHref="#icon-minus"/>
             </svg>

@@ -5,8 +5,8 @@ import {AppRoute} from '../../const';
 import Cart from './cart';
 import {store} from '../../mock-store';
 
-describe('Component: Card', () => {
-  it('should render Card component', () => {
+describe('Component: Cart', () => {
+  it('should render Cart component', () => {
     render(
       <Provider store={store}>
         <MemoryRouter initialEntries={[AppRoute.Cart]}>

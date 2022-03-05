@@ -29,7 +29,7 @@ function DeleteCartModal (props: DeleteCartModalProps): JSX.Element {
       <div className="modal is-active">
         <div className="modal__wrapper">
           <div onClick={handleCloseClick} className="modal__overlay" data-close-modal/>
-          <div className="modal__content">
+          <div className="modal__content" data-testid={'delete-modal'}>
             <h2 className="modal__header title title--medium title--red">Удалить этот товар?</h2>
             <div className="modal__info"><img className="modal__img" src={imagePath} width="67" height="137" alt="Честер bass"/>
               <div className="modal__info-wrapper">
