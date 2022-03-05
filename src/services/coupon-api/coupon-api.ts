@@ -5,6 +5,7 @@ import {Coupon} from '../../types/types';
 export const couponApi = createApi({
   reducerPath: NameSpace.CouponApi,
   baseQuery: fetchBaseQuery({baseUrl: BACKEND_URL}),
+  tagTypes: ['Coupon'],
   endpoints: (builder) => ({
     getCoupon: builder.mutation<number, Coupon>({
       query: (coupon: Coupon) => ({
@@ -12,6 +13,7 @@ export const couponApi = createApi({
         method: 'POST',
         body: coupon,
       }),
+      invalidatesTags: [{type: 'Coupon'}],
     }),
   }),
 });
