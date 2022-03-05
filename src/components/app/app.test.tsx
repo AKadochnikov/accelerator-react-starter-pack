@@ -1,19 +1,34 @@
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, NameSpace} from '../../const';
 import App from './app';
 import {createMemoryHistory} from 'history';
+import {configureMockStore} from '@jedmao/redux-mock-store';
+import {Provider} from 'react-redux';
+import * as redux from 'react-redux';
+import {makeFakeAddedGuitars} from '../../mock-guitars';
 
 const history = createMemoryHistory();
+const mockStore = configureMockStore();
+const store = mockStore({
+  [NameSpace.Data]: {
+    addedGuitars: [],
+    discount: 0,
+  },
+});
 
 const fakeApp = (
-  <Router history={history}>
-    <App/>
-  </Router>
+  <Provider store={store}>
+    <Router history={history}>
+      <App/>
+    </Router>
+  </Provider>
 );
 
 describe('Application Routing', () => {
   beforeEach(() => {
+    const spy = jest.spyOn(redux, 'useSelector');
+    spy.mockReturnValue({ addedGuitars: makeFakeAddedGuitars() });
     history.push(AppRoute.Main);
   });
 

@@ -19,7 +19,7 @@ function Header (props: HeaderProps):JSX.Element {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const formRef = useRef<HTMLDivElement | null>(null);
   const history = useHistory();
-  const guitarsId = useSelector(getAddedGuitars);
+  const addedGuitars = useSelector(getAddedGuitars);
 
   const handleInput = (evt: FormEvent<HTMLInputElement>) => {
     let value = '';
@@ -102,7 +102,7 @@ function Header (props: HeaderProps):JSX.Element {
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"/>
           </svg>
-          <span className="visually-hidden">Перейти в корзину</span>{guitarsId.length !== 0? <span className="header__cart-count">{guitarsId.length}</span> : ''}
+          <span className="visually-hidden">Перейти в корзину</span>{addedGuitars.length !== 0? <span className="header__cart-count">{addedGuitars.length}</span> : ''}
         </Link>
       </div>
     </header>

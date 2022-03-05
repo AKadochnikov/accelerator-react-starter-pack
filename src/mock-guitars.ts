@@ -1,4 +1,4 @@
-import {Guitar} from './types/types';
+import {AddedGuitar, Guitar} from './types/types';
 
 export const makeFakeGuitars = (): Guitar[] => [
   {
@@ -465,7 +465,7 @@ export const fakeGuitar: Guitar = {
 };
 
 
-export const makeFakeAddedGuitars = () => ([
+export const makeFakeAddedGuitars = ():AddedGuitar[] => ([
   {
     id: 1,
     count: 3,
