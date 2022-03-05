@@ -1,16 +1,14 @@
 import {renderHook} from '@testing-library/react-hooks';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {useCoupon} from './use-coupon';
-
-const mockStore = configureMockStore();
+import {store} from '../../mock-store';
 
 describe('Hook: useCoupon', () => {
   it('should return correct types',  () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const wrapper = ({ children }) => (
-      <Provider store={mockStore({})}>
+      <Provider store={store}>
         {children}
       </Provider>
     );
