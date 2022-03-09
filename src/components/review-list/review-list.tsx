@@ -1,7 +1,7 @@
 import Review from '../review/review';
 import {Comment} from '../../types/types';
 import {useInView} from 'react-intersection-observer';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {COMMENT_STEP, WAIT_500_MILLISECONDS} from '../../const';
 import {getActiveComments} from '../../utils';
 import {MouseEvent} from 'react';
@@ -31,29 +31,28 @@ function ReviewList (props: ReviewListProps):JSX.Element {
     window.scrollTo(0, 0);
   };
 
+  const changeActiveComments = useCallback(() => {
+    if(activeComments.length < comments.length) {
+      const newCountValue = activeComments.length + COMMENT_STEP;
+      setView(false);
+      setPrevComments(comments);
+      getActiveComments(newCountValue, comments, setActiveComments);
+    }
+  }, [activeComments.length, comments]);
+
   useEffect(() => {
     setView(inView);
   }, [inView]);
 
   useEffect(() => {
     if (view) {
-      if(activeComments.length < comments.length) {
-        const newCountValue = activeComments.length + COMMENT_STEP;
-        setView(false);
-        setPrevComments(comments);
-        getActiveComments(newCountValue, comments, setActiveComments);
-      }
+      changeActiveComments();
       return;
     }
     if (comments !== prevComments) {
-      if(activeComments.length < comments.length) {
-        const newCountValue = activeComments.length + COMMENT_STEP;
-        setView(false);
-        setPrevComments(comments);
-        getActiveComments(newCountValue, comments, setActiveComments);
-      }
+      changeActiveComments();
     }
-  },[activeComments.length, comments, prevComments, view]);
+  },[changeActiveComments, comments, prevComments, view]);
 
   return (
     <>
