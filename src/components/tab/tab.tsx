@@ -2,6 +2,7 @@ import {getRussianType} from '../../utils';
 import {useState} from 'react';
 import {Tabs} from '../../const';
 import {MouseEvent} from 'react';
+import {Link} from 'react-router-dom';
 
 type TabProps = {
   vendorCode: string;
@@ -13,7 +14,6 @@ type TabProps = {
 function Tab (props: TabProps): JSX.Element {
   const {type, stringCount, vendorCode, description} = props;
   const russianType = getRussianType(type);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTab, setActiveTab] = useState<string>(Tabs.Specifications);
 
   const handleChangeTab = (evt: MouseEvent<HTMLAnchorElement>) => {
@@ -26,10 +26,8 @@ function Tab (props: TabProps): JSX.Element {
 
   return (
     <div className="tabs" data-testid={'tab-component'}>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Specifications? '' : 'button--black-border'}`} href="#" datatype={Tabs.Specifications} data-testid={'spec-button'}>Характеристики</a>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Description? '' : 'button--black-border'}`} href="#" datatype={Tabs.Description} data-testid={'desc-button'}>Описание</a>
+      <Link onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Specifications? '' : 'button--black-border'}`} to={'#'} datatype={Tabs.Specifications} data-testid={'spec-button'}>Характеристики</Link>
+      <Link onClick={handleChangeTab} className={`button button--medium tabs__button ${activeTab === Tabs.Description? '' : 'button--black-border'}`} to={'#'} datatype={Tabs.Description} data-testid={'desc-button'}>Описание</Link>
       <div className="tabs__content" id="characteristics">
         <table className="tabs__table" hidden={activeTab === Tabs.Description} data-testid={'spec-table'}>
           <tbody>

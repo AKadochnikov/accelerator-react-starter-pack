@@ -2,7 +2,7 @@ import Review from '../review/review';
 import {Comment} from '../../types/types';
 import {useInView} from 'react-intersection-observer';
 import {useEffect, useState} from 'react';
-import {COMMENT_STEP} from '../../const';
+import {COMMENT_STEP, WAIT_500_MILLISECONDS} from '../../const';
 import {getActiveComments} from '../../utils';
 import {MouseEvent} from 'react';
 
@@ -13,9 +13,9 @@ type ReviewListProps = {
 function ReviewList (props: ReviewListProps):JSX.Element {
   const {comments} = props;
   const [activeComments, setActiveComments] = useState<Comment[]>(comments);
-  const [commentsCount, setCommentsCount] = useState(3);
+  const [commentsCount, setCommentsCount] = useState(COMMENT_STEP);
   const [ref, inView] = useInView({
-    delay: 500,
+    delay: WAIT_500_MILLISECONDS,
   });
 
   const handleShowComment = () => {
@@ -35,12 +35,11 @@ function ReviewList (props: ReviewListProps):JSX.Element {
       const newCountValue = commentsCount + COMMENT_STEP;
       setCommentsCount(newCountValue);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[inView]);
+    // eslint-disable-next-line
+  },[comments.length, inView]);
 
   useEffect(() => {
     getActiveComments(commentsCount, comments, setActiveComments);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commentsCount, comments]);
 
   return (

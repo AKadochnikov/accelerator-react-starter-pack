@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import {APIRoute} from '../../const';
 import {useSearch} from '../use-search/use-search';
 import {Guitar} from '../../types/types';
@@ -15,18 +15,17 @@ export const useMinMaxPrice = (params: string) => {
   search.delete(Params.Start);
   search.delete(Params.End);
 
-  const execute = () => api.get<Guitar[]>(`${APIRoute.Guitars}/?${search.toString()}`)
+  const execute = useCallback(() => api.get<Guitar[]>(`${APIRoute.Guitars}/?${search.toString()}`)
     .then((response) => {
       const data = response.data;
       const value = data.map((item) => item.price);
       setMinPrice(Math.min(...value));
       setMaxPrice(Math.max(...value));
-    });
+    }), [search]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     void execute();
-  }, [params]);
+  }, [execute, params]);
 
   return [minPrice, maxPrice];
 };

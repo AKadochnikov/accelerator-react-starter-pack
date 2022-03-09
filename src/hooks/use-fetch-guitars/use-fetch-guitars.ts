@@ -41,7 +41,6 @@ export const useFetchGuitars = (params: string) => {
       });
   },[currentSearch]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const myRef = {
       unMounted:false,

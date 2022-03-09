@@ -6,16 +6,21 @@ import {AppRoute} from '../../const';
 
 type SuccessAddCartModalProps = {
   setIsOpenedSuccessCartModal: Dispatch<SetStateAction<boolean>>;
+  currentPage: string;
 }
 
 function SuccessAddCartModal (props: SuccessAddCartModalProps): JSX.Element {
-  const {setIsOpenedSuccessCartModal} = props;
+  const {setIsOpenedSuccessCartModal, currentPage} = props;
   const {handleCloseClick, handleKeyDown} = useCloseCartModal(setIsOpenedSuccessCartModal);
   const history = useHistory();
 
   const handleClickButton = (evt: MouseEvent<HTMLButtonElement>, path: string) => {
     document.body.removeEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'scroll';
     setIsOpenedSuccessCartModal(false);
+    if (currentPage === AppRoute.Main && path !== AppRoute.Cart) {
+      return;
+    }
     history.push(path);
   };
 

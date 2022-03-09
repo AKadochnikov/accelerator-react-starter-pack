@@ -26,7 +26,7 @@ function Card (props: CardProps): JSX.Element {
   return (
     <>
       {isOpenedCartModal? <AddCartModal setIsOpenedCartModal={setIsOpenedCartModal} setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal} type={type} name={name} stringCount={stringCount} price={price} vendorCode={vendorCode} imgPath={imgPath} id={id}/> : ''}
-      {isOpenedSuccessCartModal? <SuccessAddCartModal setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal}/> : ''}
+      {isOpenedSuccessCartModal? <SuccessAddCartModal setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal} currentPage={AppRoute.Main}/> : ''}
       <div className="product-card">
         <img src={imgPath} width="75" height="190" alt={`${name} ${type}`}/>
         <div className="product-card__info">

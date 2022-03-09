@@ -9,7 +9,7 @@ import {
   Params,
   RussianGuitarType,
   START_PAGE,
-  StringsCount, UNDEFINED_GUITAR_TYPE
+  StringsCount, UNDEFINED_GUITAR_TYPE, WAIT_1000_MILLISECONDS, WAIT_500_MILLISECONDS
 } from './const';
 import {AddedGuitar, Guitar} from './types/types';
 import {Dispatch, SetStateAction} from 'react';
@@ -269,7 +269,7 @@ export const postComment = (id: number, name: string, advantage: string, disadva
     comment: comment,
     rating: rating,
   })
-    .then((response) => {
+    .then(() => {
       setIsOpenedCommentModal(false);
       setIsOpenedSuccessModal(true);
     })
@@ -305,7 +305,7 @@ export const getUpdatedGuitars = (addedGuitars: AddedGuitar[], id: number, value
   return item;
 });
 
-export const updateCount = (value: number, dispatch: Dispatch<any>, addedGuitars: AddedGuitar[], id: number, setCurrentCount: Dispatch<SetStateAction<number>>) => {
+export const updateCount = (value: number, dispatch: Dispatch<{ payload: AddedGuitar[]; type: string; }>, addedGuitars: AddedGuitar[], id: number, setCurrentCount: Dispatch<SetStateAction<number>>) => {
   let currentValue = value;
   if (currentValue > MAX_CART_VALUE) {
     setCurrentCount(MAX_CART_VALUE);
@@ -317,10 +317,10 @@ export const updateCount = (value: number, dispatch: Dispatch<any>, addedGuitars
 
 export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
 
-export const debouncedChangeCountAndType = debounce(changeCountAndType, 1000);
-export const debouncedUpdateCount = debounce(updateCount, 500);
+export const debouncedChangeCountAndType = debounce(changeCountAndType, WAIT_1000_MILLISECONDS);
+export const debouncedUpdateCount = debounce(updateCount, WAIT_500_MILLISECONDS);
 
-export const debouncedValidityMinPrice = debounce(validityMinPrice, 500);
-export const debouncedValidityMaxPrice = debounce(validityMaxPrice, 500);
+export const debouncedValidityMinPrice = debounce(validityMinPrice, WAIT_500_MILLISECONDS);
+export const debouncedValidityMaxPrice = debounce(validityMaxPrice, WAIT_500_MILLISECONDS);
 
-export const debouncedFetchSought = debounce(fetchSought, 1000);
+export const debouncedFetchSought = debounce(fetchSought, WAIT_1000_MILLISECONDS);

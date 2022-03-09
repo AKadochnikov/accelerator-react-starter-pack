@@ -9,6 +9,8 @@ export const MAX_CART_VALUE = 99;
 export const MIN_CART_VALUE = 1;
 export const UNDEFINED_GUITAR_TYPE = 'Гитара';
 export const FAIL_VALIDITY = 'Введите купон без пробелов';
+export const WAIT_1000_MILLISECONDS = 1000;
+export const WAIT_500_MILLISECONDS = 500;
 
 export const isCatalog = {
   yes: true,

@@ -61,7 +61,7 @@ function Product (): JSX.Element {
       {isOpenedCommentModal? <AddCommentModal setIsOpenedCommentModal={setIsOpenedCommentModal} setIsOpenedSuccessModal={setIsOpenedSuccessModal} guitarName={name} id={id}/>: ''}
       {isOpenedSuccessModal? <SuccessAddReviewModal setIsOpen={setIsOpenedSuccessModal} setComments={setComments} id={id}/> : ''}
       {isOpenedCartModal? <AddCartModal setIsOpenedCartModal={setIsOpenedCartModal} setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal} type={type} name={name} stringCount={stringCount} price={price} vendorCode={vendorCode} imgPath={imgPath} id={id}/> : ''}
-      {isOpenedSuccessCartModal? <SuccessAddCartModal setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal}/> : ''}
+      {isOpenedSuccessCartModal? <SuccessAddCartModal setIsOpenedSuccessCartModal={setIsOpenedSuccessCartModal} currentPage={AppRoute.Guitar}/> : ''}
       <Icons/>
       <div className="wrapper">
         <Header isCatalog={isCatalog.no}/>
