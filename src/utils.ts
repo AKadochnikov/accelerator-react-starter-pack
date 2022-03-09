@@ -315,6 +315,11 @@ export const updateCount = (value: number, dispatch: Dispatch<{ payload: AddedGu
   dispatch(addGuitar(updatedGuitars));
 };
 
+export const getCount = (addedGuitars: AddedGuitar[]) => {
+  const addedCount = addedGuitars.map((item) => item.count);
+  return addedCount.reduce((itemA, itemB) => itemA + itemB);
+};
+
 export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
 
 export const debouncedChangeCountAndType = debounce(changeCountAndType, WAIT_1000_MILLISECONDS);

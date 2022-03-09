@@ -13,15 +13,16 @@ type ReviewListProps = {
 function ReviewList (props: ReviewListProps):JSX.Element {
   const {comments} = props;
   const [activeComments, setActiveComments] = useState<Comment[]>(comments);
-  const [commentsCount, setCommentsCount] = useState(COMMENT_STEP);
   const [ref, inView] = useInView({
     delay: WAIT_500_MILLISECONDS,
   });
+  const [view, setView] = useState(inView);
+  const [prevComments, setPrevComments] = useState(comments);
 
   const handleShowComment = () => {
-    if(commentsCount < comments.length) {
-      const newCountValue = commentsCount + COMMENT_STEP;
-      setCommentsCount(newCountValue);
+    if(activeComments.length < comments.length) {
+      const newCountValue = activeComments.length + COMMENT_STEP;
+      getActiveComments(newCountValue, comments, setActiveComments);
     }
   };
 
@@ -31,21 +32,33 @@ function ReviewList (props: ReviewListProps):JSX.Element {
   };
 
   useEffect(() => {
-    if(inView && commentsCount < comments.length) {
-      const newCountValue = commentsCount + COMMENT_STEP;
-      setCommentsCount(newCountValue);
-    }
-    // eslint-disable-next-line
-  },[comments.length, inView]);
+    setView(inView);
+  }, [inView]);
 
   useEffect(() => {
-    getActiveComments(commentsCount, comments, setActiveComments);
-  }, [commentsCount, comments]);
+    if (view) {
+      if(activeComments.length < comments.length) {
+        const newCountValue = activeComments.length + COMMENT_STEP;
+        setView(false);
+        setPrevComments(comments);
+        getActiveComments(newCountValue, comments, setActiveComments);
+      }
+      return;
+    }
+    if (comments !== prevComments) {
+      if(activeComments.length < comments.length) {
+        const newCountValue = activeComments.length + COMMENT_STEP;
+        setView(false);
+        setPrevComments(comments);
+        getActiveComments(newCountValue, comments, setActiveComments);
+      }
+    }
+  },[activeComments.length, comments, prevComments, view]);
 
   return (
     <>
       {activeComments.map((commentItem) => <Review key={commentItem.id} commentItem={commentItem}/>)}
-      {commentsCount < comments.length? <button onClick={handleShowComment} ref={ref} className="button button--medium reviews__more-button">Показать еще отзывы</button>  : ''}
+      {activeComments.length < comments.length? <button onClick={handleShowComment} ref={ref} className="button button--medium reviews__more-button">Показать еще отзывы</button>  : ''}
       {comments.length !== 0? <a onClick={handleClickButtonUP} className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a> : ''}
     </>
   );

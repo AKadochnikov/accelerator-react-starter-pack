@@ -2,7 +2,7 @@ import {Guitar} from '../../types/types';
 import {FormEvent, useEffect, useRef, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {AppRoute, Key} from '../../const';
-import {debouncedFetchSought} from '../../utils';
+import {debouncedFetchSought, getCount} from '../../utils';
 import {Link} from 'react-router-dom';
 import {KeyboardEvent} from 'react';
 import {useSelector} from 'react-redux';
@@ -56,8 +56,10 @@ function Header (props: HeaderProps):JSX.Element {
       setIsDisabled(false);
     }
   };
+  useEffect(() => {
+    document.addEventListener('click', handleClickOnDocument);
+  });
 
-  document.addEventListener('click', handleClickOnDocument);
   useEffect(() => {
     if (data === undefined) {
       setIsDisabled(true);
@@ -103,7 +105,7 @@ function Header (props: HeaderProps):JSX.Element {
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"/>
           </svg>
-          <span className="visually-hidden">Перейти в корзину</span>{addedGuitars.length !== 0? <span className="header__cart-count">{addedGuitars.length}</span> : ''}
+          <span className="visually-hidden">Перейти в корзину</span>{addedGuitars.length !== 0? <span className="header__cart-count">{getCount(addedGuitars)}</span> : ''}
         </Link>
       </div>
     </header>
