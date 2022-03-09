@@ -14,36 +14,6 @@ jest.mock('../../hooks/use-fetch-guitar/use-fetch-guitar', () => ({
 }));
 
 describe('Component: Product',  () => {
-  it('should is loading component', () => {
-    (useFetchGuitar as jest.Mock<ReturnType<typeof useFetchGuitar>, Parameters<typeof useFetchGuitar>>).mockReturnValue({
-      guitar: null,
-      loadStatus: LoadingStatus.Loading,
-    });
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
-          <Product />
-        </MemoryRouter>
-      </Provider>,
-    );
-    expect(screen.getByTestId('loading')).toBeInTheDocument();
-  });
-
-  it('should is error', () => {
-    (useFetchGuitar as jest.Mock<ReturnType<typeof useFetchGuitar>, Parameters<typeof useFetchGuitar>>).mockReturnValue({
-      guitar: null,
-      loadStatus: LoadingStatus.Error,
-    });
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries = {[`${AppRoute.CurrentGuitar}1`]} >
-          <Product />
-        </MemoryRouter>
-      </Provider>,
-    );
-    expect(screen.getByText(/Page not found/i)).toBeInTheDocument();
-  });
-
   it('should is rendered component', () => {
     (useFetchGuitar as jest.Mock<ReturnType<typeof useFetchGuitar>, Parameters<typeof useFetchGuitar>>).mockReturnValue({
       guitar: fakeGuitar,

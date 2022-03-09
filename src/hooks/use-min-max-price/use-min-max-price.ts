@@ -15,16 +15,25 @@ export const useMinMaxPrice = (params: string) => {
   search.delete(Params.Start);
   search.delete(Params.End);
 
-  const execute = useCallback(() => api.get<Guitar[]>(`${APIRoute.Guitars}/?${search.toString()}`)
-    .then((response) => {
-      const data = response.data;
-      const value = data.map((item) => item.price);
-      setMinPrice(Math.min(...value));
-      setMaxPrice(Math.max(...value));
-    }), [search]);
+  const execute = useCallback((myRef: { unMounted: boolean }) => {
+    api.get<Guitar[]>(`${APIRoute.Guitars}/?${search.toString()}`)
+      .then((response) => {
+        const data = response.data;
+        const value = data.map((item) => item.price);
+        if (!myRef.unMounted) {
+          setMinPrice(Math.min(...value));
+          setMaxPrice(Math.max(...value));
+        }
+      });}, [search]);
 
   useEffect(() => {
-    void execute();
+    const myRef = {
+      unMounted: false,
+    };
+    if (!myRef.unMounted) {
+      execute(myRef);
+    }
+    return () => { myRef.unMounted = true; };
   }, [execute, params]);
 
   return [minPrice, maxPrice];
