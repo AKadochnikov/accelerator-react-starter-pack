@@ -4,8 +4,6 @@ import {AppRoute, NameSpace} from '../../const';
 import App from './app';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import * as redux from 'react-redux';
-import {makeFakeAddedGuitars} from '../../mock-guitars';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 
 const history = createMemoryHistory();
@@ -29,8 +27,6 @@ const fakeApp = (
 
 describe('Application Routing', () => {
   beforeEach(() => {
-    const spy = jest.spyOn(redux, 'useSelector');
-    spy.mockReturnValue({ addedGuitars: makeFakeAddedGuitars() });
     history.push(AppRoute.Main);
   });
 
