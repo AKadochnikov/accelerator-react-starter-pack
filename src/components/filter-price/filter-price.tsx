@@ -35,22 +35,22 @@ function FilterPrice (): JSX.Element {
     void debouncedValidityMaxPrice(eventTarget, maxPrice, minPrice, history, search, setCurrentMaxPrice, currentMinPrice);
   };
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if(!search.has(Params.PriceMin)) {
-      return;
-    }
-    const value = Number(search.get(Params.PriceMin));
-    setCurrentMinPrice(value);
-  }, [minPrice]);
+  const searchMinPrice = Number(search.get(Params.PriceMin));
+  const searchMaxPrice = Number(search.get(Params.PriceMax));
 
   useEffect(() => {
-    if(!search.has(Params.PriceMax)) {
+    if(!searchMinPrice) {
       return;
     }
-    const value = Number(search.get(Params.PriceMax));
-    setCurrentMaxPrice(value);
-  }, [maxPrice]);
+    setCurrentMinPrice(searchMinPrice);
+  }, [minPrice, searchMinPrice]);
+
+  useEffect(() => {
+    if(!searchMaxPrice) {
+      return;
+    }
+    setCurrentMaxPrice(searchMaxPrice);
+  }, [maxPrice, searchMaxPrice]);
 
   return (
     <fieldset className="catalog-filter__block">
