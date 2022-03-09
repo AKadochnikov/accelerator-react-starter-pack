@@ -23,7 +23,7 @@ function CartItem (props: CartItemProps): JSX.Element {
     <>
       {isOpenedModal? <DeleteCartModal price={price} type={russianType} name={name} vendorCode={vendorCode} imagePath={imagePath} stringCount={stringCount} setIsOpenedModal={setIsOpenedModal} id={id}/> : ''}
       <div className="cart-item" data-testid={'cart-item'}>
-        <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить">
+        <button onClick={() => setIsOpenedModal(true)} className="cart-item__close-button button-cross" type="button" aria-label="Удалить">
           <span className="button-cross__icon"/>
           <span className="cart-item__close-button-interactive-area"/>
         </button>
