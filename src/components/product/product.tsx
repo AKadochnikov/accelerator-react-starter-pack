@@ -88,14 +88,12 @@ function Product (): JSX.Element {
               <div className="product-container__price-wrapper">
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
                 <p className="product-container__price-info product-container__price-info--value">{price} ₽</p>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a onClick={handleOpenCartModal} className="button button--red button--big product-container__button" href="#" data-testid={'add-cart-in-product'}>Добавить в корзину</a>
+                <Link onClick={handleOpenCartModal} className="button button--red button--big product-container__button" to={'#'} data-testid={'add-cart-in-product'}>Добавить в корзину</Link>
               </div>
             </div>
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a onClick={handleOpenCommentModal} className="button button--red-border button--big reviews__sumbit-button" href="#" data-testid={'add-comment-button'}>Оставить отзыв</a>
+              <Link onClick={handleOpenCommentModal} className="button button--red-border button--big reviews__sumbit-button" to={'#'} data-testid={'add-comment-button'}>Оставить отзыв</Link>
               <ReviewList comments={comments}/>
             </section>
           </div>
