@@ -24,7 +24,7 @@ describe('Hook: useCartItem', () => {
 
     const {result} = renderHook(() => useCartItem(id, previewImg, type, price, jest.fn),{wrapper});
 
-    const {currentCount, setCurrentCount, handleInputCount, handleIncrementCount, handleDecrementCount, imagePath, russianType, totalPrice} = result.current;
+    const {currentCount, setCurrentCount, handleInputCount, handleIncrementCount, handleDecrementCount, imagePath, russianType, totalPrice, handleFocusCount} = result.current;
 
     expect(typeof currentCount).toBe('number');
     expect(typeof setCurrentCount).toBe('function');
@@ -34,5 +34,6 @@ describe('Hook: useCartItem', () => {
     expect(typeof imagePath).toBe('string');
     expect(typeof russianType).toBe('string');
     expect(typeof totalPrice).toBe('number');
+    expect(typeof handleFocusCount).toBe('function');
   });
 });

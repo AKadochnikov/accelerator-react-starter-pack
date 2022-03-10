@@ -12,7 +12,7 @@ function CartItem (props: CartItemProps): JSX.Element {
   const {guitar} = props;
   const {name, stringCount, vendorCode, previewImg, price, type, count, id} = guitar;
   const [isOpenedModal, setIsOpenedModal] = useState(false);
-  const {currentCount, setCurrentCount, handleInputCount, handleIncrementCount, handleDecrementCount, imagePath, russianType, totalPrice} = useCartItem(id, previewImg, type, price, setIsOpenedModal);
+  const {currentCount, setCurrentCount, handleInputCount, handleIncrementCount, handleDecrementCount, imagePath, russianType, totalPrice, handleFocusCount} = useCartItem(id, previewImg, type, price, setIsOpenedModal);
 
   useEffect(() => {
     if (count !== undefined) {
@@ -41,7 +41,7 @@ function CartItem (props: CartItemProps): JSX.Element {
               <use xlinkHref="#icon-minus"/>
             </svg>
           </button>
-          <input onInput={handleInputCount} className="quantity__input" type="number" value={currentCount} placeholder="1" id="2-count" name="2-count" max="99"/>
+          <input onBlur={handleFocusCount} onInput={handleInputCount} className="quantity__input" type="number" value={currentCount} placeholder="1" id="2-count" name="2-count" max="99"/>
           <button onClick={handleIncrementCount} className="quantity__button" aria-label="Увеличить количество" disabled={currentCount === MAX_CART_VALUE}>
             <svg width="8" height="8" aria-hidden="true">
               <use xlinkHref="#icon-plus"/>

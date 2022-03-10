@@ -330,7 +330,6 @@ export const getCount = (addedGuitars: AddedGuitar[]) => {
 export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
 
 export const debouncedChangeCountAndType = debounce(changeCountAndType, WAIT_1000_MILLISECONDS);
-export const debouncedUpdateCount = debounce(updateCount, WAIT_1000_MILLISECONDS);
 
 export const debouncedValidityMinPrice = debounce(validityMinPrice, WAIT_500_MILLISECONDS);
 export const debouncedValidityMaxPrice = debounce(validityMaxPrice, WAIT_500_MILLISECONDS);
