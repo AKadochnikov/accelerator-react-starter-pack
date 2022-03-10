@@ -19,6 +19,10 @@ export const useCartItem = (id: number, previewImg: string, type: string, price:
       return;
     }
     const value = Number(evt.currentTarget.value);
+    if(value < 0){
+      setCurrentCount(1);
+      return;
+    }
     setCurrentCount(value);
   };
 
