@@ -5,7 +5,7 @@ import {
   AppRoute, FAIL_GET_COMMENTS, FAIL_MESSAGE,
   guitarsChar,
   GuitarType, MAX_CART_VALUE,
-  MAX_GUITARS,
+  MAX_GUITARS, MIN_CART_VALUE,
   Params,
   RussianGuitarType,
   START_PAGE,
@@ -305,7 +305,14 @@ export const getUpdatedGuitars = (addedGuitars: AddedGuitar[], id: number, value
   return item;
 });
 
-export const updateCount = (value: number, dispatch: Dispatch<{ payload: AddedGuitar[]; type: string; }>, addedGuitars: AddedGuitar[], id: number, setCurrentCount: Dispatch<SetStateAction<number>>) => {
+export const updateCount = (value: number | '', dispatch: Dispatch<{ payload: AddedGuitar[]; type: string; }>, addedGuitars: AddedGuitar[], id: number, setCurrentCount: Dispatch<SetStateAction<number | ''>>, setIsOpenedModal: Dispatch<SetStateAction<boolean>>) => {
+  if (value === 0 || value === '') {
+    setIsOpenedModal(true);
+    setCurrentCount(1);
+    const updatedGuitars = getUpdatedGuitars(addedGuitars, id, MIN_CART_VALUE);
+    dispatch(addGuitar(updatedGuitars));
+    return;
+  }
   let currentValue = value;
   if (currentValue > MAX_CART_VALUE) {
     setCurrentCount(MAX_CART_VALUE);
@@ -323,7 +330,7 @@ export const getCount = (addedGuitars: AddedGuitar[]) => {
 export const humanizeDate = (date: Date): string => date.toLocaleDateString('ru-Ru', {day: '2-digit', month: 'long'});
 
 export const debouncedChangeCountAndType = debounce(changeCountAndType, WAIT_1000_MILLISECONDS);
-export const debouncedUpdateCount = debounce(updateCount, WAIT_500_MILLISECONDS);
+export const debouncedUpdateCount = debounce(updateCount, WAIT_1000_MILLISECONDS);
 
 export const debouncedValidityMinPrice = debounce(validityMinPrice, WAIT_500_MILLISECONDS);
 export const debouncedValidityMaxPrice = debounce(validityMaxPrice, WAIT_500_MILLISECONDS);
